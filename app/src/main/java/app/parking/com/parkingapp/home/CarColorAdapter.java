@@ -2,12 +2,15 @@ package app.parking.com.parkingapp.home;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,13 +31,20 @@ public class CarColorAdapter extends BaseAdapter {
     private ArrayList<String> dummyArrayList;
     private TextView mTextView;
 
+    private String[] dummyColorArray;
+
+
     private Dialog mDialog;
 
     public CarColorAdapter(Activity mActivity, TextView textView, Dialog modelDialog) {
         this.mActivity = mActivity;
         this.mTextView = textView;
         this.mDialog = modelDialog;
+
+        dummyColorArray = mActivity.getApplicationContext().getResources().getStringArray(R.array.color_bg);
         try {
+
+
             mLayoutInflater = (LayoutInflater) mActivity
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             dummyArrayList = new ArrayList<>();
@@ -46,7 +56,6 @@ public class CarColorAdapter extends BaseAdapter {
             dummyArrayList.add("Valencia Orange Metallic");
             dummyArrayList.add("Estoril Blue II");
             dummyArrayList.add("Black (Matt)");
-
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -87,14 +96,21 @@ public class CarColorAdapter extends BaseAdapter {
             convertView = mLayoutInflater.inflate(R.layout.car_model_row_layout, parent, false);
             holder = new ViewHolder();
 
+            holder.txt_modelColor =(TextView)convertView.findViewById(R.id.model_color);
             holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
-            holder.model_ll = (LinearLayout) convertView.findViewById(R.id.model_ll);
+            holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
             holder.selected_img = (ImageView) convertView.findViewById(R.id.selected_img);
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        String color = dummyColorArray[position % dummyColorArray.length];
+
+        GradientDrawable drawable = (GradientDrawable) holder.txt_modelColor.getBackground();
+        drawable.setColor(Color.parseColor(color));
+
 
         holder.model_name.setText(dummyArrayList.get(position));
 
@@ -110,8 +126,9 @@ public class CarColorAdapter extends BaseAdapter {
 
 
     public class ViewHolder {
+        TextView txt_modelColor;
         TextView model_name;
         ImageView selected_img;
-        LinearLayout model_ll;
+        RelativeLayout model_ll;
     }
 }
