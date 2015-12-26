@@ -38,9 +38,7 @@ public class CarMakeAdapter extends BaseAdapter {
             dummyArrayList = new ArrayList<>();
             dummyArrayList.add("Audi");
             dummyArrayList.add("Bentley");
-
             dummyArrayList.add("BMW");
-
             dummyArrayList.add("Chevrolet");
             dummyArrayList.add("Daewoo");
             dummyArrayList.add("Nissan");
