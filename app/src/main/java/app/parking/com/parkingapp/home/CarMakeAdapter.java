@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.bookinghistory.BookingHistoryModel;
 
-/**
- * Created by Harish on 12/16/2015.
- */
 public class CarMakeAdapter extends BaseAdapter {
 
 
@@ -91,13 +88,14 @@ public class CarMakeAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(R.layout.car_model_row_layout, parent, false);
             holder = new ViewHolder();
 
+            holder.model_color = (TextView) convertView.findViewById(R.id.model_color);
             holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
-            holder.model_ll = (LinearLayout) convertView.findViewById(R.id.model_ll);
+            holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
             holder.selected_img = (ImageView) convertView.findViewById(R.id.selected_img);
             convertView.setTag(holder);
 
@@ -105,6 +103,7 @@ public class CarMakeAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.model_color.setVisibility(View.GONE);
         holder.model_name.setText(dummyArrayList.get(position));
 
         holder.model_ll.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +118,8 @@ public class CarMakeAdapter extends BaseAdapter {
 
 
     public class ViewHolder {
-        TextView model_name;
+        TextView model_name, model_color;
         ImageView selected_img;
-        LinearLayout model_ll;
+        RelativeLayout model_ll;
     }
 }
