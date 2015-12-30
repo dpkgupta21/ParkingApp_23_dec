@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.navigationDrawer.NavigationDrawerActivity;
+import app.parking.com.parkingapp.drivermodel.navigationDrawer.DriverNavigationDrawerActivity;
+import app.parking.com.parkingapp.usermodel.navigationDrawer.UserNavigationDrawerActivity;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
 
-    RelativeLayout login_button;
+    private RelativeLayout login_button;
+    private EditText email_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void initViews() {
 
         login_button = (RelativeLayout) findViewById(R.id.login_button);
+        email_et = (EditText) findViewById(R.id.email_et);
     }
 
     private void assignClick() {
@@ -40,9 +44,18 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.login_button:
 
-                Intent intent = new Intent(this, NavigationDrawerActivity.class);
-                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+
+                if (email_et.getText().toString().trim().equalsIgnoreCase("user")) {
+                    Intent intent = new Intent(this, UserNavigationDrawerActivity.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+
+                } else if (email_et.getText().toString().trim().equalsIgnoreCase("driver")) {
+                    Intent intent = new Intent(this, DriverNavigationDrawerActivity.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+
+                }
                 break;
         }
 

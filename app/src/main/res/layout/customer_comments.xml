@@ -41,37 +41,12 @@
                 android:orientation="vertical"
                 android:padding="@dimen/margin_20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/service_type"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="@string/service_cost"
+                    android:hint="@string/cust_comnts"
                     android:inputType="text"
                     android:textColor="@color/black"
                     android:textCursorDrawable="@null"
@@ -100,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Oil Change"
+                    android:hint="@string/cust_signoff_param"
                     android:inputType="text"
                     android:textColor="@color/black"
                     android:textCursorDrawable="@null"
@@ -173,7 +148,7 @@
             android:background="@color/grey" />
 
         <RelativeLayout
-            android:id="@+id/place_order_button"
+            android:id="@+id/take_vehicle_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view"
@@ -188,7 +163,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/place_order"
+                android:text="@string/take_vehicle"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_20sp" />
         </RelativeLayout>

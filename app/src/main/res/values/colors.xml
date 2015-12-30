@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#85AE4F</color>
     <color name="colorPrimaryDark">#6B8648</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#6B8648</color>
     <color name="white">#FFFFFF</color>
     <color name="white_faded">#80FFFFFF</color>
     <color name="white_faded_partially">#95FFFFFF</color>
@@ -27,8 +27,6 @@
         <item>#fcba59</item>
         <item>#24c6d5</item>
     </string-array>
-
-
 
 
 </resources>

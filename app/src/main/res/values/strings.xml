@@ -104,5 +104,24 @@
     <string name="service_cost">Service Cost</string>
     <string name="add_more_fields">Add more fields</string>
     <string name="place_order">Place Order</string>
+    <string name="my_jobs">My Jobs</string>
+    <string name="current_job">Current Job</string>
+    <string name="accept_job">Accept Job</string>
+    <string name="customer_details">Customer Details</string>
+    <string name="make_model">Make Model</string>
+    <string name="vehicle_num_plate">Vehicle Number Plate</string>
+    <string name="start_job">Start Job</string>
+    <string name="rt_door_front">Right Front Door</string>
+    <string name="dented">Dented</string>
+    <string name="clear">Clear</string>
+    <string name="lt_door_front">Left Front Door</string>
+    <string name="rt_door_back">Right Back Door</string>
+    <string name="lt_door_back">Left Back Door</string>
+    <string name="frnt_bmpr">Front Bumper</string>
+    <string name="back_bmpr">Back Bumper</string>
+    <string name="take_vehicle">Take Vehicle</string>
+    <string name="vehicle_inspection">Vehicle Inspection</string>
+    <string name="cust_comnts">Customer Comments</string>
+    <string name="cust_signoff_param">Customer Signoff Parameters</string>
 </resources>
 
