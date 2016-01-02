@@ -28,18 +28,17 @@ public class CarColorAdapter extends BaseAdapter {
 
     private ArrayList<BookingHistoryModel> mBookingHistoryList;
     private ArrayList<String> dummyArrayList;
-    private TextView mTextView;
+    private TextView mTextView, mColorView;
 
     private String[] dummyColorArray;
 
-
     private Dialog mDialog;
 
-    public CarColorAdapter(Activity mActivity, TextView textView, Dialog modelDialog) {
+    public CarColorAdapter(Activity mActivity, TextView textView, TextView colorview, Dialog modelDialog) {
         this.mActivity = mActivity;
         this.mTextView = textView;
         this.mDialog = modelDialog;
-
+        mColorView = colorview;
         dummyColorArray = mActivity.getApplicationContext().getResources().getStringArray(R.array.color_bg);
         try {
 
@@ -95,7 +94,7 @@ public class CarColorAdapter extends BaseAdapter {
             convertView = mLayoutInflater.inflate(R.layout.car_model_row_layout, parent, false);
             holder = new ViewHolder();
 
-            holder.txt_modelColor =(TextView)convertView.findViewById(R.id.model_color);
+            holder.txt_modelColor = (TextView) convertView.findViewById(R.id.model_color);
             holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
             holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
             holder.selected_img = (ImageView) convertView.findViewById(R.id.selected_img);
@@ -106,7 +105,6 @@ public class CarColorAdapter extends BaseAdapter {
         }
 
         String color = dummyColorArray[position % dummyColorArray.length];
-
         GradientDrawable drawable = (GradientDrawable) holder.txt_modelColor.getBackground();
         drawable.setColor(Color.parseColor(color));
 
@@ -117,6 +115,9 @@ public class CarColorAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mTextView.setText(dummyArrayList.get(position));
+                String color = dummyColorArray[position % dummyColorArray.length];
+                GradientDrawable drawable = (GradientDrawable) mColorView.getBackground();
+                drawable.setColor(Color.parseColor(color));
                 mDialog.dismiss();
             }
         });
@@ -130,4 +131,6 @@ public class CarColorAdapter extends BaseAdapter {
         ImageView selected_img;
         RelativeLayout model_ll;
     }
+
+
 }

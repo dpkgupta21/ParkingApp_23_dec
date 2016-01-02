@@ -57,7 +57,7 @@ public class AppDialogs {
             ListView car_make_list = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             final CarMakeAdapter adapter = new CarMakeAdapter(
-                    mActivity, textView,mModelDialog);
+                    mActivity, textView, mModelDialog);
             car_make_list.setAdapter(adapter);
 
             try {
@@ -75,9 +75,8 @@ public class AppDialogs {
     }
 
 
-
     public static void selectCarColor(final Activity mActivity,
-                                     final TextView textView) {
+                                      final TextView textView, final TextView color_view) {
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
                 mModelDialog.dismiss();
@@ -109,7 +108,7 @@ public class AppDialogs {
             ListView car_make_list = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             final CarColorAdapter adapter = new CarColorAdapter(
-                    mActivity, textView,mModelDialog);
+                    mActivity, textView, color_view, mModelDialog);
             car_make_list.setAdapter(adapter);
 
             try {

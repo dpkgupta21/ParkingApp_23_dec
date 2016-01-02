@@ -6,5 +6,7 @@ package app.parking.com.parkingapp.iClasses;
 public interface AppConstants {
 
 
-    public static  int ONE_SECOND=1000;
+    public static int ONE_SECOND = 1000;
+    public static String IMAGE_PATH = "ParkingApp";
+    public static String CLICKED_IMAGE_PATH = "imagepath";
 }

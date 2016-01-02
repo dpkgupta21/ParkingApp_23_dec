@@ -1,6 +1,8 @@
 package app.parking.com.parkingapp.usermodel.home;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +18,12 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
 
     private Toolbar mToolbar;
     private TextView toolbar_title;
-    private RelativeLayout next_button;
-    private LinearLayout color_ll, make_ll;
-    private TextView color_tv, make_tv;
+    private RelativeLayout next_button, color_ll;
+    private LinearLayout make_ll;
+    private TextView color_tv;
+    private TextView make_tv;
+    private static TextView model_color;
+    private VehicleDetailsScreen mVehicleDetailsScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +40,16 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
     }
 
     private void initViews() {
+        mVehicleDetailsScreen = this;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.vehicle_details));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
-
+        model_color = (TextView) findViewById(R.id.model_color);
         make_ll = (LinearLayout) findViewById(R.id.make_ll);
-        color_ll = (LinearLayout) findViewById(R.id.color_ll);
+        color_ll = (RelativeLayout) findViewById(R.id.color_ll);
         color_tv = (TextView) findViewById(R.id.color_tv);
         make_tv = (TextView) findViewById(R.id.make_tv);
         next_button = (RelativeLayout) findViewById(R.id.next_button);
@@ -63,7 +69,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.color_ll:
-                AppDialogs.selectCarColor(this, color_tv);
+                AppDialogs.selectCarColor(this, color_tv, model_color);
                 break;
         }
     }
@@ -82,5 +88,11 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

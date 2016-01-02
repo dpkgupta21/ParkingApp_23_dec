@@ -123,5 +123,7 @@
     <string name="vehicle_inspection">Vehicle Inspection</string>
     <string name="cust_comnts">Customer Comments</string>
     <string name="cust_signoff_param">Customer Signoff Parameters</string>
+    <string name="done">Done</string>
+    <string name="job_completed">Your Job has been completed</string>
 </resources>
 

@@ -34,7 +34,7 @@
                 android:id="@+id/usr_prfile_img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/user_image_height"
-                android:background="@drawable/user" />
+                android:background="@drawable/fifth_page" />
 
 
             <LinearLayout

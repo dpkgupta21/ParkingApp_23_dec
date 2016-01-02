@@ -95,27 +95,33 @@
                     android:layout_below="@+id/name_et"
                     android:background="@color/grey" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/color_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/margin_20dp"
-                    android:weightSum="2">
+                    android:padding="@dimen/margin_20dp">
 
                     <TextView
                         android:id="@+id/color_tv"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
                         android:text="@string/select_color"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_18sp"
                         android:textStyle="normal" />
 
+                    <TextView
+                        android:id="@+id/model_color"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:background="@drawable/backgroud" />
 
-                </LinearLayout>
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
