@@ -6,17 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import app.parking.com.parkingapp.R;
+import java.util.ArrayList;
 
-public class ServicesScreen extends AppCompatActivity implements View.OnClickListener {
+import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.iClasses.AppConstants;
+
+public class ServicesScreen extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RelativeLayout place_order_button, plus_button;
     private Toolbar mToolbar;
-    private TextView toolbar_title;
+    private TextView toolbar_title, toolbar_right_tv;
+    private RelativeLayout toolbar_right_rl;
+    private ListView add_services_lv;
+    ArrayList<String> addedServicesList;
 
+    private ArrayAdapter<String> arrayListArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initViews() {
+        addedServicesList = new ArrayList<String>();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
@@ -36,12 +47,24 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         mToolbar.setNavigationIcon(R.drawable.back_button);
         plus_button = (RelativeLayout) findViewById(R.id.plus_button);
         place_order_button = (RelativeLayout) findViewById(R.id.place_order_button);
+        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        add_services_lv = (ListView) findViewById(R.id.add_services_lv);
+        toolbar_right_rl.setVisibility(View.VISIBLE);
+        toolbar_right_tv.setText(R.string.skip);
+
+        arrayListArrayAdapter = new ArrayAdapter<String>(this, R.layout.added_services_row, R.id.service_name, addedServicesList);
+        add_services_lv.setAdapter(arrayListArrayAdapter);
+        arrayListArrayAdapter.notifyDataSetChanged();
     }
 
     private void assignClicks() {
 
         place_order_button.setOnClickListener(this);
         plus_button.setOnClickListener(this);
+        toolbar_right_rl.setOnClickListener(this);
+
+        add_services_lv.setOnItemClickListener(this);
 
 
     }
@@ -55,7 +78,13 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.plus_button:
-                startActivity(new Intent(this, AddServicesScreen.class));
+                Intent addServiceIntent = new Intent(this, AddServicesScreen.class);
+                startActivityForResult(addServiceIntent, 101);
+                break;
+            case R.id.toolbar_right_rl:
+
+                startActivity(new Intent(this, OrderDetailsScreen.class));
+
                 break;
         }
     }
@@ -74,5 +103,35 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        addedServicesList.remove(position);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                arrayListArrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 101) {
+            String service = data.getExtras().getString(AppConstants.SERVICE);
+            addedServicesList.add(service);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    arrayListArrayAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }

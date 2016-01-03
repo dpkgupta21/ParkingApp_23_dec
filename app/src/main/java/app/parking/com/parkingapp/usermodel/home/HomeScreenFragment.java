@@ -26,23 +26,20 @@ import app.parking.com.parkingapp.usermodel.navigationDrawer.UserNavigationDrawe
 public class HomeScreenFragment extends Fragment {
 
 
-    View view;
+    private View view;
 
-    Activity mActivity;
+    private Activity mActivity;
 
-    RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, book_now_button;
+    private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, book_now_button;
 
-    TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv;
-    static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
-    boolean isDropDateClicked = true, isDropTimeClicked = true;
+    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv;
+    private static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
+    private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Toolbar mToolbar;
 
-    Calendar calendar;
-    int mYear;
-    int mMonth;
-    int mDay;
-    int mHour;
-    int mMinute;
+    private Calendar calendar;
+    private int mYear;
+    private int mMonth, mDay, mHour, mMinute;
 
     public HomeScreenFragment() {
     }

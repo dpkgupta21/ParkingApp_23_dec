@@ -52,7 +52,7 @@
     <string name="order_details">Order Details</string>
     <string name="confrim_order">Confirm Order</string>
     <string name="apply">Apply</string>
-    <string name="enter_promocode"> Promocode</string>
+    <string name="enter_promocode"> Enter Promocode</string>
     <string name="title_activity_order_confirmation">OrderConfirmation</string>
     <string name="your_order_number">Your Order Number</string>
     <string name="order_confirm">Order Confirmation</string>
@@ -125,5 +125,7 @@
     <string name="cust_signoff_param">Customer Signoff Parameters</string>
     <string name="done">Done</string>
     <string name="job_completed">Your Job has been completed</string>
+    <string name="skip">Skip</string>
+    <string name="add_more_services">Add more services</string>
 </resources>
 

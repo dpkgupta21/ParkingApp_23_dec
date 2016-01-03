@@ -39,7 +39,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -47,8 +49,8 @@
                         android:layout_alignParentLeft="true"
                         android:text="@string/arrival"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/text_size_22sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -58,27 +60,16 @@
                     android:padding="@dimen/margin_20dp"
                     android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/flight_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
 
                     <EditText
                         android:id="@+id/flight_name_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:gravity="right"
-                        android:hint="@string/flight_name"
-
+                        android:gravity="left"
                         android:inputType="text"
+                        android:text="@string/flight_name"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -101,15 +92,6 @@
                     android:padding="@dimen/margin_20dp"
                     android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/flight_number"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
 
                     <EditText
                         android:id="@+id/_et"
@@ -118,9 +100,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:gravity="right"
-                        android:hint="@string/flight_number"
+                        android:gravity="left"
+
                         android:inputType="text"
+                        android:text="@string/flight_number"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -138,7 +121,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,8 +131,8 @@
                         android:layout_alignParentLeft="true"
                         android:text="@string/arrival_datetime"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/text_size_22sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
                 </RelativeLayout>
 
 
@@ -195,7 +180,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:padding="@dimen/margin_20dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/destination_et"
@@ -221,13 +207,16 @@
                     android:layout_below="@+id/name_et"
                     android:layout_marginLeft="@dimen/margin_20dp"
                     android:layout_marginRight="@dimen/margin_20dp"
-                    android:background="@color/grey" />
+                    android:background="@color/grey"
+                    android:visibility="gone" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:padding="@dimen/margin_20dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/origin_et"
@@ -274,7 +263,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -282,8 +273,8 @@
                         android:layout_alignParentLeft="true"
                         android:text="@string/departure"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/text_size_22sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -293,15 +284,6 @@
                     android:padding="@dimen/margin_20dp"
                     android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/flight_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
 
                     <EditText
                         android:id="@+id/flight_name_depart_et"
@@ -310,10 +292,10 @@
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:gravity="right"
-                        android:hint="@string/flight_name"
+                        android:gravity="left"
 
                         android:inputType="text"
+                        android:text="@string/flight_name"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -336,15 +318,6 @@
                     android:padding="@dimen/margin_20dp"
                     android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/flight_number"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
 
                     <EditText
                         android:id="@+id/flight_number_depart_et"
@@ -353,9 +326,9 @@
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:gravity="right"
-                        android:hint="@string/flight_number"
+                        android:gravity="left"
                         android:inputType="text"
+                        android:text="@string/flight_number"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -373,7 +346,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -381,8 +356,8 @@
                         android:layout_alignParentLeft="true"
                         android:text="@string/depart_datetime"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/text_size_22sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
                 </RelativeLayout>
 
 
@@ -392,7 +367,7 @@
                     android:padding="@dimen/margin_20dp">
 
                     <TextView
-                        android:id="@+id/arrival_depart_date_tv"
+                        android:id="@+id/depart_date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -405,7 +380,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/arrival_time_depart_tv"
+                        android:id="@+id/depart_time_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -430,7 +405,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:padding="@dimen/margin_20dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/destination_depart_et"
@@ -452,17 +428,21 @@
 
                 <View
                     android:layout_width="match_parent"
+
                     android:layout_height="@dimen/horizontal_line_height"
                     android:layout_below="@+id/name_et"
                     android:layout_marginLeft="@dimen/margin_20dp"
                     android:layout_marginRight="@dimen/margin_20dp"
-                    android:background="@color/grey" />
+                    android:background="@color/grey"
+                    android:visibility="gone" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_20dp">
+                    android:padding="@dimen/margin_20dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/origin_depart_et"

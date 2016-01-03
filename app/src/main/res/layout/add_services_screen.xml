@@ -24,6 +24,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/car_wash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -53,6 +54,7 @@
             android:background="@color/grey" />
 
         <LinearLayout
+            android:id="@+id/oil_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -65,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_radio_button_fill"
+                android:drawableLeft="@drawable/ic_radio_button_outline"
                 android:drawablePadding="@dimen/margin_50dp"
                 android:text="Oil Change"
                 android:textColor="@color/black"
@@ -82,6 +84,7 @@
             android:background="@color/grey" />
 
         <LinearLayout
+            android:id="@+id/refill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

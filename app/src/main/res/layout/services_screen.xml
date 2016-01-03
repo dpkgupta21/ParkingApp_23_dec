@@ -20,9 +20,10 @@
     </LinearLayout>
 
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottom_rl"
         android:layout_below="@+id/toolbar_ll"
         android:isScrollContainer="false"
@@ -30,8 +31,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_ll"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -115,10 +115,15 @@
                 android:layout_height="@dimen/horizontal_line_height"
                 android:layout_below="@+id/name_et"
                 android:background="@color/grey" />
+
+            <ListView
+                android:id="@+id/add_services_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp" />
         </LinearLayout>
-
-    </ScrollView>
-
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/bottom_rl"
@@ -126,22 +131,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-
         <LinearLayout
             android:id="@+id/add_services_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/margin_20dp"
+            android:paddingLeft="@dimen/margin_20dp"
             android:weightSum="2">
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:background="@null"
-                android:hint="@string/add_more_fields"
+                android:hint="@string/add_more_services"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null"
@@ -152,8 +156,10 @@
                 android:id="@+id/plus_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
-                android:gravity="right|center_vertical">
+                android:layout_weight="0.5"
+                android:gravity="right|center_vertical"
+
+                android:paddingRight="@dimen/margin_20dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -180,7 +186,7 @@
             android:layout_marginBottom="@dimen/margin_20dp"
             android:layout_marginLeft="@dimen/margin_20dp"
             android:layout_marginRight="@dimen/margin_20dp"
-            android:layout_marginTop="@dimen/margin_30dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@drawable/green_round_corner_btn_selector_btn"
             android:gravity="center"
             android:padding="@dimen/margin_10dp">
