@@ -20,12 +20,12 @@
     <color name="welcome_color">#48BD5D</color>
 
     <string-array name="color_bg">
-        <item>#24c6d5</item>
-        <item>#57dd86</item>
-        <item>#ad7dcf</item>
-        <item>#ff484d</item>
-        <item>#fcba59</item>
-        <item>#24c6d5</item>
+        <item>#000000</item>
+        <item>#b32500</item>
+        <item>#292727</item>
+        <item>#fd930e</item>
+        <item>#187187</item>
+        <item>#5a5757</item>
     </string-array>
 
 

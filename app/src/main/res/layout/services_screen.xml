@@ -29,100 +29,24 @@
         android:isScrollContainer="false"
         android:scrollbars="none">
 
-        <LinearLayout
+
+        <ListView
+            android:id="@+id/add_services_lv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/service_type"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="@string/service_cost"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:background="@color/grey" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="Oil Change"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:background="@color/grey" />
-
-            <ListView
-                android:id="@+id/add_services_lv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                android:dividerHeight="0dp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/no_service_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_services"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18sp"
+            android:textStyle="normal"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -140,13 +64,13 @@
             android:paddingLeft="@dimen/margin_20dp"
             android:weightSum="2">
 
-            <EditText
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:background="@null"
-                android:hint="@string/add_more_services"
                 android:inputType="text"
+                android:text="@string/add_more_services"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/text_size_18sp"

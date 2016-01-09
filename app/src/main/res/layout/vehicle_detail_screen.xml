@@ -47,13 +47,14 @@
                     android:padding="@dimen/margin_20dp"
                     android:weightSum="2">
 
-                    <TextView
+                    <AutoCompleteTextView
                         android:id="@+id/make_tv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/select_make"
+                        android:layout_weight="2"
+                        android:background="@null"
+                        android:hint="@string/select_make"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_18sp"
                         android:textStyle="normal" />
@@ -75,11 +76,11 @@
                     android:weightSum="2">
 
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/email_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:background="@null"
                         android:hint="@string/select_model"
                         android:inputType="text"
@@ -102,12 +103,15 @@
                     android:gravity="center_vertical"
                     android:padding="@dimen/margin_20dp">
 
-                    <TextView
+                    <AutoCompleteTextView
                         android:id="@+id/color_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/select_color"
+                        android:layout_marginRight="@dimen/margin_20dp"
+                        android:layout_toLeftOf="@+id/model_color"
+                        android:background="@null"
+                        android:hint="@string/select_color"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_18sp"
                         android:textStyle="normal" />
@@ -122,67 +126,6 @@
 
 
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/horizontal_line_height"
-                    android:layout_below="@+id/name_et"
-                    android:background="@color/grey" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/margin_20dp"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:text="@string/select_reg"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/horizontal_line_height"
-                    android:layout_below="@+id/name_et"
-                    android:background="@color/grey" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/horizontal_line_height"
-                    android:layout_below="@+id/name_et"
-                    android:background="@color/grey" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/margin_20dp"
-                    android:weightSum="2">
-
-
-                    <EditText
-                        android:id="@+id/number_plate_et"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/number_plate"
-                        android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textCursorDrawable="@null"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

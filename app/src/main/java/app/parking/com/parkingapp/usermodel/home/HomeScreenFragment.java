@@ -39,7 +39,10 @@ public class HomeScreenFragment extends Fragment {
 
     private Calendar calendar;
     private int mYear;
-    private int mMonth, mDay, mHour, mMinute;
+    int mMonth;
+    int mDay;
+    int mHour;
+    int mMinute;
 
     public HomeScreenFragment() {
     }

@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.usermodel.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +18,17 @@ import java.util.ArrayList;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.iClasses.AppConstants;
 
-public class ServicesScreen extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ServicesScreen extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout place_order_button, plus_button;
     private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv;
+    private TextView toolbar_title, toolbar_right_tv, no_service_tv;
     private RelativeLayout toolbar_right_rl;
     private ListView add_services_lv;
-    ArrayList<String> addedServicesList;
+    private Activity mActivity;
 
-    private ArrayAdapter<String> arrayListArrayAdapter;
+    private ArrayList<ServicesModel> mServicesModelArrayList;
+    private ServiceAdapter mServiceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initViews() {
-        addedServicesList = new ArrayList<String>();
+        mActivity = this;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
@@ -50,23 +52,27 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
         toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         add_services_lv = (ListView) findViewById(R.id.add_services_lv);
+        no_service_tv = (TextView) findViewById(R.id.no_service_tv);
         toolbar_right_rl.setVisibility(View.VISIBLE);
         toolbar_right_tv.setText(R.string.skip);
 
-        arrayListArrayAdapter = new ArrayAdapter<String>(this, R.layout.added_services_row, R.id.service_name, addedServicesList);
-        add_services_lv.setAdapter(arrayListArrayAdapter);
-        arrayListArrayAdapter.notifyDataSetChanged();
+        mServicesModelArrayList = new ArrayList<>();
+        mServiceAdapter = new ServiceAdapter(mActivity, mServicesModelArrayList, no_service_tv);
+
+//        arrayListArrayAdapter = new ArrayAdapter<String>(this, R.layout.added_services_row, R.id.service_name, addedServicesList);
+        add_services_lv.setAdapter(mServiceAdapter);
+
+        mServiceAdapter.notifyDataSetChanged();
+
+
     }
+
 
     private void assignClicks() {
 
         place_order_button.setOnClickListener(this);
         plus_button.setOnClickListener(this);
         toolbar_right_rl.setOnClickListener(this);
-
-        add_services_lv.setOnItemClickListener(this);
-
-
     }
 
     @Override
@@ -105,33 +111,24 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        addedServicesList.remove(position);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                arrayListArrayAdapter.notifyDataSetChanged();
-            }
-        });
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 101) {
-            String service = data.getExtras().getString(AppConstants.SERVICE);
-            addedServicesList.add(service);
+            ArrayList<ServicesModel> servicesModelArrayList = new ArrayList<>();
+            servicesModelArrayList = (ArrayList<ServicesModel>) data.getExtras().getSerializable(AppConstants.SERVICE);
+
+            mServicesModelArrayList.addAll(servicesModelArrayList);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    arrayListArrayAdapter.notifyDataSetChanged();
+                    mServiceAdapter.notifyDataSetChanged();
+
                 }
             });
         }
+
     }
 }
