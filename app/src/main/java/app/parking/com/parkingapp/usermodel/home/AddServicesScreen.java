@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.AppConstants;
+import app.parking.com.parkingapp.utils.AppConstants;
 
 public class AddServicesScreen extends AppCompatActivity implements View.OnClickListener {
 

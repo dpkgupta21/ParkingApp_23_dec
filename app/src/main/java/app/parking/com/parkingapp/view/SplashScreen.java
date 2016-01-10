@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.appIntroduction.WelcomeScreen;
-import app.parking.com.parkingapp.iClasses.AppConstants;
+import app.parking.com.parkingapp.utils.AppConstants;
 
 public class SplashScreen extends AppCompatActivity {
 

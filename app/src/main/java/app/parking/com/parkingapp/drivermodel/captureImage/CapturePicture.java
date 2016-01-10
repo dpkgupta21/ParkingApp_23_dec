@@ -27,7 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.AppConstants;
+import app.parking.com.parkingapp.utils.AppConstants;
 
 public class CapturePicture extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "CapturePicture";
@@ -184,7 +184,7 @@ public class CapturePicture extends AppCompatActivity implements View.OnClickLis
 
     private File getOutputMediaFile() throws IOException {
         createdAt = System.currentTimeMillis();
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/" + AppConstants.IMAGE_PATH + "/");
+        File storageDir = new File(AppConstants.SNAPSHOT_DIRECTORY_PATH);
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }

@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.AppConstants;
+import app.parking.com.parkingapp.utils.AppConstants;
 
 public class ServicesScreen extends AppCompatActivity implements View.OnClickListener {
 

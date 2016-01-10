@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.drivermodel.captureImage.CapturePicture;
+import app.parking.com.parkingapp.drivermodel.captureImage.ShowingSnapshotScreen;
 
 public class VehicleInspectionScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +30,7 @@ public class VehicleInspectionScreen extends AppCompatActivity implements View.O
     private RelativeLayout take_vehicle_button;
     private static Activity mActivity;
 
-    private TextView rt_frnt_dr_tv, lt_frnt_dr_tv, rt_bck_dr_tv, lt_back_dr_tv, frnt_bmpr_tv, back_bmpr_tv;
+    private TextView rt_frnt_dr_tv, lt_frnt_dr_tv, rt_bck_dr_tv, lt_back_dr_tv, frnt_bmpr_tv, back_bmpr_tv, view_all_pics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class VehicleInspectionScreen extends AppCompatActivity implements View.O
         rt_bck_dr_tv.setOnClickListener(this);
         lt_back_dr_tv.setOnClickListener(this);
         frnt_bmpr_tv.setOnClickListener(this);
+        back_bmpr_tv.setOnClickListener(this);
+        view_all_pics.setOnClickListener(this);
     }
 
 
@@ -67,7 +70,7 @@ public class VehicleInspectionScreen extends AppCompatActivity implements View.O
         lt_back_dr_tv = (TextView) findViewById(R.id.lt_back_dr_tv);
         frnt_bmpr_tv = (TextView) findViewById(R.id.frnt_bmpr_tv);
         back_bmpr_tv = (TextView) findViewById(R.id.back_bmpr_tv);
-
+        view_all_pics = (TextView) findViewById(R.id.view_all_pics);
 
     }
 
@@ -98,33 +101,37 @@ public class VehicleInspectionScreen extends AppCompatActivity implements View.O
                 break;
 
             case R.id.rt_frnt_dr_tv:
-                captureImageIntent.putExtra("imagepath", "right_front_door");
+                captureImageIntent.putExtra("imagepath", "Right Front Door");
 
                 startActivityForResult(captureImageIntent, 0);
                 break;
             case R.id.lt_frnt_dr_tv:
-                captureImageIntent.putExtra("imagepath", "left_front_door");
+                captureImageIntent.putExtra("imagepath", "Left Front Door");
 
                 startActivityForResult(captureImageIntent, 1);
                 break;
             case R.id.rt_bck_dr_tv:
-                captureImageIntent.putExtra("imagepath", "right_back_door");
+                captureImageIntent.putExtra("imagepath", "Right Back Door");
 
                 startActivityForResult(captureImageIntent, 2);
                 break;
             case R.id.lt_back_dr_tv:
-                captureImageIntent.putExtra("imagepath", "left_front_door");
+                captureImageIntent.putExtra("imagepath", "Left Back Door");
 
                 startActivityForResult(captureImageIntent, 3);
                 break;
             case R.id.frnt_bmpr_tv:
-                captureImageIntent.putExtra("imagepath", "front_bumper");
+                captureImageIntent.putExtra("imagepath", "Front Bumper");
 
                 startActivityForResult(captureImageIntent, 4);
                 break;
             case R.id.back_bmpr_tv:
-                captureImageIntent.putExtra("imagepath", "back_bumper");
+                captureImageIntent.putExtra("imagepath", "Back Bumper");
                 startActivityForResult(captureImageIntent, 5);
+                break;
+
+            case R.id.view_all_pics:
+                startActivity(new Intent(VehicleInspectionScreen.this, ShowingSnapshotScreen.class));
                 break;
         }
     }

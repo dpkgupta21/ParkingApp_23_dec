@@ -129,5 +129,7 @@
     <string name="add_more_services">Add more services</string>
     <string name="no_services">No Services</string>
     <string name="submit">Submit</string>
+    <string name="no_image_found">No Image Found</string>
+    <string name="delete">Delete</string>
 </resources>
 
