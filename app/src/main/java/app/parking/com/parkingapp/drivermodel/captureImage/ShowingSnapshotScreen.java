@@ -226,6 +226,7 @@ public class ShowingSnapshotScreen extends AppCompatActivity {
             return null;
         }
 
+
         return inFiles;
     }
 
