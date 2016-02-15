@@ -16,17 +16,17 @@
         <activity
             android:name=".view.UserProfileScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".usermodel.navigationDrawer.UserNavigationDrawerActivity" />
+        <activity android:name=".navigationDrawer.UserNavigationDrawerActivity" />
         <activity
-            android:name=".usermodel.home.VehicleDetailsScreen"
+            android:name=".home.VehicleDetailsScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".usermodel.home.OrderDetailsScreen"
+            android:name=".home.OrderDetailsScreen"
             android:label="@string/title_activity_order_details_screen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".usermodel.home.OrderConfirmation"
+            android:name=".home.OrderConfirmation"
             android:label="@string/title_activity_order_confirmation"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -42,44 +42,25 @@
 
 
         <activity
-            android:name=".usermodel.bookinghistory.BookingHistoryDetailScreen"
+            android:name=".bookinghistory.BookingHistoryDetailScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".appIntroduction.WelcomeScreen" />
         <activity
-            android:name=".usermodel.home.FlightDetailsScreen"
+            android:name=".home.FlightDetailsScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".usermodel.home.AddServicesScreen" />
-        <activity android:name=".usermodel.home.SelectPaymentScreen" />
-        <activity android:name=".usermodel.home.OrderAmountScreen" />
-        <activity android:name=".usermodel.home.CreditCardScreen" />
+        <activity android:name=".home.AddServicesScreen" />
+        <activity android:name=".home.SelectPaymentScreen" />
+        <activity android:name=".home.OrderAmountScreen" />
+        <activity android:name=".home.CreditCardScreen" />
         <activity
-            android:name=".usermodel.home.ServicesScreen"
+            android:name=".home.ServicesScreen"
             android:label="@string/title_activity_services_screen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
 
         </activity>
-        <activity
-            android:name=".drivermodel.navigationDrawer.DriverNavigationDrawerActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".drivermodel.VehicleInspectionScreen"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-
-        </activity>
-        <activity
-            android:name=".drivermodel.CustomerComments"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".drivermodel.captureImage.CapturePicture">
-
-        </activity>
-        <activity android:name=".drivermodel.captureImage.ShowFullSnapShotOnGUI"></activity>
-        <activity android:name=".drivermodel.captureImage.ShowingSnapshotScreen">
 
 
-        </activity>
-    </application>
+</application>
 
-</manifest>
+    </manifest>

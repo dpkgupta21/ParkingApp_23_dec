@@ -8,8 +8,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.drivermodel.navigationDrawer.DriverNavigationDrawerActivity;
-import app.parking.com.parkingapp.usermodel.navigationDrawer.UserNavigationDrawerActivity;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,11 +46,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
                 if (email_et.getText().toString().trim().equalsIgnoreCase("user")) {
                     Intent intent = new Intent(this, UserNavigationDrawerActivity.class);
-                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    finish();
-
-                } else if (email_et.getText().toString().trim().equalsIgnoreCase("driver")) {
-                    Intent intent = new Intent(this, DriverNavigationDrawerActivity.class);
                     startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
 

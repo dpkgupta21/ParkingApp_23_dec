@@ -15,7 +15,7 @@ import app.parking.com.parkingapp.R;
 public class UserProfileScreen extends AppCompatActivity {
 
 
-    Toolbar mToolbar;
+   private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
