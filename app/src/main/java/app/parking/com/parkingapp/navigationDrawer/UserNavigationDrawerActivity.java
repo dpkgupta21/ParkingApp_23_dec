@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,10 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
+import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.view.UserProfileScreen;
+import app.parking.com.parkingapp.webservices.handler.LogoutAPIHandler;
+import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 
 public class UserNavigationDrawerActivity extends AppCompatActivity {
@@ -32,6 +42,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     private int mCurrentSelectedPosition;
     private View headerView;
     public static Activity mActivity;
+    private String TAG = UserNavigationDrawerActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +121,13 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_item_logout:
-                        Toast.makeText(UserNavigationDrawerActivity.this, "clicked", Toast.LENGTH_LONG).show();
+
+                        String email = SessionManager.getInstance(mActivity).getEmail();
+                        String auth = SessionManager.getInstance(mActivity).getAuthToken();
+
+                        AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
+                        LogoutAPIHandler mLogoutAPIHandler = new LogoutAPIHandler(mActivity, email, auth, onLogoutResponseListner());
+
 
                         mCurrentSelectedPosition = 5;
 
@@ -124,6 +141,52 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private WebAPIResponseListener onLogoutResponseListner() {
+
+        WebAPIResponseListener mWebAPIResponseListener;
+
+        mWebAPIResponseListener = new WebAPIResponseListener() {
+            @Override
+            public void onSuccessOfResponse(Object... arguments) {
+
+                try {
+                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                    if (mJsonObject != null) {
+                        if (mJsonObject.has(GlobalKeys.MESSAGE)) {
+
+                            String message = mJsonObject.getString(GlobalKeys.MESSAGE);
+                            SessionManager.getInstance(mActivity).logoutUser();
+                            Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+                            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            AppUtils.showToast(mActivity, message);
+
+                            finish();
+
+                        } else {
+                            AppUtils.showToast(mActivity, "Logout Failed");
+                        }
+                    } else {
+                        AppUtils.showToast(mActivity, "Logout Failed");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onFailOfResponse(Object... arguments) {
+                AppUtils.showToast(mActivity, "Logout Failed");
+
+            }
+        }
+
+        ;
+
+        return mWebAPIResponseListener;
     }
 
     private void displayView(int position) {
