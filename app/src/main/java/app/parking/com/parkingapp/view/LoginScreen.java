@@ -23,7 +23,7 @@ import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
 
-    private RelativeLayout login_button;
+    private RelativeLayout login_button, register;
     private EditText email_et, pwd_et;
     private LoginAPIHandler mLoginAPIHandler;
     private String TAG = LoginScreen.class.getSimpleName();
@@ -41,6 +41,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void initViews() {
 
         login_button = (RelativeLayout) findViewById(R.id.login_button);
+        register = (RelativeLayout) findViewById(R.id.register);
         email_et = (EditText) findViewById(R.id.email_et);
         pwd_et = (EditText) findViewById(R.id.pwd_et);
     }
@@ -48,12 +49,17 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void assignClick() {
 
         login_button.setOnClickListener(this);
+        register.setOnClickListener(this);
     }
 
     @Override
     public void onClick(final View v) {
 
         switch (v.getId()) {
+
+            case R.id.register:
+                startActivity(new Intent(LoginScreen.this, SignupScreen.class));
+                break;
             case R.id.login_button:
 
                 String email = email_et.getText().toString().trim();
