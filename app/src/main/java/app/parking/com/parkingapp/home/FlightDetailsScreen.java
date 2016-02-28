@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -16,15 +17,30 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.CreateOrderDTO;
+import app.parking.com.parkingapp.model.FlightArrivalDTO;
+import app.parking.com.parkingapp.model.FlightDepartureDTO;
+import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.AppUtils;
 
 public class FlightDetailsScreen extends AppCompatActivity implements View.OnClickListener {
-    Toolbar mToolbar;
-    TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv;
-    RelativeLayout next_button;
+    private Toolbar mToolbar;
+    private TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv;
+    private RelativeLayout next_button;
+    private EditText flight_name_et, flight_num_et, flight_name_depart_et, flight_number_depart_et;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Calendar calendar;
-    private int mYear;
-    private int mMonth, mDay, mHour, mMinute;
+    private int mYear, mDepartYear, mArrivalYear;
+    private int mMonth, mDepartMonth, mArrivalMonth;
+    private int mDay, mDepartDay, mArrivalDay;
+    private int mHour, mDepartHour, mArrivalHour;
+    private int mMinute, mDepartMinute, mArrivalMinute;
+    private String departureTime, arrivalTime;
+    private CreateOrderDTO createOrderDTO;
+    private FlightArrivalDTO flightArrivalDTO;
+    private FlightDepartureDTO flightDepartureDTO;
+    private String TAG = FlightDetailsScreen.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +74,11 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         arrival_time_tv = (TextView) findViewById(R.id.arrival_time_tv);
         depart_time_tv = (TextView) findViewById(R.id.depart_time_tv);
         depart_date_tv = (TextView) findViewById(R.id.depart_date_tv);
+        flight_name_et = (EditText) findViewById(R.id.flight_name_et);
+        flight_num_et = (EditText) findViewById(R.id.flight_num_et);
+        flight_name_depart_et = (EditText) findViewById(R.id.flight_name_depart_et);
+        flight_number_depart_et = (EditText) findViewById(R.id.flight_number_depart_et);
+
 
         calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
@@ -65,6 +86,23 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
+
+        mDepartYear = mArrivalYear = mYear;
+        mDepartMonth = mArrivalMonth = mMonth;
+        mDepartDay = mArrivalDay = mDay;
+        mDepartHour = mArrivalHour = mHour;
+        mDepartMinute = mArrivalMinute = mMinute;
+
+        if (getIntent() != null) {
+            createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
+            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
+        } else {
+            createOrderDTO = new CreateOrderDTO();
+        }
+
+        flightArrivalDTO = new FlightArrivalDTO();
+        flightDepartureDTO = new FlightDepartureDTO();
+
     }
 
     @Override
@@ -72,7 +110,25 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 
         switch (v.getId()) {
             case R.id.next_button:
-                startActivity(new Intent(this, VehicleDetailsScreen.class));
+
+                arrivalTime = mArrivalYear + "-" + mArrivalMonth + "-" + mArrivalDay + "T" + mArrivalHour + ":" + mArrivalMinute;
+                departureTime = mDepartYear + "-" + mDepartMonth + "-" + mDepartDay + "T" + mDepartHour + ":" + mDepartMinute;
+
+
+                flightArrivalDTO.setFlightArrivalTime(arrivalTime);
+                flightArrivalDTO.setFlightDepatureTime(departureTime);
+                flightArrivalDTO.setFlightName(flight_name_et.getText().toString().trim());
+                flightArrivalDTO.setFlightNumber(flight_num_et.getText().toString().trim());
+
+
+                flightDepartureDTO.setFlightArrivalTime(arrivalTime);
+                flightDepartureDTO.setFlightDepatureTime(departureTime);
+                flightDepartureDTO.setFlightName(flight_name_depart_et.getText().toString().trim());
+                flightDepartureDTO.setFlightNumber(flight_number_depart_et.getText().toString().trim());
+
+                createOrderDTO.setFlightArrivalDTO(flightArrivalDTO);
+                createOrderDTO.setFlightDepartureDTO(flightDepartureDTO);
+                startActivity(new Intent(this, VehicleDetailsScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
 
                 break;
 
@@ -133,11 +189,17 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
             if (!isDropDateClicked) {
+                mArrivalDay = mDay;
+                mArrivalMonth = mMonth + 1;
+                mArrivalYear = mYear;
                 arrival_date_tv.setText(new StringBuilder()
                         // Month is 0 based so add 1
                         .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
                         .append(mYear).append(" "));
             } else {
+                mDepartDay = mDay;
+                mDepartMonth = mMonth + 1;
+                mDepartYear = mYear;
                 depart_date_tv.setText(new StringBuilder()
                         // Month is 0 based so add 1
                         .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
@@ -155,8 +217,13 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
             int min = minute;
 
             if (isDropTimeClicked) {
+                mDepartHour = hour;
+                mDepartMinute = min;
+
                 depart_time_tv.setText(hour + ":" + min);
             } else {
+                mArrivalMinute = min;
+                mArrivalHour = hour;
                 arrival_time_tv.setText(hour + ":" + min);
             }
 

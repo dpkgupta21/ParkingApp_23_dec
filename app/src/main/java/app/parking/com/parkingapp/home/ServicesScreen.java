@@ -11,10 +11,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.AppUtils;
 
 public class ServicesScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,9 +28,11 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     private RelativeLayout toolbar_right_rl;
     private ListView add_services_lv;
     private Activity mActivity;
+    private CreateOrderDTO createOrderDTO;
 
     private ArrayList<ServicesModel> mServicesModelArrayList;
     private ServiceAdapter mServiceAdapter;
+    private String TAG = ServicesScreen.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,15 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
 
         mServiceAdapter.notifyDataSetChanged();
 
+        if (getIntent() != null) {
+            createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
+            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
+        } else {
+            createOrderDTO = new CreateOrderDTO();
+        }
+
+        Gson gson = new Gson();
+        AppUtils.showLog(TAG, gson.toJson(createOrderDTO));
 
     }
 

@@ -18,7 +18,10 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
+import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.AppUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,6 +33,7 @@ public class HomeScreenFragment extends Fragment {
 
     private Activity mActivity;
 
+    private CreateOrderDTO createOrderDTO;
     private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, book_now_button;
 
     private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv;
@@ -38,19 +42,22 @@ public class HomeScreenFragment extends Fragment {
     private Toolbar mToolbar;
 
     private Calendar calendar;
-    private int mYear;
-    int mMonth;
-    int mDay;
-    int mHour;
-    int mMinute;
+    private int mYear, mDropYear, mPickupYear;
+    private int mMonth, mDropMonth, mPickupMonth;
+    private int mDay, mDropDay, mPickupDay;
+    private int mHour, mDropHour, mPickupHour;
+    private int mMinute, mDropMinute, mPickupMinute;
+    private String dropTime, pickTime;
+    private String TAG;
 
     public HomeScreenFragment() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        TAG = HomeScreenFragment.class.getSimpleName();
         view = inflater.inflate(R.layout.fragment_home_screen, container, false);
         return view;
 
@@ -63,6 +70,7 @@ public class HomeScreenFragment extends Fragment {
 
 
         mActivity = UserNavigationDrawerActivity.mActivity;
+        createOrderDTO = new CreateOrderDTO();
         pick_time_rl = (RelativeLayout) view.findViewById(R.id.pick_time_rl);
         pick_date_rl = (RelativeLayout) view.findViewById(R.id.pick_date_rl);
         drop_date_rl = (RelativeLayout) view.findViewById(R.id.drop_date_rl);
@@ -80,6 +88,12 @@ public class HomeScreenFragment extends Fragment {
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
+
+        mDropYear = mPickupYear = mYear;
+        mDropMonth = mPickupMonth = mMonth;
+        mDropDay = mPickupDay = mDay;
+        mDropHour = mPickupHour = mHour;
+        mDropMinute = mPickupMinute = mMinute;
 
 
         pick_date_rl.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +144,16 @@ public class HomeScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+//                "dropOffTime": "2016-02-14T08:11:32.244Z",
+//                        "pickUpTime": "2016-02-17T08:11:32.244Z",
+                pickTime = mPickupYear + "-" + mPickupMonth + "-" + mPickupDay + "T" + mPickupHour + ":" + mPickupMinute;
+                dropTime = mDropYear + "-" + mDropMonth + "-" + mDropDay + "T" + mDropHour + ":" + mDropMinute;
+
+                createOrderDTO.setDropOffTime(dropTime);
+                createOrderDTO.setPickUpTime(pickTime);
+                AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
                 Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
+                intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
                 startActivity(intent);
             }
         });
@@ -145,11 +168,22 @@ public class HomeScreenFragment extends Fragment {
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
             if (!isDropDateClicked) {
+
+                mPickupDay = mDay;
+                mPickupMonth = mMonth + 1;
+                mPickupYear = mYear;
+
+
                 pick_date_tv.setText(new StringBuilder()
                         // Month is 0 based so add 1
                         .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
                         .append(mYear).append(" "));
             } else {
+
+
+                mDropDay = mDay;
+                mDropMonth = mMonth + 1;
+                mDropYear = mYear;
                 drop_date_tv.setText(new StringBuilder()
                         // Month is 0 based so add 1
                         .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
@@ -167,8 +201,13 @@ public class HomeScreenFragment extends Fragment {
             int min = minute;
 
             if (isDropTimeClicked) {
+                mDropHour = hour;
+                mDropMinute = min;
+
                 drop_time_tv.setText(hour + ":" + min);
             } else {
+                mPickupMinute = min;
+                mPickupHour = hour;
                 pick_time_tv.setText(hour + ":" + min);
             }
 

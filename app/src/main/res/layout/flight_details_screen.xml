@@ -69,7 +69,7 @@
                         android:background="@null"
                         android:gravity="left"
                         android:inputType="text"
-                        android:text="@string/flight_name"
+                        android:hint="@string/flight_name"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -94,7 +94,7 @@
 
 
                     <EditText
-                        android:id="@+id/_et"
+                        android:id="@+id/flight_num_et"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -103,7 +103,7 @@
                         android:gravity="left"
 
                         android:inputType="text"
-                        android:text="@string/flight_number"
+                        android:hint="@string/flight_number"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -295,7 +295,7 @@
                         android:gravity="left"
 
                         android:inputType="text"
-                        android:text="@string/flight_name"
+                        android:hint="@string/flight_name"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"
@@ -328,7 +328,7 @@
                         android:background="@null"
                         android:gravity="left"
                         android:inputType="text"
-                        android:text="@string/flight_number"
+                        android:hint="@string/flight_number"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/text_size_18sp"

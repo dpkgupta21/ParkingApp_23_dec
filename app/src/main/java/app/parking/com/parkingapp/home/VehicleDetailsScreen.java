@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +19,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.CreateOrderDTO;
+import app.parking.com.parkingapp.model.VehicleDTO;
+import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.AppUtils;
 
 public class VehicleDetailsScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,9 +30,14 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
     private TextView toolbar_title;
     private RelativeLayout next_button, color_ll;
     private LinearLayout make_ll;
-    private AutoCompleteTextView color_tv, make_tv;
+    private AutoCompleteTextView color_tv, make_tv, model_et;
+    private EditText number_plate_et;
+
     private static TextView model_color;
     private VehicleDetailsScreen mVehicleDetailsScreen;
+    private CreateOrderDTO createOrderDTO;
+    private VehicleDTO vehicleDTO;
+    private String TAG = VehicleDetailsScreen.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +65,35 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         make_ll = (LinearLayout) findViewById(R.id.make_ll);
         color_ll = (RelativeLayout) findViewById(R.id.color_ll);
         color_tv = (AutoCompleteTextView) findViewById(R.id.color_tv);
-        make_tv = (AutoCompleteTextView) findViewById(R.id.make_tv);
+        make_tv = (AutoCompleteTextView) findViewById(R.id.make_et);
+        model_et = (AutoCompleteTextView) findViewById(R.id.model_et);
+        number_plate_et = (EditText) findViewById(R.id.number_plate_et);
         next_button = (RelativeLayout) findViewById(R.id.next_button);
         makeSelection();
         colorSelecion();
 
+        if (getIntent() != null) {
+            createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
+            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
+        } else {
+            createOrderDTO = new CreateOrderDTO();
+        }
+
+        vehicleDTO = new VehicleDTO();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next_button:
+
+                vehicleDTO.setColor(color_tv.getText().toString().trim());
+                vehicleDTO.setMake(make_tv.getText().toString().trim());
+                vehicleDTO.setModel(model_et.getText().toString().trim());
+                vehicleDTO.setPlateNo(number_plate_et.getText().toString().trim());
+                createOrderDTO.setVehicleDTO(vehicleDTO);
                 Intent intent = new Intent(getApplicationContext(), ServicesScreen.class);
-                startActivity(intent);
+                startActivity(intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
                 break;
             case R.id.make_ll:
 
