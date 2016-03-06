@@ -6,26 +6,33 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.ListOfServicesDTO;
+import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.webservices.handler.ServicesAPIHandler;
+import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class AddServicesScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    private TextView toolbar_title;
-    private LinearLayout refill, car_wash, oil_change;
-    private CheckBox refill_cb, car_wash_cb, oil_change_cb;
-
+    private TextView toolbar_title, no_service_tv;
+    private ListView services_lv;
     private RelativeLayout submit_button;
-
-    private ArrayList<ServicesModel> servicesModelArrayList;
+    private AddServicesAdapter addServicesAdapter;
+    private ArrayList<ListOfServicesDTO> listOfServicesDTOArrayList;
+    private String TAG = AddServicesScreen.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +52,49 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        refill = (LinearLayout) findViewById(R.id.refill);
-        car_wash = (LinearLayout) findViewById(R.id.car_wash);
-        oil_change = (LinearLayout) findViewById(R.id.oil_change);
+        services_lv = (ListView) findViewById(R.id.services_lv);
+        no_service_tv = (TextView) findViewById(R.id.no_service_tv);
         submit_button = (RelativeLayout) findViewById(R.id.submit_button);
-
-        car_wash_cb = (CheckBox) findViewById(R.id.car_wash_cb);
-        refill_cb = (CheckBox) findViewById(R.id.refill_cb);
-        oil_change_cb = (CheckBox) findViewById(R.id.oil_change_cb);
 
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.add_services));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
+
+        String auth = SessionManager.getInstance(this).getAuthToken();
+
+        new ServicesAPIHandler(this, auth, fetchServiceResponseListner());
+
+    }
+
+    private WebAPIResponseListener fetchServiceResponseListner() {
+
+        WebAPIResponseListener webAPIResponseListener = new WebAPIResponseListener() {
+            @Override
+            public void onSuccessOfResponse(Object... arguments) {
+
+                String response = (String) arguments[0];
+
+                Gson gson = new Gson();
+                Type listType = new TypeToken<ArrayList<ListOfServicesDTO>>() {
+                }.getType();
+                listOfServicesDTOArrayList = gson.fromJson(response, listType);
+
+                AppUtils.showLog(TAG, listOfServicesDTOArrayList.size() + "");
+
+                addServicesAdapter = new AddServicesAdapter(AddServicesScreen.this, listOfServicesDTOArrayList, no_service_tv);
+                services_lv.setAdapter(addServicesAdapter);
+
+            }
+
+            @Override
+            public void onFailOfResponse(Object... arguments) {
+
+            }
+        };
+
+        return webAPIResponseListener;
 
 
     }
@@ -90,30 +126,14 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
             case R.id.submit_button:
 
-                servicesModelArrayList = new ArrayList<ServicesModel>();
-                ServicesModel servicesModel;
-
-                if (car_wash_cb.isChecked()) {
-                    servicesModel = new ServicesModel();
-                    servicesModel.setServiceCost("$20");
-                    servicesModel.setServiceName("Car Wash");
-                    servicesModelArrayList.add(servicesModel);
-                }
-                if (oil_change_cb.isChecked()) {
-                    servicesModel = new ServicesModel();
-                    servicesModel.setServiceCost("$20");
-                    servicesModel.setServiceName("Oil Change");
-                    servicesModelArrayList.add(servicesModel);
+                AppUtils.showLog(TAG, listOfServicesDTOArrayList.get(0).isAdded() + "");
+                for (int i = 0; i < listOfServicesDTOArrayList.size(); i++) {
+                    if (!listOfServicesDTOArrayList.get(0).isAdded()) {
+                        listOfServicesDTOArrayList.remove(i);
+                    }
                 }
 
-                if (refill_cb.isChecked()) {
-                    servicesModel = new ServicesModel();
-                    servicesModel.setServiceCost("$20");
-                    servicesModel.setServiceName("Re-Fill Petrol");
-                    servicesModelArrayList.add(servicesModel);
-                }
-
-                intent.putExtra(AppConstants.SERVICE, servicesModelArrayList);
+                intent.putExtra(AppConstants.SERVICE, listOfServicesDTOArrayList);
                 setResult(RESULT_OK, intent);
                 finish();
 

@@ -114,20 +114,23 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
                 arrivalTime = mArrivalYear + "-" + mArrivalMonth + "-" + mArrivalDay + "T" + mArrivalHour + ":" + mArrivalMinute;
                 departureTime = mDepartYear + "-" + mDepartMonth + "-" + mDepartDay + "T" + mDepartHour + ":" + mDepartMinute;
 
-
+                arrivalTime = departureTime = "2016-02-14T08:11:32.244Z";
                 flightArrivalDTO.setFlightArrivalTime(arrivalTime);
                 flightArrivalDTO.setFlightDepatureTime(departureTime);
                 flightArrivalDTO.setFlightName(flight_name_et.getText().toString().trim());
                 flightArrivalDTO.setFlightNumber(flight_num_et.getText().toString().trim());
+                flightArrivalDTO.setOrigin("Tornoto");
+                flightArrivalDTO.setDestination("London");
 
 
                 flightDepartureDTO.setFlightArrivalTime(arrivalTime);
                 flightDepartureDTO.setFlightDepatureTime(departureTime);
                 flightDepartureDTO.setFlightName(flight_name_depart_et.getText().toString().trim());
                 flightDepartureDTO.setFlightNumber(flight_number_depart_et.getText().toString().trim());
-
-                createOrderDTO.setFlightArrivalDTO(flightArrivalDTO);
-                createOrderDTO.setFlightDepartureDTO(flightDepartureDTO);
+                flightDepartureDTO.setDestination("Tornoto");
+                flightDepartureDTO.setOrigin("London");
+                createOrderDTO.setArrivalFlight(flightArrivalDTO);
+                createOrderDTO.setDestinationFlight(flightDepartureDTO);
                 startActivity(new Intent(this, VehicleDetailsScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
 
                 break;

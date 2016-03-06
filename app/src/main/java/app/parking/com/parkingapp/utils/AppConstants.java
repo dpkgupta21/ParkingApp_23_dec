@@ -18,7 +18,10 @@ public class AppConstants {
     public static Bitmap fullScreenBitmap = null;
     public static String imageName = "";
 
-    public static String APP_WEBSERVICE_API_URL = "http://104.131.119.107:3000/api/users/";
+    public static String APP_WEBSERVICE_API_URL = "http://104.131.119.107:3000/api/";
 
     public static String CREATE_ORDER = "create_order";
+    public static String HOLD_ORDER_KEY = "hold_order";
+
+    public static String PURCHASE_ORDER_KEY = "purchase_order";
 }

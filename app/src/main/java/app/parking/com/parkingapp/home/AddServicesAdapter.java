@@ -1,41 +1,36 @@
 package app.parking.com.parkingapp.home;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.RemoveServices;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
 
 /**
  * Created by Harish on 12/16/2015.
  */
-public class ServiceAdapter extends BaseAdapter {
+public class AddServicesAdapter extends BaseAdapter {
 
 
     private LayoutInflater mLayoutInflater;
     Activity mActivity;
     private ArrayList<ListOfServicesDTO> mSerViceModelList;
     private TextView mTextView;
-    private RemoveServices removeServices;
-    private String[] dummyColorArray;
 
-    private Dialog mDialog;
 
-    public ServiceAdapter(Activity mActivity, ArrayList<ListOfServicesDTO> list, TextView textView, RemoveServices removeServices) {
+    public AddServicesAdapter(Activity mActivity, ArrayList<ListOfServicesDTO> list, TextView textView) {
         this.mTextView = textView;
         this.mSerViceModelList = list;
         this.mActivity = mActivity;
-        this.removeServices = removeServices;
         try {
             mLayoutInflater = (LayoutInflater) mActivity
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -67,12 +62,11 @@ public class ServiceAdapter extends BaseAdapter {
 
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.added_services_row, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.services_row_layout, parent, false);
             holder = new ViewHolder();
 
-            holder.service_name = (TextView) convertView.findViewById(R.id.service_name);
-            holder.price_tv = (TextView) convertView.findViewById(R.id.price_tv);
-            holder.cross_img = (ImageView) convertView.findViewById(R.id.cross_img);
+            holder.service_cost = (TextView) convertView.findViewById(R.id.service_cost);
+            holder.service_name = (CheckBox) convertView.findViewById(R.id.service_name);
             convertView.setTag(holder);
 
         } else {
@@ -90,27 +84,30 @@ public class ServiceAdapter extends BaseAdapter {
             mTextView.setVisibility(View.GONE);
 
             holder.service_name.setText(mSerViceModelList.get(position).getName());
-            holder.price_tv.setText(mSerViceModelList.get(position).getPrice());
+            holder.service_cost.setText(mSerViceModelList.get(position).getPrice());
 
-            holder.cross_img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    mSerViceModelList.remove(position);
-                    notifyDataSetChanged();
-                    removeServices.onServicesRemoved(mSerViceModelList);
-                }
-            });
         }
+
+        holder.service_name.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    mSerViceModelList.get(position).setIsAdded(true);
+                } else {
+                    mSerViceModelList.get(position).setIsAdded(false);
+
+                }
+            }
+        });
 
         return convertView;
     }
 
 
     public class ViewHolder {
-        TextView service_name;
-        TextView price_tv;
-        ImageView cross_img;
+        CheckBox service_name;
+        TextView service_cost;
     }
 
 

@@ -1,6 +1,7 @@
 package app.parking.com.parkingapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Harish on 2/28/2016.
@@ -8,45 +9,45 @@ import java.io.Serializable;
 public class CreateOrderDTO implements Serializable {
 
     public String userEmail, venueName, dropOffTime, pickUpTime;
-    public VehicleDTO vehicleDTO;
-    public FlightArrivalDTO flightArrivalDTO;
-    public FlightDepartureDTO flightDepartureDTO;
-    public ListOfServicesDTO listOfServicesDTO;
+    public VehicleDTO vehicle;
 
-    public ListOfServicesDTO getListOfServicesDTO() {
-        return listOfServicesDTO;
+    public VehicleDTO getVehicle() {
+        return vehicle;
     }
 
-    public void setListOfServicesDTO(ListOfServicesDTO listOfServicesDTO) {
-        this.listOfServicesDTO = listOfServicesDTO;
+    public void setVehicle(VehicleDTO vehicle) {
+        this.vehicle = vehicle;
     }
 
-
-    public FlightArrivalDTO getFlightArrivalDTO() {
-        return flightArrivalDTO;
+    public FlightArrivalDTO getArrivalFlight() {
+        return arrivalFlight;
     }
 
-    public void setFlightArrivalDTO(FlightArrivalDTO flightArrivalDTO) {
-        this.flightArrivalDTO = flightArrivalDTO;
+    public void setArrivalFlight(FlightArrivalDTO arrivalFlight) {
+        this.arrivalFlight = arrivalFlight;
     }
 
-    public FlightDepartureDTO getFlightDepartureDTO() {
-        return flightDepartureDTO;
+    public FlightDepartureDTO getDestinationFlight() {
+        return destinationFlight;
     }
 
-    public void setFlightDepartureDTO(FlightDepartureDTO flightDepartureDTO) {
-        this.flightDepartureDTO = flightDepartureDTO;
+    public void setDestinationFlight(FlightDepartureDTO destinationFlight) {
+        this.destinationFlight = destinationFlight;
     }
 
 
-    public VehicleDTO getVehicleDTO() {
-        return vehicleDTO;
+    public FlightArrivalDTO arrivalFlight;
+    public FlightDepartureDTO destinationFlight;
+
+    public ArrayList<ListOfServicesDTO> getServices() {
+        return services;
     }
 
-    public void setVehicleDTO(VehicleDTO vehicleDTO) {
-        this.vehicleDTO = vehicleDTO;
+    public void setServices(ArrayList<ListOfServicesDTO> services) {
+        this.services = services;
     }
 
+    public ArrayList<ListOfServicesDTO> services;
 
     public String getVenueName() {
         return venueName;

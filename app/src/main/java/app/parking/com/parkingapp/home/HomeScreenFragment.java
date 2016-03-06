@@ -20,6 +20,7 @@ import java.util.Calendar;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
+import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 
@@ -144,14 +145,17 @@ public class HomeScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                "dropOffTime": "2016-02-14T08:11:32.244Z",
-//                        "pickUpTime": "2016-02-17T08:11:32.244Z",
-                pickTime = mPickupYear + "-" + mPickupMonth + "-" + mPickupDay + "T" + mPickupHour + ":" + mPickupMinute;
-                dropTime = mDropYear + "-" + mDropMonth + "-" + mDropDay + "T" + mDropHour + ":" + mDropMinute;
+                pickTime = mPickupYear + "-" + mPickupMonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
+                        ":00";
+                pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
+                dropTime = mDropYear + "-" + mDropMonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
+                dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
 
                 createOrderDTO.setDropOffTime(dropTime);
                 createOrderDTO.setPickUpTime(pickTime);
                 AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
+                createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
+                createOrderDTO.setVenueName("Vancouver");
                 Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
                 intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
                 startActivity(intent);

@@ -91,7 +91,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 vehicleDTO.setMake(make_tv.getText().toString().trim());
                 vehicleDTO.setModel(model_et.getText().toString().trim());
                 vehicleDTO.setPlateNo(number_plate_et.getText().toString().trim());
-                createOrderDTO.setVehicleDTO(vehicleDTO);
+                createOrderDTO.setVehicle(vehicleDTO);
                 Intent intent = new Intent(getApplicationContext(), ServicesScreen.class);
                 startActivity(intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
                 break;

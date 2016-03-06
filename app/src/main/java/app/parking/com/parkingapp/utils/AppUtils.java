@@ -17,6 +17,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
  * Utils of this application use static methods of application.
  */
 public class AppUtils {
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     /**
      * Object instance of progress bar
      */
@@ -534,5 +536,25 @@ public class AppUtils {
         }
     }
 
+    public static Date convertInUTCDate(String dateString) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
+        //formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date = null;
+        try {
+            date = formatter.parse(dateString);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static String convertoUTCFormat(Date date) {
+
+        String format = DATE_FORMAT;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
+
+    }
 }

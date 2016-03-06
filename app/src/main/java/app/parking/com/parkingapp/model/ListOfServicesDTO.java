@@ -3,19 +3,21 @@ package app.parking.com.parkingapp.model;
 import java.io.Serializable;
 
 /**
- * Created by Harish on 2/28/2016.
+ * Created by Harish on 1/9/2016.
  */
 public class ListOfServicesDTO implements Serializable {
 
-    public String name, price;
+    String name = "", price = "";
 
-    public String getName() {
-        return name;
+    public boolean isAdded() {
+        return isAdded;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded;
     }
+
+    boolean isAdded = false;
 
     public String getPrice() {
         return price;
@@ -23,6 +25,14 @@ public class ListOfServicesDTO implements Serializable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 

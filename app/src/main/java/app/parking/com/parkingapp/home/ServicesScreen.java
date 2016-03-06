@@ -13,12 +13,22 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.iClasses.RemoveServices;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
+import app.parking.com.parkingapp.model.HoldOrderDTO;
+import app.parking.com.parkingapp.model.ListOfServicesDTO;
+import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
+import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class ServicesScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,9 +39,11 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     private ListView add_services_lv;
     private Activity mActivity;
     private CreateOrderDTO createOrderDTO;
-
-    private ArrayList<ServicesModel> mServicesModelArrayList;
+    private ArrayList<ListOfServicesDTO> listOfServicesDTO;
+    private RemoveServices removeServices;
+    private ArrayList<ListOfServicesDTO> mListOfServicesDTOArrayList;
     private ServiceAdapter mServiceAdapter;
+
     private String TAG = ServicesScreen.class.getSimpleName();
 
     @Override
@@ -41,6 +53,18 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         initViews();
         assignClicks();
 
+    }
+
+    private void manageServicesRemovedResponse() {
+
+        removeServices = new RemoveServices() {
+            @Override
+            public void onServicesRemoved(ArrayList<ListOfServicesDTO> updatedlistOfServicesDTO) {
+                listOfServicesDTO.clear();
+                listOfServicesDTO = updatedlistOfServicesDTO;
+
+            }
+        };
     }
 
     private void initViews() {
@@ -60,8 +84,9 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         toolbar_right_rl.setVisibility(View.VISIBLE);
         toolbar_right_tv.setText(R.string.skip);
 
-        mServicesModelArrayList = new ArrayList<>();
-        mServiceAdapter = new ServiceAdapter(mActivity, mServicesModelArrayList, no_service_tv);
+        mListOfServicesDTOArrayList = new ArrayList<>();
+        manageServicesRemovedResponse();
+        mServiceAdapter = new ServiceAdapter(mActivity, mListOfServicesDTOArrayList, no_service_tv, removeServices);
 
 //        arrayListArrayAdapter = new ArrayAdapter<String>(this, R.layout.added_services_row, R.id.service_name, addedServicesList);
         add_services_lv.setAdapter(mServiceAdapter);
@@ -75,8 +100,8 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
             createOrderDTO = new CreateOrderDTO();
         }
 
-        Gson gson = new Gson();
-        AppUtils.showLog(TAG, gson.toJson(createOrderDTO));
+        listOfServicesDTO = new ArrayList<ListOfServicesDTO>();
+
 
     }
 
@@ -93,10 +118,19 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
 
         switch (v.getId()) {
             case R.id.place_order_button:
-                Intent intent = new Intent(this, OrderDetailsScreen.class);
-                startActivity(intent);
+
+                createOrderDTO.setServices(listOfServicesDTO);
+                Gson gson = new Gson();
+                String orderRequest = gson.toJson(createOrderDTO);
+                AppUtils.showLog(TAG, orderRequest);
+                String auth = SessionManager.getInstance(mActivity).getAuthToken();
+                CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
+
+
                 break;
             case R.id.plus_button:
+                listOfServicesDTO.clear();
+                mServiceAdapter.notifyDataSetChanged();
                 Intent addServiceIntent = new Intent(this, AddServicesScreen.class);
                 startActivityForResult(addServiceIntent, 101);
                 break;
@@ -106,6 +140,51 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
 
                 break;
         }
+    }
+
+    /**
+     * Mananging response of orderCreation.
+     *
+     * @return
+     */
+    private WebAPIResponseListener createOrderResponseListner() {
+        WebAPIResponseListener webAPIResponseListener = new WebAPIResponseListener() {
+            @Override
+            public void onSuccessOfResponse(Object... arguments) {
+
+                String response = (String) arguments[0];
+                String orderid = "";
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response);
+                    if (jsonObject.has("_orderId")) {
+                        orderid = jsonObject.get("_orderId") + "";
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                HoldOrderDTO holdOrderDTO = new HoldOrderDTO();
+                holdOrderDTO = new Gson().fromJson(response, HoldOrderDTO.class);
+                holdOrderDTO.setOrderId(orderid);
+                holdOrderDTO.setUserEmail(SessionManager.getInstance(ServicesScreen.this).getEmail());
+                AppUtils.showLog(TAG, response);
+                Intent intent = new Intent(ServicesScreen.this, OrderDetailsScreen.class);
+                intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
+                startActivity(intent);
+
+
+            }
+
+            @Override
+            public void onFailOfResponse(Object... arguments) {
+
+            }
+        };
+
+
+        return webAPIResponseListener;
+
     }
 
     @Override
@@ -130,10 +209,10 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == 101) {
-            ArrayList<ServicesModel> servicesModelArrayList = new ArrayList<>();
-            servicesModelArrayList = (ArrayList<ServicesModel>) data.getExtras().getSerializable(AppConstants.SERVICE);
+            listOfServicesDTO.clear();
+            listOfServicesDTO = (ArrayList<ListOfServicesDTO>) data.getExtras().getSerializable(AppConstants.SERVICE);
 
-            mServicesModelArrayList.addAll(servicesModelArrayList);
+            mListOfServicesDTOArrayList.addAll(listOfServicesDTO);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -144,4 +223,6 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         }
 
     }
+
+
 }
