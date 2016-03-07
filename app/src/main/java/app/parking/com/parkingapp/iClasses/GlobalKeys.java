@@ -7,7 +7,7 @@ public interface GlobalKeys {
     String PASSWORD = "password";
     String EMAIL = "email";
     String LOGIN_API = "users/login";
-    String LOGOUT_API = "logout";
+    String LOGOUT_API = "users/logout";
     String SIGNUP_API = "users/signup";
     String CREATE_ORDER_API = "order/createOrder";
 

@@ -56,6 +56,21 @@ public class PurchaseOrderDTO implements Serializable {
         this.slotId = slotId;
     }
 
-    String userEmail = "", venueName = "", orderId = "", pickUpTime = "", dropOffTime = "", slotId = "";
+    String userEmail = "";
+    String venueName = "";
+    String orderId = "";
+    String pickUpTime = "";
+    String dropOffTime = "";
+    String slotId = "";
+
+    public String getPurchaseStripeToken() {
+        return purchaseStripeToken;
+    }
+
+    public void setPurchaseStripeToken(String purchaseStripeToken) {
+        this.purchaseStripeToken = purchaseStripeToken;
+    }
+
+    String purchaseStripeToken = "";
 
 }

@@ -72,6 +72,8 @@ public class PurchaseOrderAPIHandler {
         JSONObject mJsonObjectRequest = null;
         try {
             mJsonObjectRequest = new JSONObject(parameters);
+
+            AppUtils.showLog(TAG, parameters);
         } catch (JSONException e) {
             e.printStackTrace();
         }

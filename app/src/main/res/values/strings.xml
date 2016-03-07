@@ -142,6 +142,7 @@
     <string name="please_enter_firtsname">Please Enter First Name</string>
     <string name="please_enter_secondname">Please Enter Second Name</string>
     <string name="plate_number">Plate Number</string>
+    <string name="submit_order">Submit Order</string>
 
 </resources>
 

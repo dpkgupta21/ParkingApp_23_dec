@@ -78,8 +78,10 @@ public class OrderConfirmation extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.make_payment:
 
+                purchaseOrderDTO.setUserEmail(SessionManager.getInstance(OrderConfirmation.this).getEmail());
                 String auth = SessionManager.getInstance(OrderConfirmation.this).getAuthToken();
                 String request = new Gson().toJson(purchaseOrderDTO);
+
                 new PurchaseOrderAPIHandler(OrderConfirmation.this, request, auth, managePurchaseResponse());
 
                 break;
