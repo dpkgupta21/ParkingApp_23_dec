@@ -92,7 +92,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 vehicleDTO.setModel(model_et.getText().toString().trim());
                 vehicleDTO.setPlateNo(number_plate_et.getText().toString().trim());
                 createOrderDTO.setVehicle(vehicleDTO);
-                Intent intent = new Intent(getApplicationContext(), ServicesScreen.class);
+                Intent intent = new Intent(getApplicationContext(), FlightDetailsScreen.class);
                 startActivity(intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
                 break;
             case R.id.make_ll:

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class HomeScreenFragment extends Fragment {
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Toolbar mToolbar;
 
-    private Calendar calendar;
+    private Calendar calendar, calendarPickup, calendarDropoff;
     private int mYear, mDropYear, mPickupYear;
     private int mMonth, mDropMonth, mPickupMonth;
     private int mDay, mDropDay, mPickupDay;
@@ -96,6 +97,20 @@ public class HomeScreenFragment extends Fragment {
         mDropHour = mPickupHour = mHour;
         mDropMinute = mPickupMinute = mMinute;
 
+        pick_date_tv.setText(new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
+                .append(mYear).append(" "));
+
+        drop_date_tv.setText(new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
+                .append(mYear).append(" "));
+
+        drop_time_tv.setText(mHour + ":" + mMinute);
+
+        pick_time_tv.setText(mHour + ":" + mMinute);
+
 
         pick_date_rl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +118,7 @@ public class HomeScreenFragment extends Fragment {
 //                getActivity().showDialog(PICK_DATE_DIALOG);
                 isDropDateClicked = false;
                 DatePickerDialog dialog = new DatePickerDialog(getContext(),
-                        mDateSetListener, mYear, mMonth, mDay);
+                        mDateSetListener, mPickupYear, mPickupMonth, mPickupDay);
                 dialog.show();
             }
         });
@@ -113,7 +128,7 @@ public class HomeScreenFragment extends Fragment {
             public void onClick(View v) {
                 isDropTimeClicked = false;
                 TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mHour, mMinute, true);
+                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mPickupHour, mPickupMinute, true);
                 dialog.show();
             }
         });
@@ -123,7 +138,7 @@ public class HomeScreenFragment extends Fragment {
             public void onClick(View v) {
                 isDropDateClicked = true;
                 DatePickerDialog dialog = new DatePickerDialog(getContext(),
-                        mDateSetListener, mYear, mMonth, mDay);
+                        mDateSetListener, mDropYear, mDropMonth, mDropDay);
                 dialog.show();
 
 
@@ -135,7 +150,7 @@ public class HomeScreenFragment extends Fragment {
             public void onClick(View v) {
                 isDropTimeClicked = true;
                 TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mHour, mMinute, true);
+                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mDropHour, mDropMinute, true);
                 dialog.show();
             }
         });
@@ -145,20 +160,45 @@ public class HomeScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                pickTime = mPickupYear + "-" + mPickupMonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
-                        ":00";
-                pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
-                dropTime = mDropYear + "-" + mDropMonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
-                dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
+                calendarDropoff = Calendar.getInstance();
+                calendarPickup = Calendar.getInstance();
 
-                createOrderDTO.setDropOffTime(dropTime);
-                createOrderDTO.setPickUpTime(pickTime);
-                AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
-                createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
-                createOrderDTO.setVenueName("Vancouver");
-                Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
-                intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
-                startActivity(intent);
+                calendarDropoff.set(mDropYear, mDropMonth, mDropDay, mDropHour, mDropMinute);
+                calendarPickup.set(mPickupYear, mPickupMonth, mPickupDay, mPickupHour, mPickupMinute);
+
+                long dropoffTimestamp = calendarDropoff.getTimeInMillis();
+                AppUtils.showLog(TAG, "dropoffTimestamp " + dropoffTimestamp);
+                long pickupTimestamp = calendarPickup.getTimeInMillis();
+                AppUtils.showLog(TAG, "pickupTimestamp " + pickupTimestamp);
+
+                long difference = pickupTimestamp - dropoffTimestamp;
+
+                long days = difference / (24 * 60 * 60 * 100);
+
+                AppUtils.showLog(TAG, difference + " " + days);
+
+                if (days >= 1) {
+
+                    int pickmonth = mPickupMonth + 1;
+                    int dropmonth = mDropMonth + 1;
+
+                    pickTime = mPickupYear + "-" + pickmonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
+                            ":00";
+                    pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
+                    dropTime = mDropYear + "-" + dropmonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
+                    dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
+
+                    createOrderDTO.setDropOffTime(dropTime);
+                    createOrderDTO.setPickUpTime(pickTime);
+                    AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
+                    createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
+                    createOrderDTO.setVenueName("Vancouver");
+                    Intent intent = new Intent(getContext(), VehicleDetailsScreen.class);
+                    intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(view, "Order should be for atleast one day", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -174,7 +214,7 @@ public class HomeScreenFragment extends Fragment {
             if (!isDropDateClicked) {
 
                 mPickupDay = mDay;
-                mPickupMonth = mMonth + 1;
+                mPickupMonth = mMonth;
                 mPickupYear = mYear;
 
 
@@ -186,7 +226,7 @@ public class HomeScreenFragment extends Fragment {
 
 
                 mDropDay = mDay;
-                mDropMonth = mMonth + 1;
+                mDropMonth = mMonth;
                 mDropYear = mYear;
                 drop_date_tv.setText(new StringBuilder()
                         // Month is 0 based so add 1

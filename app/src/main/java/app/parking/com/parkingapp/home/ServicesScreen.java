@@ -119,14 +119,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.place_order_button:
 
-                createOrderDTO.setServices(listOfServicesDTO);
-                Gson gson = new Gson();
-                String orderRequest = gson.toJson(createOrderDTO);
-                AppUtils.showLog(TAG, orderRequest);
-                String auth = SessionManager.getInstance(mActivity).getAuthToken();
-                CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
-
-
+                submitOrder();
                 break;
             case R.id.plus_button:
                 listOfServicesDTO.clear();
@@ -141,6 +134,20 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
+    private void submitOrder() {
+
+
+        Intent intent = new Intent(ServicesScreen.this, OrderSummaryScreen.class);
+        startActivity(intent);
+//        createOrderDTO.setServices(listOfServicesDTO);
+//        Gson gson = new Gson();
+//        String orderRequest = gson.toJson(createOrderDTO);
+//        AppUtils.showLog(TAG, orderRequest);
+//        String auth = SessionManager.getInstance(mActivity).getAuthToken();
+//        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
+    }
+
 
     /**
      * Mananging response of orderCreation.
@@ -169,7 +176,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 holdOrderDTO.setOrderId(orderid);
                 holdOrderDTO.setUserEmail(SessionManager.getInstance(ServicesScreen.this).getEmail());
                 AppUtils.showLog(TAG, response);
-                Intent intent = new Intent(ServicesScreen.this, OrderDetailsScreen.class);
+                Intent intent = new Intent(ServicesScreen.this, OrderSummaryScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
                 startActivity(intent);
 
@@ -195,7 +202,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         switch (id) {
 
             case android.R.id.home:
-                finish();
+                submitOrder();
                 break;
 
         }

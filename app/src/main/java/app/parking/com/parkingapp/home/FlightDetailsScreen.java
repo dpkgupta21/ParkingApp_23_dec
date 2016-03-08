@@ -131,7 +131,7 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
                 flightDepartureDTO.setOrigin("London");
                 createOrderDTO.setArrivalFlight(flightArrivalDTO);
                 createOrderDTO.setDestinationFlight(flightDepartureDTO);
-                startActivity(new Intent(this, VehicleDetailsScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
+                startActivity(new Intent(this, ServicesScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
 
                 break;
 
