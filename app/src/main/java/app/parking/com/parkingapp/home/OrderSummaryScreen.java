@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -14,7 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
+import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
@@ -26,8 +29,11 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
     private Toolbar mToolbar;
     private RelativeLayout confirm_button;
     private HoldOrderDTO holdOrderDTO;
+    private CreateOrderResponseDTO createOrderResponseDTO;
+    private HoldOrderResponseDTO holdOrderResponseDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
     private String TAG = OrderSummaryScreen.class.getSimpleName();
+    private TextView venue_et, drop_time_et, picktime_tv_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +55,23 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
         mToolbar.setNavigationIcon(R.drawable.back_button);
 
         confirm_button = (RelativeLayout) findViewById(R.id.confirm_button);
-
+        venue_et = (TextView) findViewById(R.id.venue_et);
+        drop_time_et = (TextView) findViewById(R.id.drop_time_et);
+        picktime_tv_et = (TextView) findViewById(R.id.picktime_tv_et);
 
         if (getIntent() != null) {
             holdOrderDTO = (HoldOrderDTO) getIntent().getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
+            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
             AppUtils.showLog(TAG, holdOrderDTO.getPickUpTime() + " " + holdOrderDTO.getDropOffTime());
         } else {
             holdOrderDTO = new HoldOrderDTO();
+            createOrderResponseDTO = new CreateOrderResponseDTO();
         }
 
+
+        venue_et.setText(createOrderResponseDTO.getVenueName());
+        drop_time_et.setText(createOrderResponseDTO.getDropOffTime());
+        picktime_tv_et.setText(createOrderResponseDTO.getPickUpTime());
 
     }
 
@@ -80,6 +94,8 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
             @Override
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
+
+                holdOrderResponseDTO = new Gson().fromJson(response, HoldOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
                 JSONObject jsonObject = null;
 
@@ -96,8 +112,9 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
                 purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
                 purchaseOrderDTO.setSlotId(slotId);
 
-                Intent intent = new Intent(OrderSummaryScreen.this, OrderConfirmation.class);
+                Intent intent = new Intent(OrderSummaryScreen.this, OrderConfirmationDetailsScreen.class);
                 intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO);
+                intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
                 startActivity(intent);
             }
 

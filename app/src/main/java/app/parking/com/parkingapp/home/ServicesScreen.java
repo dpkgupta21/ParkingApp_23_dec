@@ -22,6 +22,7 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.iClasses.RemoveServices;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
+import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
@@ -39,6 +40,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     private ListView add_services_lv;
     private Activity mActivity;
     private CreateOrderDTO createOrderDTO;
+    private CreateOrderResponseDTO createOrderResponseDTO;
     private ArrayList<ListOfServicesDTO> listOfServicesDTO;
     private RemoveServices removeServices;
     private ArrayList<ListOfServicesDTO> mListOfServicesDTOArrayList;
@@ -129,7 +131,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.toolbar_right_rl:
 
-                startActivity(new Intent(this, OrderDetailsScreen.class));
+                submitOrder();
 
                 break;
         }
@@ -138,14 +140,12 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     private void submitOrder() {
 
 
-        Intent intent = new Intent(ServicesScreen.this, OrderSummaryScreen.class);
-        startActivity(intent);
-//        createOrderDTO.setServices(listOfServicesDTO);
-//        Gson gson = new Gson();
-//        String orderRequest = gson.toJson(createOrderDTO);
-//        AppUtils.showLog(TAG, orderRequest);
-//        String auth = SessionManager.getInstance(mActivity).getAuthToken();
-//        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
+        createOrderDTO.setServices(listOfServicesDTO);
+        Gson gson = new Gson();
+        String orderRequest = gson.toJson(createOrderDTO);
+        AppUtils.showLog(TAG, orderRequest);
+        String auth = SessionManager.getInstance(mActivity).getAuthToken();
+        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
     }
 
 
@@ -160,6 +160,9 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
             public void onSuccessOfResponse(Object... arguments) {
 
                 String response = (String) arguments[0];
+                createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
+
+
                 String orderid = "";
                 JSONObject jsonObject = null;
                 try {
@@ -178,6 +181,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(ServicesScreen.this, OrderSummaryScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
+                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
 
 
@@ -202,7 +206,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         switch (id) {
 
             case android.R.id.home:
-                submitOrder();
+                finish();
                 break;
 
         }

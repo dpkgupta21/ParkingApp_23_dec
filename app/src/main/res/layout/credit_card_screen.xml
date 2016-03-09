@@ -195,4 +195,26 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/make_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_20dp"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:layout_marginRight="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@drawable/green_round_corner_btn_selector_btn"
+        android:gravity="center"
+        android:padding="@dimen/margin_10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/make_payment"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp" />
+    </RelativeLayout>
+
+
 </RelativeLayout>

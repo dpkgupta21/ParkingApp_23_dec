@@ -1,12 +1,11 @@
 package app.parking.com.parkingapp.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Harish on 2/28/2016.
  */
-public class CreateOrderResponseDTO implements Serializable {
+public class HoldOrderResponseDTO implements Serializable {
 
     public String getVenueName() {
         return venueName;
@@ -48,7 +47,21 @@ public class CreateOrderResponseDTO implements Serializable {
         this.orderTax = orderTax;
     }
 
-    public String venueName = "", dropOffTime = "", pickUpTime = "", orderTotal = "", orderTax = "";
+    public String venueName = "";
+    public String dropOffTime = "";
+    public String pickUpTime = "";
+    public String orderTotal = "";
+    public String orderTax = "";
+
+    public String getPaymentTransactionId() {
+        return paymentTransactionId;
+    }
+
+    public void setPaymentTransactionId(String paymentTransactionId) {
+        this.paymentTransactionId = paymentTransactionId;
+    }
+
+    public String paymentTransactionId = "";
 
 
 }

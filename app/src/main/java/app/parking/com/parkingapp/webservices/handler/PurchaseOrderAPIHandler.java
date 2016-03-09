@@ -52,7 +52,7 @@ public class PurchaseOrderAPIHandler {
     public PurchaseOrderAPIHandler(Activity mActivity, String parameters,
                                    String auth, WebAPIResponseListener webAPIResponseListener) {
         AppUtils
-                .showProgressDialog(mActivity, "Loading...", false);
+                .showProgressDialog(mActivity, "Wait...", false);
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
