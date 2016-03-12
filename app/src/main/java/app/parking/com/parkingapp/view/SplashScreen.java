@@ -43,7 +43,6 @@ public class SplashScreen extends AppCompatActivity {
                         JSONObject mJsonObject = (JSONObject) arguments[0];
                         if (mJsonObject != null) {
                             if (mJsonObject.has(GlobalKeys.AUTHTOKEN) && mJsonObject.has(GlobalKeys.EMAIL)) {
-
                                 email = mJsonObject.getString(GlobalKeys.EMAIL);
                                 String auth = mJsonObject.getString(GlobalKeys.AUTHTOKEN);
                                 AppUtils.showLog(TAG, "email: " + email + " " + auth);
@@ -51,7 +50,6 @@ public class SplashScreen extends AppCompatActivity {
                                 Intent intent = new Intent(SplashScreen.this, UserNavigationDrawerActivity.class);
                                 startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                 finish();
-
                             } else {
                                 openLoginScreen();
                             }

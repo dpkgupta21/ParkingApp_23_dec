@@ -231,7 +231,9 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
                 AppUtils.showLog(TAG, response);
                 AppUtils.showToast(CreditCardScreen.this, "Payment Successfull");
 
-                startActivity(new Intent(CreditCardScreen.this, PurchaseReceiptDetailsScreen.class).putExtra(AppConstants.PURCHASE_ORDER_RESPONSE,purchaseOrderResponseDTO));
+                startActivity(new Intent(CreditCardScreen.this,
+                        PurchaseReceiptDetailsScreen.class).
+                        putExtra(AppConstants.PURCHASE_ORDER_RESPONSE,purchaseOrderResponseDTO));
             }
 
             @Override

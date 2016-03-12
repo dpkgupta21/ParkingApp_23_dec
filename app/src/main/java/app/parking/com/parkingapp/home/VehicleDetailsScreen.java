@@ -1,22 +1,15 @@
 package app.parking.com.parkingapp.home;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
@@ -30,7 +23,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
     private TextView toolbar_title, color_tv, make_tv;
     private RelativeLayout next_button, color_ll;
     private LinearLayout make_ll;
-    private AutoCompleteTextView model_et;
+    private TextView model_et;
     private EditText number_plate_et;
 
     private static TextView model_color;
@@ -51,6 +44,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         next_button.setOnClickListener(this);
         make_ll.setOnClickListener(this);
         color_ll.setOnClickListener(this);
+        model_et.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -66,7 +60,7 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         color_ll = (RelativeLayout) findViewById(R.id.color_ll);
         color_tv = (TextView) findViewById(R.id.color_tv);
         make_tv = (TextView) findViewById(R.id.make_tv);
-        model_et = (AutoCompleteTextView) findViewById(R.id.model_et);
+        model_et = (TextView) findViewById(R.id.model_et);
         number_plate_et = (EditText) findViewById(R.id.number_plate_et);
         next_button = (RelativeLayout) findViewById(R.id.next_button);
        /* makeSelection();
@@ -100,6 +94,10 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 AppDialogs.selectCarMake(this, make_tv);
                 break;
 
+            case R.id.model_et:
+
+                AppDialogs.selectCarModel(this, model_et);
+                break;
             case R.id.color_ll:
 
                 AppDialogs.selectCarColor(this, color_tv, model_color);

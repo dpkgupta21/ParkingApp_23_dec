@@ -7,6 +7,17 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- For push Notification Permission -->
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission
+        android:name="app.parking.com.parkingapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="app.parking.com.parkingapp.permission.C2D_MESSAGE" />
+
 
     <application
         android:name=".application.ParkingAppController"
@@ -82,6 +93,26 @@
 
             ></activity>
         <activity android:name=".home.PurchaseReceiptDetailsScreen" />
+
+
+        <!-- Start Push Notification -->
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="app.parking.com.parkingapp" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".GCMIntentService" />
+
+        <!-- End Push Notification -->
     </application>
 
 </manifest>

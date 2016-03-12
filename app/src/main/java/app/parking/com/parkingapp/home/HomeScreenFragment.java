@@ -91,11 +91,20 @@ public class HomeScreenFragment extends Fragment {
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
-        mDropYear = mPickupYear = mYear;
-        mDropMonth = mPickupMonth = mMonth;
-        mDropDay = mPickupDay = mDay;
-        mDropHour = mPickupHour = mHour;
-        mDropMinute = mPickupMinute = mMinute;
+
+        mPickupYear = mYear;
+        mPickupMonth = mMonth;
+        mPickupDay = mDay;
+        mPickupHour = mHour;
+        mPickupMinute = mMinute;
+
+
+        mDropYear = calendar.get(Calendar.YEAR);
+        mDropMonth = calendar.get(Calendar.MONTH);
+        mDropDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mDropHour = calendar.get(Calendar.HOUR_OF_DAY);
+        mDropMinute = calendar.get(Calendar.MINUTE);
+
 
         pick_date_tv.setText(new StringBuilder()
                 // Month is 0 based so add 1
@@ -128,7 +137,8 @@ public class HomeScreenFragment extends Fragment {
             public void onClick(View v) {
                 isDropTimeClicked = false;
                 TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mPickupHour, mPickupMinute, true);
+                dialog = new TimePickerDialog(getContext(), mTimeSetListner,
+                        mPickupHour, mPickupMinute, true);
                 dialog.show();
             }
         });
@@ -150,7 +160,10 @@ public class HomeScreenFragment extends Fragment {
             public void onClick(View v) {
                 isDropTimeClicked = true;
                 TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(), mTimeSetListner, mDropHour, mDropMinute, true);
+                dialog = new TimePickerDialog(getContext(),
+                        mTimeSetListner,
+                        mDropHour,
+                        mDropMinute, true);
                 dialog.show();
             }
         });

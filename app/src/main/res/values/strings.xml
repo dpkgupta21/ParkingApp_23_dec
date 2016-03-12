@@ -94,7 +94,10 @@
     <string name="select_payment">Select Payment</string>
     <string name="credit_card_details">Credit Card Details</string>
     <string name="card_number">Card Number</string>
+    <string name="card_number_hint">****************</string>
+
     <string name="card_holder_name">Card Holder Name</string>
+    <string name="card_holder_name_hint">Enter CardHolder Name</string>
     <string name="cvv">CVV</string>
     <string name="expiry">Expiry Date</string>
     <string name="month">Month</string>
@@ -129,6 +132,7 @@
     <string name="add_more_services">Add more services</string>
     <string name="no_services">No Services</string>
     <string name="submit">Submit</string>
+    <string name="add_service">Add Service</string>
     <string name="no_image_found">No Image Found</string>
     <string name="delete">Delete</string>
     <string name="network_slow_error">Slow internet connection</string>
@@ -147,6 +151,31 @@
     <string name="order_total">Order Total</string>
     <string name="order_summary">Order Summary</string>
     <string name="trans_id">Transaction Id</string>
+
+
+    <!-- Android push notifications -->
+
+    <string name="title_activity_main">Push Notifications</string>
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+    <string name="title_no_internet">Internet Connection Error!</string>
+    <string name="msg_no_internet">Please connect to working Internet connection.</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
 
