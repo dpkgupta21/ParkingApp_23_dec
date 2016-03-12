@@ -25,6 +25,7 @@ import java.util.List;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
+import app.parking.com.parkingapp.model.PurchaseOrderResponseDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
@@ -42,6 +43,7 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
     private EditText card_num_et, card_holder_name_et, cvv_et;
     private RelativeLayout make_payment;
     private PurchaseOrderDTO purchaseOrderDTO;
+    private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
     private String PUBLISHABLE_KEY = "pk_test_OpA06mOu6bmI6iGZMrahmKkc";
 
 
@@ -225,8 +227,11 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
             @Override
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
+                purchaseOrderResponseDTO = new Gson().fromJson(response, PurchaseOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
                 AppUtils.showToast(CreditCardScreen.this, "Payment Successfull");
+
+                startActivity(new Intent(CreditCardScreen.this, PurchaseReceiptDetailsScreen.class).putExtra(AppConstants.PURCHASE_ORDER_RESPONSE,purchaseOrderResponseDTO));
             }
 
             @Override

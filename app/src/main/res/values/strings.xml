@@ -146,6 +146,7 @@
     <string name="venuename">Venue</string>
     <string name="order_total">Order Total</string>
     <string name="order_summary">Order Summary</string>
+    <string name="trans_id">Transaction Id</string>
 
 </resources>
 

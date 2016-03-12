@@ -13,4 +13,5 @@ public interface PreferenceHelper {
     String KEY_EMAIL_ID = "emailId";
     String KEY_AUTHTOKEN = "authentication_token";
     String IS_LOGIN = "is_login";
+    String KEY_PWD="password";
 }

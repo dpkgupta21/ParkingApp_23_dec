@@ -26,4 +26,5 @@ public class AppConstants {
     public static String PURCHASE_ORDER_KEY = "purchase_order";
     public static String ORDER_SUMMARY_KEY = "order_summary";
     public static String HOLD_ORDER_RESPONSE_KEY = "hold_order_response";
+    public static String PURCHASE_ORDER_RESPONSE = "purchase_order_response";
 }

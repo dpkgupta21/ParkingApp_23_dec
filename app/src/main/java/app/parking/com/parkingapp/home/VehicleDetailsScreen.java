@@ -27,10 +27,10 @@ import app.parking.com.parkingapp.utils.AppUtils;
 public class VehicleDetailsScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    private TextView toolbar_title;
+    private TextView toolbar_title, color_tv, make_tv;
     private RelativeLayout next_button, color_ll;
     private LinearLayout make_ll;
-    private AutoCompleteTextView color_tv, make_tv, model_et;
+    private AutoCompleteTextView model_et;
     private EditText number_plate_et;
 
     private static TextView model_color;
@@ -64,13 +64,13 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         model_color = (TextView) findViewById(R.id.model_color);
         make_ll = (LinearLayout) findViewById(R.id.make_ll);
         color_ll = (RelativeLayout) findViewById(R.id.color_ll);
-        color_tv = (AutoCompleteTextView) findViewById(R.id.color_tv);
-        make_tv = (AutoCompleteTextView) findViewById(R.id.make_et);
+        color_tv = (TextView) findViewById(R.id.color_tv);
+        make_tv = (TextView) findViewById(R.id.make_tv);
         model_et = (AutoCompleteTextView) findViewById(R.id.model_et);
         number_plate_et = (EditText) findViewById(R.id.number_plate_et);
         next_button = (RelativeLayout) findViewById(R.id.next_button);
-        makeSelection();
-        colorSelecion();
+       /* makeSelection();
+        colorSelecion();*/
 
         if (getIntent() != null) {
             createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
@@ -97,15 +97,12 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.make_ll:
 
-             /*   AppDialogs.selectCarMake(this, make_tv);
-*/
+                AppDialogs.selectCarMake(this, make_tv);
                 break;
 
             case R.id.color_ll:
 
-/*
                 AppDialogs.selectCarColor(this, color_tv, model_color);
-*/
                 break;
         }
     }
@@ -134,42 +131,42 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
 
 
     private void makeSelection() {
-        ArrayList<String> dummyArrayList = new ArrayList<>();
-        dummyArrayList.add("Audi");
-        dummyArrayList.add("Bentley");
-        dummyArrayList.add("BMW");
-        dummyArrayList.add("Chevrolet");
-        dummyArrayList.add("Daewoo");
-        dummyArrayList.add("Nissan");
-
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dummyArrayList);
-        make_tv.setAdapter(adapter);
-        make_tv.setThreshold(1);
+//        ArrayList<String> dummyArrayList = new ArrayList<>();
+//        dummyArrayList.add("Audi");
+//        dummyArrayList.add("Bentley");
+//        dummyArrayList.add("BMW");
+//        dummyArrayList.add("Chevrolet");
+//        dummyArrayList.add("Daewoo");
+//        dummyArrayList.add("Nissan");
+//
+//
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, dummyArrayList);
+//        make_tv.setAdapter(adapter);
+//        make_tv.setThreshold(1);
     }
 
     private void colorSelecion() {
-        ArrayList<String> colorList = new ArrayList<>();
-        colorList.add("Black Saphire Metallic");
-        colorList.add("Melbourne Red Pearl");
-
-        colorList.add("Mineral Grey");
-
-        colorList.add("Valencia Orange Metallic");
-        colorList.add("Estoril Blue II");
-        colorList.add("Black (Matt)");
-        ArrayAdapter colorAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, colorList);
-        color_tv.setAdapter(colorAdapter);
-        color_tv.setThreshold(1);
-        final String[] dummyColorArray = getApplicationContext().getResources().getStringArray(R.array.color_bg);
-
-        color_tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String color = dummyColorArray[position];
-                GradientDrawable drawable = (GradientDrawable) model_color.getBackground();
-                drawable.setColor(Color.parseColor(color));
-            }
-        });
+//        ArrayList<String> colorList = new ArrayList<>();
+//        colorList.add("Black Saphire Metallic");
+//        colorList.add("Melbourne Red Pearl");
+//
+//        colorList.add("Mineral Grey");
+//
+//        colorList.add("Valencia Orange Metallic");
+//        colorList.add("Estoril Blue II");
+//        colorList.add("Black (Matt)");
+//        ArrayAdapter colorAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, colorList);
+//        color_tv.setAdapter(colorAdapter);
+//        color_tv.setThreshold(1);
+//        final String[] dummyColorArray = getApplicationContext().getResources().getStringArray(R.array.color_bg);
+//
+//        color_tv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String color = dummyColorArray[position];
+//                GradientDrawable drawable = (GradientDrawable) model_color.getBackground();
+//                drawable.setColor(Color.parseColor(color));
+//            }
+//        });
     }
 }

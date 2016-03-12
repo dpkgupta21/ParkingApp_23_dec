@@ -82,7 +82,6 @@ public class AppDialogs {
                 mModelDialog.dismiss();
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
 

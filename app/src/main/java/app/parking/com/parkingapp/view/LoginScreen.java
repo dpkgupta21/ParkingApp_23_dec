@@ -27,6 +27,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private EditText email_et, pwd_et;
     private LoginAPIHandler mLoginAPIHandler;
     private String TAG = LoginScreen.class.getSimpleName();
+    private String email, pwd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(LoginScreen.this, SignupScreen.class));
                 break;
             case R.id.login_button:
-
-                String email = email_et.getText().toString().trim();
-                String pwd = pwd_et.getText().toString().trim();
+                email = email_et.getText().toString().trim();
+                pwd = pwd_et.getText().toString().trim();
                 if (email.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
                 } else if (pwd.isEmpty()) {
@@ -79,10 +80,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                 if (mJsonObject != null) {
                                     if (mJsonObject.has(GlobalKeys.AUTHTOKEN) && mJsonObject.has(GlobalKeys.EMAIL)) {
 
-                                        String email = mJsonObject.getString(GlobalKeys.EMAIL);
+                                        email = mJsonObject.getString(GlobalKeys.EMAIL);
                                         String auth = mJsonObject.getString(GlobalKeys.AUTHTOKEN);
                                         AppUtils.showLog(TAG, "email: " + email + " " + auth);
-                                        SessionManager.getInstance(LoginScreen.this).createLoginSession(email, auth);
+                                        SessionManager.getInstance(LoginScreen.this).createLoginSession(email, pwd, auth);
                                         Intent intent = new Intent(LoginScreen.this, UserNavigationDrawerActivity.class);
                                         startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         finish();

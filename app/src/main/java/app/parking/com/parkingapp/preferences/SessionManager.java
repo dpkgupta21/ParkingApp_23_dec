@@ -43,11 +43,12 @@ public class SessionManager {
     /**
      * Create login session
      */
-    public void createLoginSession(String email, String auth_token) {
+    public void createLoginSession(String email, String password, String auth_token) {
         // Storing login value as TRUE
         editor.putBoolean(PreferenceHelper.IS_LOGIN, true);
         // Storing email id in pref
         editor.putString(PreferenceHelper.KEY_EMAIL_ID, email);
+        editor.putString(PreferenceHelper.KEY_PWD, password);
         editor.putString(PreferenceHelper.KEY_AUTHTOKEN, auth_token);
 
         // commit changes
@@ -57,7 +58,7 @@ public class SessionManager {
     /**
      * Clear session details
      */
-    public void logoutUser() {
+    public void clearSession() {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
@@ -72,8 +73,12 @@ public class SessionManager {
     }
 
     public String getEmail() {
-        return pref.getString(PreferenceHelper.KEY_EMAIL_ID, "email");
+        return pref.getString(PreferenceHelper.KEY_EMAIL_ID, " ");
 
+    }
+
+    public String getPwd() {
+        return pref.getString(PreferenceHelper.KEY_PWD, " ");
     }
 
     public String getAuthToken() {
