@@ -17,6 +17,7 @@ import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
@@ -76,9 +77,11 @@ public class AddTokenPushAPIHandler {
 
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
+            String email = SessionManager.getInstance(mActivity).getEmail();
             mJsonObjectRequest.put(GlobalKeys.REG_TOKEN, regToken);
             mJsonObjectRequest.put(GlobalKeys.DEVICE_ID, deviceId);
             mJsonObjectRequest.put(GlobalKeys.DEVICE_TYPE, deviceType);
+            mJsonObjectRequest.put(GlobalKeys.EMAIL_KEY, email);
         } catch (JSONException e) {
             e.printStackTrace();
         }

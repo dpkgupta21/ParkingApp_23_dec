@@ -38,7 +38,7 @@ public class SignupAPIHandler {
     /**
      * Request Data
      */
-    private String emailId, password, firstName, lastName;
+    private String emailId, password, firstName, lastName, mobNumber;
 
     private String device_token, device_platform;
     /**
@@ -50,10 +50,12 @@ public class SignupAPIHandler {
      * @param mActivity
      * @param password
      * @param email
+     * @param mobNumber
      * @param webAPIResponseListener
      */
     public SignupAPIHandler(Activity mActivity, String email,
-                            String password, String firstName, String lastName, WebAPIResponseListener webAPIResponseListener) {
+                            String password, String firstName, String lastName,
+                            String mobNumber, WebAPIResponseListener webAPIResponseListener) {
         AppUtils
                 .showProgressDialog(mActivity, "Registering...", false);
         this.mActivity = mActivity;
@@ -61,6 +63,7 @@ public class SignupAPIHandler {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.mobNumber=mobNumber;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -81,6 +84,7 @@ public class SignupAPIHandler {
             mJsonObjectRequest.put(GlobalKeys.PASSWORD, password);
             mJsonObjectRequest.put(GlobalKeys.FIRSTNAME, firstName);
             mJsonObjectRequest.put(GlobalKeys.LASTNAME, lastName);
+            mJsonObjectRequest.put(GlobalKeys.MOBILE_NO, mobNumber);
         } catch (JSONException e) {
             e.printStackTrace();
         }

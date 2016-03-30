@@ -62,7 +62,7 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                 String pwd = pwd_et.getText().toString().trim();
                 String firstname = firstname_et.getText().toString().trim();
                 String lastname = secondname_et.getText().toString().trim();
-
+                String mobNumber="919460940608";
                 if (email.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
                 } else if (pwd.isEmpty()) {
@@ -74,8 +74,12 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                 } else if (lastname.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
 
+                }  else if (mobNumber.isEmpty()) {
+                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+
                 } else {
-                    mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname, lastname, new WebAPIResponseListener() {
+                    mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname,
+                            lastname, mobNumber, new WebAPIResponseListener() {
                         @Override
                         public void onSuccessOfResponse(Object... arguments) {
 

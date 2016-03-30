@@ -83,7 +83,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                         email = mJsonObject.getString(GlobalKeys.EMAIL);
                                         String auth = mJsonObject.getString(GlobalKeys.AUTHTOKEN);
                                         AppUtils.showLog(TAG, "email: " + email + " " + auth);
-                                        SessionManager.getInstance(LoginScreen.this).createLoginSession(email, pwd, auth);
+                                        SessionManager.getInstance(LoginScreen.this).
+                                                createLoginSession(email, pwd, auth);
                                         Intent intent = new Intent(LoginScreen.this, UserNavigationDrawerActivity.class);
                                         startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         finish();

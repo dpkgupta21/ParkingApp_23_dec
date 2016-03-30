@@ -30,10 +30,12 @@ public interface GlobalKeys {
     String AUTHTOKEN = "authtoken";
     String FIRSTNAME = "firstname";
     String LASTNAME = "lastname";
+    String MOBILE_NO = "mobile_no";
 
     String REG_TOKEN="regToken";
     String DEVICE_ID="deviceId";
     String DEVICE_TYPE="deviceType";
+    String EMAIL_KEY="email";
 
 
 }
