@@ -36,9 +36,9 @@ public class HomeScreenFragment extends Fragment {
     private Activity mActivity;
 
     private CreateOrderDTO createOrderDTO;
-    private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, book_now_button;
+    private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, toolbar_right_rl;
 
-    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv;
+    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv, toolbar_right_tv, toolbar_title;
     private static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Toolbar mToolbar;
@@ -77,12 +77,19 @@ public class HomeScreenFragment extends Fragment {
         pick_date_rl = (RelativeLayout) view.findViewById(R.id.pick_date_rl);
         drop_date_rl = (RelativeLayout) view.findViewById(R.id.drop_date_rl);
         drop_time_rl = (RelativeLayout) view.findViewById(R.id.drop_time_rl);
-        book_now_button = (RelativeLayout) view.findViewById(R.id.book_now_button);
         pick_date_tv = (TextView) view.findViewById(R.id.pick_date_tv);
         drop_date_tv = (TextView) view.findViewById(R.id.drop_date_tv);
         drop_time_tv = (TextView) view.findViewById(R.id.drop_time_tv);
         pick_time_tv = (TextView) view.findViewById(R.id.pick_time_tv);
 
+        toolbar_right_rl = (RelativeLayout) mActivity.findViewById(R.id.toolbar_right_rl);
+        toolbar_right_tv = (TextView) mActivity.findViewById(R.id.toolbar_right_tv);
+        toolbar_right_rl.setVisibility(View.VISIBLE);
+        toolbar_right_tv.setText(R.string.next);
+
+        toolbar_title = (TextView) mActivity.findViewById(R.id.toolbar_title);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(R.string.parkforu);
 
         calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
@@ -169,7 +176,7 @@ public class HomeScreenFragment extends Fragment {
         });
 
 
-        book_now_button.setOnClickListener(new View.OnClickListener() {
+        toolbar_right_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

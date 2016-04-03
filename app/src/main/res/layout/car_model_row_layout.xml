@@ -28,12 +28,11 @@
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
-        <ImageView
+        <RadioButton
             android:id="@+id/selected_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_radio_button_fill"
             android:visibility="invisible" />
     </RelativeLayout>
 

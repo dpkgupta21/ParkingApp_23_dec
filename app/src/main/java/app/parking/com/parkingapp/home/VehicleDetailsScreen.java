@@ -20,8 +20,9 @@ import app.parking.com.parkingapp.utils.AppUtils;
 public class VehicleDetailsScreen extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    private TextView toolbar_title, color_tv, make_tv;
-    private RelativeLayout next_button, color_ll;
+    private TextView toolbar_title, toolbar_right_tv, color_tv, make_tv, make_value_tv, model_value_tv, color_value_tv;
+    private RelativeLayout toolbar_right_rl;
+    private RelativeLayout color_ll;
     private LinearLayout make_ll;
     private TextView model_et;
     private EditText number_plate_et;
@@ -41,20 +42,27 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
     }
 
     private void assignClicks() {
-        next_button.setOnClickListener(this);
         make_ll.setOnClickListener(this);
         color_ll.setOnClickListener(this);
         model_et.setOnClickListener(this);
+        toolbar_right_rl.setOnClickListener(this);
     }
 
     private void initViews() {
         mVehicleDetailsScreen = this;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(R.string.parkforu);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.vehicle_details));
+        getSupportActionBar().setTitle(" ");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
+
+        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        toolbar_right_rl.setVisibility(View.VISIBLE);
+        toolbar_right_tv.setText(R.string.next);
         model_color = (TextView) findViewById(R.id.model_color);
         make_ll = (LinearLayout) findViewById(R.id.make_ll);
         color_ll = (RelativeLayout) findViewById(R.id.color_ll);
@@ -62,7 +70,10 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
         make_tv = (TextView) findViewById(R.id.make_tv);
         model_et = (TextView) findViewById(R.id.model_et);
         number_plate_et = (EditText) findViewById(R.id.number_plate_et);
-        next_button = (RelativeLayout) findViewById(R.id.next_button);
+        make_value_tv = (TextView) findViewById(R.id.make_value_tv);
+        model_value_tv = (TextView) findViewById(R.id.model_value_tv);
+        color_value_tv = (TextView) findViewById(R.id.color_value_tv);
+
        /* makeSelection();
         colorSelecion();*/
 
@@ -79,11 +90,11 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.next_button:
+            case R.id.toolbar_right_rl:
 
-                vehicleDTO.setColor(color_tv.getText().toString().trim());
-                vehicleDTO.setMake(make_tv.getText().toString().trim());
-                vehicleDTO.setModel(model_et.getText().toString().trim());
+                vehicleDTO.setColor(color_value_tv.getText().toString().trim());
+                vehicleDTO.setMake(make_value_tv.getText().toString().trim());
+                vehicleDTO.setModel(model_value_tv.getText().toString().trim());
                 vehicleDTO.setPlateNo(number_plate_et.getText().toString().trim());
                 createOrderDTO.setVehicle(vehicleDTO);
                 Intent intent = new Intent(getApplicationContext(), FlightDetailsScreen.class);
@@ -91,16 +102,16 @@ public class VehicleDetailsScreen extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.make_ll:
 
-                AppDialogs.selectCarMake(this, make_tv);
+                AppDialogs.selectCarMake(this, make_value_tv);
                 break;
 
             case R.id.model_et:
 
-                AppDialogs.selectCarModel(this, model_et);
+                AppDialogs.selectCarModel(this, model_value_tv);
                 break;
             case R.id.color_ll:
 
-                AppDialogs.selectCarColor(this, color_tv, model_color);
+                AppDialogs.selectCarColor(this, color_value_tv, model_color);
                 break;
         }
     }

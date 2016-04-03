@@ -18,4 +18,6 @@
     <dimen name="welcome_content">16.0sp</dimen>
     <dimen name="margin_40dp">40dp</dimen>
     <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="margin_60dp">60dp</dimen>
 </resources>

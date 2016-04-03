@@ -8,15 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.GlobalKeys;
-import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
-import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.webservices.handler.LoginAPIHandler;
 import app.parking.com.parkingapp.webservices.handler.SignupAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -24,7 +19,7 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
 
     private RelativeLayout signup_button;
-    private EditText email_et, pwd_et, secondname_et, firstname_et;
+    private EditText email_et, pwd_et, name_et, phone_et, cnfrm_pwd_et;
     private SignupAPIHandler mSignupHandler;
     private String TAG = SignupScreen.class.getSimpleName();
 
@@ -43,8 +38,10 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
         signup_button = (RelativeLayout) findViewById(R.id.signup_button);
         email_et = (EditText) findViewById(R.id.email_et);
         pwd_et = (EditText) findViewById(R.id.pwd_et);
-        secondname_et = (EditText) findViewById(R.id.secondname_et);
-        firstname_et = (EditText) findViewById(R.id.firstname_et);
+        name_et = (EditText) findViewById(R.id.name_et);
+        phone_et = (EditText) findViewById(R.id.phone_et);
+        cnfrm_pwd_et = (EditText) findViewById(R.id.cnfrm_pwd_et);
+
     }
 
     private void assignClick() {
@@ -60,21 +57,28 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
                 String email = email_et.getText().toString().trim();
                 String pwd = pwd_et.getText().toString().trim();
-                String firstname = firstname_et.getText().toString().trim();
-                String lastname = secondname_et.getText().toString().trim();
-                String mobNumber="919460940608";
-                if (email.isEmpty()) {
+                String firstname = name_et.getText().toString().trim();
+                String confrmpwd = cnfrm_pwd_et.getText().toString().trim();
+                String lastname = " ";
+                String mobNumber = "919460940608";
+
+
+                if (firstname.isEmpty()) {
+                    Snackbar.make(v, getString(R.string.please_enter_firtsname), Snackbar.LENGTH_LONG).show();
+
+                } else if (email.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
                 } else if (pwd.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_pwd), Snackbar.LENGTH_LONG).show();
 
-                } else if (firstname.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_firtsname), Snackbar.LENGTH_LONG).show();
-
+                } else if (confrmpwd.isEmpty()) {
+                    Snackbar.make(v, getString(R.string.please_enter_cnfrm_pwd), Snackbar.LENGTH_LONG).show();
+                } else if (confrmpwd.equalsIgnoreCase(pwd)) {
+                    Snackbar.make(v, getString(R.string.pwd_mismatch), Snackbar.LENGTH_LONG).show();
                 } else if (lastname.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
 
-                }  else if (mobNumber.isEmpty()) {
+                } else if (mobNumber.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
 
                 } else {

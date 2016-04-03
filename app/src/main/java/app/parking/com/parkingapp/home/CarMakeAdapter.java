@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.bookinghistory.BookingHistoryModel;
+
+import static app.parking.com.parkingapp.R.id.selected_img;
 
 public class CarMakeAdapter extends BaseAdapter {
 
@@ -38,14 +41,6 @@ public class CarMakeAdapter extends BaseAdapter {
             dummyArrayList.add("Audi");
             dummyArrayList.add("Bentley");
             dummyArrayList.add("BMW");
-            dummyArrayList.add("Chevrolet");
-            dummyArrayList.add("Daewoo");
-            dummyArrayList.add("Nissan");
-            dummyArrayList.add("Audi");
-            dummyArrayList.add("Bentley");
-
-            dummyArrayList.add("BMW");
-
             dummyArrayList.add("Chevrolet");
             dummyArrayList.add("Daewoo");
             dummyArrayList.add("Nissan");
@@ -93,7 +88,6 @@ public class CarMakeAdapter extends BaseAdapter {
             holder.model_color = (TextView) convertView.findViewById(R.id.model_color);
             holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
             holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
-            holder.selected_img = (ImageView) convertView.findViewById(R.id.selected_img);
             convertView.setTag(holder);
 
         } else {
@@ -110,13 +104,14 @@ public class CarMakeAdapter extends BaseAdapter {
                 mDialog.dismiss();
             }
         });
+
         return convertView;
     }
 
 
     public class ViewHolder {
         TextView model_name, model_color;
-        ImageView selected_img;
         RelativeLayout model_ll;
+        RadioButton selected_img;
     }
 }

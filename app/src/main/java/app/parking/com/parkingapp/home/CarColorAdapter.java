@@ -97,7 +97,6 @@ public class CarColorAdapter extends BaseAdapter {
             holder.txt_modelColor = (TextView) convertView.findViewById(R.id.model_color);
             holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
             holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
-            holder.selected_img = (ImageView) convertView.findViewById(R.id.selected_img);
             convertView.setTag(holder);
 
         } else {
@@ -128,7 +127,6 @@ public class CarColorAdapter extends BaseAdapter {
     public class ViewHolder {
         TextView txt_modelColor;
         TextView model_name;
-        ImageView selected_img;
         RelativeLayout model_ll;
     }
 

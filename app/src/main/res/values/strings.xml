@@ -176,6 +176,15 @@
     <string name="title_no_internet">Internet Connection Error!</string>
     <string name="msg_no_internet">Please connect to working Internet connection.</string>
     <string name="title_activity_maps">Map</string>
+    <string name="remeber_me">Remember Me</string>
+    <string name="cnfrm_password">Confirm Password</string>
+    <string name="please_enter_cnfrm_pwd">Please Confirm Password</string>
+    <string name="pwd_mismatch">Password Doesn\'t Match</string>
+    <string name="create">Create</string>
+    <string name="parkforu">PARKFORU</string>
+    <string name="departure_caps">DEPARTURE</string>
+    <string name="london">LONDON</string>
+    <string name="toronto">TORONTO</string>
 
 </resources>
 

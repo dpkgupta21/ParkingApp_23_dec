@@ -218,7 +218,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             case 0:
                 addTokenHandler();
                 fragment = new HomeScreenFragment();
-                title = "Home";
+                title = " ";
                 break;
             case 1:
                 fragment = new ViewBookingHistoryFragment();
