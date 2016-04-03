@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_black"
     tools:context=".home.AddServicesScreen">
 
     <LinearLayout
@@ -17,47 +18,81 @@
             layout="@layout/toolbar" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/services_lv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/submit_button"
-        android:layout_below="@+id/toolbar_ll"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:orientation="vertical" />
-
-
-    <TextView
-        android:id="@+id/no_service_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/no_services"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_18sp"
-        android:textStyle="normal"
-        android:visibility="invisible" />
-
     <RelativeLayout
-        android:id="@+id/submit_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/view"
-        android:layout_marginBottom="@dimen/margin_20dp"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginRight="@dimen/margin_20dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@drawable/green_round_corner_btn_selector_btn"
-        android:gravity="center"
-        android:padding="@dimen/margin_10dp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_ll"
+        android:layout_margin="@dimen/margin_20dp"
+        android:background="@drawable/add_servies_card_bg">
 
-        <TextView
+        <ImageView
+            android:id="@+id/top_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_service"
+            android:src="@drawable/add_servies_icon" />
+
+        <TextView
+            android:id="@+id/flight_dtls_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:singleLine="true"
+            android:text="@string/add_services"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/horizontal_line_height"
+            android:layout_below="@+id/flight_dtls_tv"
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:background="@color/transparent_black" />
+
+        <ListView
+            android:id="@+id/services_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submit_button"
+            android:layout_below="@+id/top_view"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:orientation="vertical" />
+
+
+        <TextView
+            android:id="@+id/no_service_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_services"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18sp"
+            android:textStyle="normal"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@color/transparent_black"
+            android:gravity="center"
+            android:padding="@dimen/margin_10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_service"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20sp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 </RelativeLayout>

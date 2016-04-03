@@ -58,10 +58,13 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.add_services));
+        getSupportActionBar().setTitle(" ");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(R.drawable.back_button);
 
+        mToolbar.setNavigationIcon(R.drawable.back_button);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(getResources().getString(R.string.add_services));
+        listOfServicesDTOArrayList = new ArrayList<>();
         String auth = SessionManager.getInstance(this).getAuthToken();
 
         new ServicesAPIHandler(this, auth, fetchServiceResponseListner());
@@ -126,7 +129,6 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
             case R.id.submit_button:
 
-                AppUtils.showLog(TAG, listOfServicesDTOArrayList.get(0).isAdded() + "");
                 for (int i = 0; i < listOfServicesDTOArrayList.size(); i++) {
                     if (!listOfServicesDTOArrayList.get(0).isAdded()) {
                         listOfServicesDTOArrayList.remove(i);

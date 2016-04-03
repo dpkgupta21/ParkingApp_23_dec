@@ -185,6 +185,9 @@
     <string name="departure_caps">DEPARTURE</string>
     <string name="london">LONDON</string>
     <string name="toronto">TORONTO</string>
+    <string name="flight_no">Flight No:</string>
+    <string name="term">-  Term: </string>
+    <string name="arrival_caps">ARRIVAL</string>
 
 </resources>
 
