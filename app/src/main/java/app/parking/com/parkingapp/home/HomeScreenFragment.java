@@ -38,7 +38,7 @@ public class HomeScreenFragment extends Fragment {
     private CreateOrderDTO createOrderDTO;
     private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, toolbar_right_rl;
 
-    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv, toolbar_right_tv, toolbar_title;
+    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv, toolbar_right_tv, toolbar_title, book_now_tv;
     private static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Toolbar mToolbar;
@@ -81,11 +81,7 @@ public class HomeScreenFragment extends Fragment {
         drop_date_tv = (TextView) view.findViewById(R.id.drop_date_tv);
         drop_time_tv = (TextView) view.findViewById(R.id.drop_time_tv);
         pick_time_tv = (TextView) view.findViewById(R.id.pick_time_tv);
-
-        toolbar_right_rl = (RelativeLayout) mActivity.findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) mActivity.findViewById(R.id.toolbar_right_tv);
-        toolbar_right_rl.setVisibility(View.VISIBLE);
-        toolbar_right_tv.setText(R.string.next);
+        book_now_tv = (TextView) view.findViewById(R.id.book_now_tv);
 
         toolbar_title = (TextView) mActivity.findViewById(R.id.toolbar_title);
         toolbar_title.setVisibility(View.VISIBLE);
@@ -113,7 +109,7 @@ public class HomeScreenFragment extends Fragment {
         mDropMinute = calendar.get(Calendar.MINUTE);
 
 
-        pick_date_tv.setText(new StringBuilder()
+       /* pick_date_tv.setText(new StringBuilder()
                 // Month is 0 based so add 1
                 .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
                 .append(mYear).append(" "));
@@ -126,7 +122,7 @@ public class HomeScreenFragment extends Fragment {
         drop_time_tv.setText(mHour + ":" + mMinute);
 
         pick_time_tv.setText(mHour + ":" + mMinute);
-
+*/
 
         pick_date_rl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +172,7 @@ public class HomeScreenFragment extends Fragment {
         });
 
 
-        toolbar_right_rl.setOnClickListener(new View.OnClickListener() {
+        book_now_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

@@ -39,11 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/grey"
+        android:background="@color/sidemenu_color"
         android:fitsSystemWindows="true"
-        app:itemIconTint="@color/black"
-
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/grey"
+        app:itemTextColor="@color/white"
         app:menu="@menu/user_model_drawer">
 
     </android.support.design.widget.NavigationView>

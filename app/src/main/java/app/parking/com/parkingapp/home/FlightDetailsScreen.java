@@ -3,13 +3,12 @@ package app.parking.com.parkingapp.home;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -25,9 +24,8 @@ import app.parking.com.parkingapp.utils.AppUtils;
 
 public class FlightDetailsScreen extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;
-    private TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv;
-    private RelativeLayout next_button;
-    private EditText flight_name_et, flight_num_et, flight_name_depart_et, flight_number_depart_et;
+    private TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv, toolbar_right_tv;
+    private TextView flight_num_et, flight_number_depart_et;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Calendar calendar;
     private int mYear, mDepartYear, mArrivalYear;
@@ -40,6 +38,7 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
     private FlightArrivalDTO flightArrivalDTO;
     private FlightDepartureDTO flightDepartureDTO;
     private String TAG = FlightDetailsScreen.class.getSimpleName();
+    private RelativeLayout toolbar_right_rl;
 
 
     @Override
@@ -52,11 +51,12 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 
     private void assignClicks() {
 
-        next_button.setOnClickListener(this);
         arrival_date_tv.setOnClickListener(this);
         arrival_time_tv.setOnClickListener(this);
         depart_time_tv.setOnClickListener(this);
         depart_date_tv.setOnClickListener(this);
+        toolbar_right_rl.setOnClickListener(this);
+
 
     }
 
@@ -64,20 +64,25 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.flight_details));
+        getSupportActionBar().setTitle(" ");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationIcon(R.drawable.back_button);
 
-        next_button = (RelativeLayout) findViewById(R.id.next_button);
+        mToolbar.setNavigationIcon(R.drawable.back_button);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(getResources().getString(R.string.parkforu));
+
+        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        toolbar_right_rl.setVisibility(View.VISIBLE);
+        toolbar_right_tv.setText(R.string.next);
+
 
         arrival_date_tv = (TextView) findViewById(R.id.arrival_date_tv);
         arrival_time_tv = (TextView) findViewById(R.id.arrival_time_tv);
         depart_time_tv = (TextView) findViewById(R.id.depart_time_tv);
         depart_date_tv = (TextView) findViewById(R.id.depart_date_tv);
-        flight_name_et = (EditText) findViewById(R.id.flight_name_et);
-        flight_num_et = (EditText) findViewById(R.id.flight_num_et);
-        flight_name_depart_et = (EditText) findViewById(R.id.flight_name_depart_et);
-        flight_number_depart_et = (EditText) findViewById(R.id.flight_number_depart_et);
+        flight_num_et = (TextView) findViewById(R.id.flight_num_et);
+        flight_number_depart_et = (TextView) findViewById(R.id.flight_number_depart_et);
 
 
         calendar = Calendar.getInstance();
@@ -109,15 +114,14 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.next_button:
+            case R.id.toolbar_right_rl:
 
                 arrivalTime = mArrivalYear + "-" + mArrivalMonth + "-" + mArrivalDay + "T" + mArrivalHour + ":" + mArrivalMinute;
                 departureTime = mDepartYear + "-" + mDepartMonth + "-" + mDepartDay + "T" + mDepartHour + ":" + mDepartMinute;
-
                 arrivalTime = departureTime = "2016-02-14T08:11:32.244Z";
                 flightArrivalDTO.setFlightArrivalTime(arrivalTime);
                 flightArrivalDTO.setFlightDepatureTime(departureTime);
-                flightArrivalDTO.setFlightName(flight_name_et.getText().toString().trim());
+                flightArrivalDTO.setFlightName(" ");
                 flightArrivalDTO.setFlightNumber(flight_num_et.getText().toString().trim());
                 flightArrivalDTO.setOrigin("Tornoto");
                 flightArrivalDTO.setDestination("London");
@@ -125,10 +129,10 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 
                 flightDepartureDTO.setFlightArrivalTime(arrivalTime);
                 flightDepartureDTO.setFlightDepatureTime(departureTime);
-                flightDepartureDTO.setFlightName(flight_name_depart_et.getText().toString().trim());
+                flightDepartureDTO.setFlightName(" ");
                 flightDepartureDTO.setFlightNumber(flight_number_depart_et.getText().toString().trim());
-                flightDepartureDTO.setDestination("Tornoto");
                 flightDepartureDTO.setOrigin("London");
+                flightDepartureDTO.setDestination("Tornoto");
                 createOrderDTO.setArrivalFlight(flightArrivalDTO);
                 createOrderDTO.setDestinationFlight(flightDepartureDTO);
                 startActivity(new Intent(this, ServicesScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
@@ -137,31 +141,31 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 
             case R.id.arrival_date_tv:
 
-                isDropDateClicked = false;
-                DatePickerDialog dialog = new DatePickerDialog(this,
-                        mDateSetListener, mYear, mMonth, mDay);
-                dialog.show();
+//                isDropDateClicked = false;
+//                DatePickerDialog dialog = new DatePickerDialog(this,
+//                        mDateSetListener, mYear, mMonth, mDay);
+//                dialog.show();
 
                 break;
 
             case R.id.arrival_time_tv:
-                isDropTimeClicked = false;
-                TimePickerDialog dialogArrivalTime;
-                dialogArrivalTime = new TimePickerDialog(this, mTimeSetListner, mHour, mMinute, true);
-                dialogArrivalTime.show();
+//                isDropTimeClicked = false;
+//                TimePickerDialog dialogArrivalTime;
+//                dialogArrivalTime = new TimePickerDialog(this, mTimeSetListner, mHour, mMinute, true);
+//                dialogArrivalTime.show();
                 break;
 
             case R.id.depart_date_tv:
-                isDropDateClicked = true;
-                DatePickerDialog dialogDepartDate = new DatePickerDialog(this,
-                        mDateSetListener, mYear, mMonth, mDay);
-                dialogDepartDate.show();
+//                isDropDateClicked = true;
+//                DatePickerDialog dialogDepartDate = new DatePickerDialog(this,
+//                        mDateSetListener, mYear, mMonth, mDay);
+//                dialogDepartDate.show();
                 break;
             case R.id.depart_time_tv:
-                isDropTimeClicked = true;
-                TimePickerDialog dialogDepartTime;
-                dialogDepartTime = new TimePickerDialog(this, mTimeSetListner, mHour, mMinute, true);
-                dialogDepartTime.show();
+//                isDropTimeClicked = true;
+//                TimePickerDialog dialogDepartTime;
+//                dialogDepartTime = new TimePickerDialog(this, mTimeSetListner, mHour, mMinute, true);
+//                dialogDepartTime.show();
                 break;
         }
 

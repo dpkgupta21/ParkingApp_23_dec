@@ -3,6 +3,7 @@
     <color name="colorPrimary">#06A15A</color>
     <color name="colorPrimaryDark">#058149</color>
     <color name="colorAccent">#000000</color>
+    <color name="sidemenu_color">#06A26F</color>
     <color name="white">#FFFFFF</color>
     <color name="white_faded">#80FFFFFF</color>
     <color name="white_faded_partially">#95FFFFFF</color>
@@ -19,6 +20,13 @@
     <color name="transparent_bg">#fff</color>
     <color name="welcome_color">#48BD5D</color>
     <color name="transparent_black">#60000000</color>
+
+    <!-- dashboard-->
+    <color name="drop_bg">#8AD7BD</color>
+    <color name="pick_bg">#F3B9B8</color>
+    <color name="drop_text">#36715F</color>
+    <color name="pick_text">#8A5251</color>
+    <color name="black_dashbrd">#5F5F5F</color>
 
     <string-array name="color_bg">
         <item>#000000</item>
