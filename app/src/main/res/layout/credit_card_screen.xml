@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_black"
     tools:context=".home.CreditCardScreen">
 
     <LinearLayout
@@ -17,208 +18,227 @@
             layout="@layout/toolbar" />
     </LinearLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_ll">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_ll"
+        android:layout_margin="@dimen/margin_20dp"
+        android:background="@drawable/payment_details_card_bg">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/top_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/payment_details_icon" />
+
+        <TextView
+            android:id="@+id/payment_dtls_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:singleLine="true"
+            android:text="@string/payment_details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/horizontal_line_height"
+            android:layout_below="@+id/payment_dtls_tv"
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:background="@color/transparent_black" />
+
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@+id/top_view"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/card_number"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-                <EditText
-                    android:id="@+id/card_num_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@null"
-                    android:gravity="left"
-                    android:hint="@string/card_number_hint"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/card_holder_name"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-
-                <EditText
-                    android:id="@+id/card_holder_name_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@null"
-                    android:gravity="left"
-                    android:hint="@string/card_holder_name_hint"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/expiry"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:padding="@dimen/margin_20dp">
 
-                    <Spinner
-                        android:id="@+id/month_spinner"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_20dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:layout_weight="1"
-                        android:prompt="@string/month" />
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/card_number"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
 
-                    <Spinner
-                        android:id="@+id/year_spinner"
-                        android:layout_width="0dp"
+                    <EditText
+                        android:id="@+id/card_num_et"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_20dp"
-                        android:layout_marginTop="@dimen/margin_10dp"
-                        android:layout_weight="1"
-                        android:prompt="@string/year" />
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:hint="@string/card_number_hint"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/horizontal_line_height"
+                    android:layout_below="@+id/name_et"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:background="@color/dark_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/card_holder_name"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/card_holder_name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:hint="Name"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/horizontal_line_height"
+                    android:layout_below="@+id/name_et"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:background="@color/dark_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/expiry"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Spinner
+                            android:id="@+id/month_spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:prompt="@string/month" />
+
+                        <Spinner
+                            android:id="@+id/year_spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.2"
+                            android:prompt="@string/year" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/horizontal_line_height"
+                    android:layout_below="@+id/name_et"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:background="@color/dark_grey" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_20dp">
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/cvv"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_20dp">
 
-                <EditText
-                    android:id="@+id/cvv_et"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/cvv"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/cvv_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:hint="@string/cvv"
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:background="@null"
-                    android:gravity="left"
-                    android:hint="@string/cvv"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="normal" />
+                    android:layout_height="@dimen/horizontal_line_height"
+                    android:layout_below="@+id/name_et"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:background="@color/dark_grey" />
+
+
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/horizontal_line_height"
-                android:layout_below="@+id/name_et"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:background="@color/grey" />
+        </ScrollView>
 
 
-        </LinearLayout>
-    </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/make_payment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/margin_20dp"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginRight="@dimen/margin_20dp"
-        android:layout_marginTop="@dimen/margin_10dp"
-        android:background="@drawable/green_round_corner_btn_selector_btn"
-        android:gravity="center"
-        android:padding="@dimen/margin_10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/make_payment"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
     </RelativeLayout>
 
 

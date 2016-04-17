@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -36,8 +37,8 @@ public class HomeScreenFragment extends Fragment {
     private Activity mActivity;
 
     private CreateOrderDTO createOrderDTO;
-    private RelativeLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl, toolbar_right_rl;
-
+    private LinearLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl;
+    private RelativeLayout toolbar_right_rl;
     private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv, toolbar_right_tv, toolbar_title, book_now_tv;
     private static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
@@ -60,7 +61,7 @@ public class HomeScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TAG = HomeScreenFragment.class.getSimpleName();
-        view = inflater.inflate(R.layout.fragment_home_screen, container, false);
+        view = inflater.inflate(R.layout.fragment_home_screen_new, container, false);
         return view;
 
     }
@@ -73,10 +74,10 @@ public class HomeScreenFragment extends Fragment {
 
         mActivity = UserNavigationDrawerActivity.mActivity;
         createOrderDTO = new CreateOrderDTO();
-        pick_time_rl = (RelativeLayout) view.findViewById(R.id.pick_time_rl);
-        pick_date_rl = (RelativeLayout) view.findViewById(R.id.pick_date_rl);
-        drop_date_rl = (RelativeLayout) view.findViewById(R.id.drop_date_rl);
-        drop_time_rl = (RelativeLayout) view.findViewById(R.id.drop_time_rl);
+        pick_time_rl = (LinearLayout) view.findViewById(R.id.pick_time_rl);
+        pick_date_rl = (LinearLayout) view.findViewById(R.id.pick_date_rl);
+        drop_date_rl = (LinearLayout) view.findViewById(R.id.drop_date_rl);
+        drop_time_rl = (LinearLayout) view.findViewById(R.id.drop_time_rl);
         pick_date_tv = (TextView) view.findViewById(R.id.pick_date_tv);
         drop_date_tv = (TextView) view.findViewById(R.id.drop_date_tv);
         drop_time_tv = (TextView) view.findViewById(R.id.drop_time_tv);

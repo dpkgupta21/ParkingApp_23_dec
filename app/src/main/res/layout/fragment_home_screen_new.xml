@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_dashbrd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/book_now_tv"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/top_rl"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/circle"
+                    android:padding="@dimen/margin_10dp">
+
+                    <app.parking.com.parkingapp.customViews.MyTextView18
+                        android:id="@+id/days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_25dp"
+                        android:text="1 Days"
+                        android:textColor="@color/white" />
+
+                    <app.parking.com.parkingapp.customViews.MyTextView20
+                        android:id="@+id/hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/days"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="12 HRS"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/below_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/top_rl"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/margin_20dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <app.parking.com.parkingapp.customViews.MyTextView18
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#615F60"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_10dp"
+                        android:text="@string/drop_off"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:id="@+id/drop_date_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dash_grey"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:src="@drawable/calendar" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView18
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/drop_date"
+                            android:textColor="@color/white" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView25
+                            android:id="@+id/drop_date_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="FEB 23,2016"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/horizontal_line_height"
+                        android:background="@color/grey" />
+
+                    <LinearLayout
+                        android:id="@+id/drop_time_rl"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dash_grey"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:src="@drawable/clock" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView18
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/drop_time"
+                            android:textColor="@color/white" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView25
+                            android:id="@+id/drop_time_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="7:30 AM"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/margin_20dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black_dashbrd" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <app.parking.com.parkingapp.customViews.MyTextView18
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#615F60"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_10dp"
+                        android:text="@string/pick_up"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:id="@+id/pick_date_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dash_grey"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:src="@drawable/calendar" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView18
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/pick_date"
+                            android:textColor="@color/white" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView25
+                            android:id="@+id/pick_date_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="FEB 23,2016"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/horizontal_line_height"
+                        android:background="@color/grey" />
+
+                    <LinearLayout
+                        android:id="@+id/pick_time_rl"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/dash_grey"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/margin_20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:src="@drawable/clock" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView18
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/pick_time"
+                            android:textColor="@color/white" />
+
+                        <app.parking.com.parkingapp.customViews.MyTextView25
+                            android:id="@+id/pick_time_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="center_horizontal"
+                            android:text="7:30 AM"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <app.parking.com.parkingapp.customViews.MyTextView20
+        android:id="@+id/book_now_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="@dimen/margin_10dp"
+        android:text="@string/book_now"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_20sp" />
+</RelativeLayout>

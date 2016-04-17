@@ -78,7 +78,6 @@ public class BookingHistoryAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.ticket_value = (TextView) convertView.findViewById(R.id.ticket_value);
-            holder.airport_tv = (TextView) convertView.findViewById(R.id.airport_tv);
             holder.pickup_value = (TextView) convertView.findViewById(R.id.pickup_value);
             holder.drop_value = (TextView) convertView.findViewById(R.id.drop_value);
             holder.new_rl = (RelativeLayout) convertView.findViewById(R.id.new_rl);
@@ -99,7 +98,7 @@ public class BookingHistoryAdapter extends BaseAdapter {
 
 
     public class ViewHolder {
-        TextView ticket_value, airport_tv, pickup_value, drop_value;
+        TextView ticket_value, pickup_value, drop_value;
         RelativeLayout new_rl;
     }
 }

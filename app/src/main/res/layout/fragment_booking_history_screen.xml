@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_black">
 
-    <ListView
-        android:id="@+id/booking_listview"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"></ListView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_ll"
+        android:layout_margin="@dimen/margin_20dp"
+        android:background="@drawable/add_servies_card_bg">
+
+        <ImageView
+            android:id="@+id/top_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_servies_icon" />
+
+        <TextView
+            android:id="@+id/flight_dtls_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:singleLine="true"
+            android:text="@string/order_history"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/horizontal_line_height"
+            android:layout_below="@+id/flight_dtls_tv"
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:background="@color/transparent_black" />
+
+        <ListView
+            android:id="@+id/booking_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/submit_button"
+            android:layout_below="@+id/top_view"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:orientation="vertical" />
+
+
+        <TextView
+            android:id="@+id/no_history_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_services"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18sp"
+            android:textStyle="normal"
+            android:visibility="invisible" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -79,7 +79,11 @@
         <activity android:name=".home.AddServicesScreen" />
         <activity android:name=".home.SelectPaymentScreen" />
         <activity android:name=".home.OrderAmountScreen" />
-        <activity android:name=".home.CreditCardScreen" />
+        <activity
+            android:name=".home.CreditCardScreen"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+
+            />
         <activity
             android:name=".view.SignupScreen"
             android:theme="@style/AppTheme"
@@ -99,7 +103,7 @@
 
             ></activity>
         <activity android:name=".home.PurchaseReceiptDetailsScreen" />
-
+        <activity android:name=".home.OrderDetailsScreenNew" />
 
         <!-- Start Push Notification -->
         <receiver

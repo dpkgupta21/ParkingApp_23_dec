@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderResponseDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
@@ -37,14 +36,14 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
 
     private static final String TAG = CreditCardScreen.class.getSimpleName();
     private Toolbar mToolbar;
-    private TextView toolbar_title;
+    private TextView toolbar_title, toolbar_right_tv;
     private Spinner month_spinner, year_spinner;
     private static int year_value = 2015;
     private EditText card_num_et, card_holder_name_et, cvv_et;
-    private RelativeLayout make_payment;
     private PurchaseOrderDTO purchaseOrderDTO;
     private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
     private String PUBLISHABLE_KEY = "pk_test_OpA06mOu6bmI6iGZMrahmKkc";
+    private RelativeLayout toolbar_right_rl;
 
 
     @Override
@@ -56,7 +55,8 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
     }
 
     private void assignClicks() {
-        make_payment.setOnClickListener(this);
+
+        toolbar_right_tv.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -64,12 +64,19 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.credit_card_details));
+        getSupportActionBar().setTitle(" ");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
 
 
-        make_payment = (RelativeLayout) findViewById(R.id.make_payment);
+        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(getResources().getString(R.string.parkforu));
+
+        toolbar_right_rl.setVisibility(View.VISIBLE);
+        toolbar_right_tv.setText(R.string.next);
+
         card_num_et = (EditText) findViewById(R.id.card_num_et);
         card_holder_name_et = (EditText) findViewById(R.id.card_holder_name_et);
         cvv_et = (EditText) findViewById(R.id.cvv_et);
@@ -166,10 +173,10 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.make_payment:
+            case R.id.toolbar_right_tv:
 
                 generateStripeToken();
-
+                startActivity(new Intent(CreditCardScreen.this, OrderDetailsScreenNew.class));
 
                 break;
         }
@@ -233,7 +240,7 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
 
                 startActivity(new Intent(CreditCardScreen.this,
                         PurchaseReceiptDetailsScreen.class).
-                        putExtra(AppConstants.PURCHASE_ORDER_RESPONSE,purchaseOrderResponseDTO));
+                        putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO));
             }
 
             @Override
