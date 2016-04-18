@@ -30,6 +30,11 @@
     <color name="dash_grey">#4F4D4E</color>
     <color name="booking_bg_col">#439895</color>
     <color name="order_details_horizntl_line_color">#2D587B</color>
+    <color name="dialog_bg">#CBE5DA</color>
+    <color name="flight_popup_search_colr">#E9F4F0</color>
+    <color name="search_txt_color">#959E9B</color>
+    <color name="search_btn_color">#4F8176</color>
+    <color name="search_bg">#7EBAAB</color>
 
     <string-array name="color_bg">
         <item>#000000</item>

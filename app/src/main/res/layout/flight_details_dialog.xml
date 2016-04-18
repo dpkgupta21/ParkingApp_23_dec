@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/white">
+
+
+    <app.parking.com.parkingapp.customViews.MyEditTextView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_20dp"
+        android:background="@color/flight_popup_search_colr"
+        android:drawableRight="@drawable/search_icon"
+        android:gravity="center_vertical|left"
+        android:hint="@string/airline_loc"
+        android:padding="@dimen/margin_20dp"
+        android:textColor="@color/search_txt_color"
+        android:textColorHint="@color/search_txt_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search"
+        android:background="@color/search_bg">
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_20dp"
+            android:background="@drawable/search_btn_selector_btn"
+            android:paddingBottom="@dimen/margin_15dp"
+            android:paddingLeft="@dimen/margin_30dp"
+            android:paddingRight="@dimen/margin_30dp"
+            android:paddingTop="@dimen/margin_15dp"
+            android:text="@string/search"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</RelativeLayout>

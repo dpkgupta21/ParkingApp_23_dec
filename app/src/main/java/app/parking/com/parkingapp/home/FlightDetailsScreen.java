@@ -47,6 +47,7 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.flight_details_screen);
         initViews();
         assignClicks();
+        AppDialogs.flightDetailsDialog(this);
     }
 
     private void assignClicks() {

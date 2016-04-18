@@ -125,7 +125,7 @@ public class AppDialogs {
     }
 
     public static void selectCarModel(final Activity mActivity,
-                                     final TextView textView) {
+                                      final TextView textView) {
 
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
@@ -174,5 +174,55 @@ public class AppDialogs {
         }
 
     }
+
+
+    public static void flightDetailsDialog(final Activity mActivity
+    ) {
+
+        try {
+            if (mModelDialog != null && mModelDialog.isShowing()) {
+                mModelDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (mActivity != null) {
+            mModelDialog = new Dialog(mActivity);
+            // hide to default title for Dialog
+            mModelDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            // inflate the layout dialog_layout.xml and set it as
+            // contentView
+            LayoutInflater inflater = (LayoutInflater) mActivity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.flight_details_dialog, null,
+                    false);
+            mModelDialog.setCanceledOnTouchOutside(false);
+            mModelDialog.setContentView(view);
+            mModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            WindowManager.LayoutParams lp = mModelDialog.getWindow().getAttributes();
+            lp.dimAmount = 0.8f;
+            mModelDialog.getWindow().setAttributes(lp);
+
+
+            ListView flightDetails = (ListView) mModelDialog
+                    .findViewById(R.id.listview);
+            final FlightDetailsAdapter adapter = new FlightDetailsAdapter(
+                    mActivity, mModelDialog);
+            flightDetails.setAdapter(adapter);
+
+            try {
+                // Display the dialog
+                mModelDialog.show();
+            } catch (WindowManager.BadTokenException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 }

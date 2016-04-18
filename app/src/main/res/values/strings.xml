@@ -191,6 +191,8 @@
     <string name="payment_details">Payment Details</string>
     <string name="order_history">Order History</string>
     <string name="packed_time">Packed Time</string>
+    <string name="airline_loc">Airline, Location or Flight #</string>
+    <string name="search">Search</string>
 
 </resources>
 
