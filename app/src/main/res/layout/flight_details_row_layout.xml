@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/search_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/top_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_20dp">
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/airline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/airline"
+            android:textColor="@color/search_btn_color" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/from"
+            android:textColor="@color/search_btn_color" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/status"
+            android:textColor="@color/search_btn_color" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/airline_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/airline"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="Air Canada"
+            android:textColor="@color/white" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/from_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/airline"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="Toronot"
+            android:textColor="@color/white" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/airline"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="Arrived"
+            android:textColor="@color/white" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/flight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/airline_value"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="@string/flight"
+            android:textColor="@color/search_btn_color" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/airline_value"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="@string/terms"
+            android:textColor="@color/search_btn_color" />
+
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/flight_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/flight"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="AA1383"
+            android:textColor="@color/white" />
+
+        <app.parking.com.parkingapp.customViews.MyTextView18
+            android:id="@+id/term_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/flight"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text="3"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/horizontal_line_height"
+        android:layout_below="@+id/top_rl"
+        android:background="@color/search_btn_color" />
+</RelativeLayout>

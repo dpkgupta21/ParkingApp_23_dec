@@ -19,6 +19,7 @@ public interface GlobalKeys {
     String HOLD_ORDER_API = "order/holdOrder";
     String PURCHASE_ORDER_API = "order/purchaseOrder";
     String ADD_TOKEN_PUSH = "notification/addtoken";
+    String FLIGHT_INFO = "order/flightinfo";
 
 
     String PILLION_LOGIN_REQUEST_KEY = "login_api";
@@ -32,10 +33,12 @@ public interface GlobalKeys {
     String LASTNAME = "lastname";
     String MOBILE_NO = "mobile_no";
 
-    String REG_TOKEN="regToken";
-    String DEVICE_ID="deviceId";
-    String DEVICE_TYPE="deviceType";
-    String EMAIL_KEY="email";
+    String REG_TOKEN = "regToken";
+    String DEVICE_ID = "deviceId";
+    String DEVICE_TYPE = "deviceType";
+    String EMAIL_KEY = "email";
 
 
+    String flightName = "flightName";
+    String flightNo = "flightNo";
 }

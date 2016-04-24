@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/light_black">
 
     <RelativeLayout
         android:id="@+id/details_rl"
@@ -142,7 +142,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/view_three"
             android:layout_marginTop="@dimen/margin_15dp"
-            android:background="@drawable/blue_round_corner_btn_selector_btn"
+            android:background="@drawable/white_round_corner_btn_selector_btn"
             android:gravity="center"
             android:paddingBottom="@dimen/margin_5dp"
             android:paddingTop="@dimen/margin_5dp">
@@ -152,10 +152,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/more"
-                android:textColor="@color/white"
+
+                android:textColor="@android:color/holo_red_dark"
                 android:textSize="@dimen/text_size_18sp" />
         </RelativeLayout>
-
 
     </RelativeLayout>
 

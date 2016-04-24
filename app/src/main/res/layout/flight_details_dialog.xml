@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
 
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search"
-        android:background="@color/search_bg">
+        android:background="@color/search_bg"
+        android:paddingBottom="@dimen/margin_20dp">
 
         <ListView
             android:id="@+id/listview"
@@ -31,18 +32,27 @@
             android:divider="@null"
             android:dividerHeight="0dp" />
 
-        <app.parking.com.parkingapp.customViews.MyTextView18
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_20dp"
-            android:background="@drawable/search_btn_selector_btn"
-            android:paddingBottom="@dimen/margin_15dp"
-            android:paddingLeft="@dimen/margin_30dp"
-            android:paddingRight="@dimen/margin_30dp"
-            android:paddingTop="@dimen/margin_15dp"
-            android:text="@string/search"
-            android:textColor="@color/white" />
+            android:background="@color/search_bg">
+
+            <app.parking.com.parkingapp.customViews.MyTextView18
+                android:id="@+id/search_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginLeft="@dimen/margin_40dp"
+                android:layout_marginRight="@dimen/margin_40dp"
+                android:background="@drawable/search_btn_selector_btn"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_15dp"
+                android:paddingLeft="@dimen/margin_30dp"
+                android:paddingRight="@dimen/margin_30dp"
+                android:paddingTop="@dimen/margin_15dp"
+                android:text="@string/search"
+                android:textColor="@color/white" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

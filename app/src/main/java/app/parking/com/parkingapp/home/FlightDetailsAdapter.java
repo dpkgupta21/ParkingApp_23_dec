@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.bookinghistory.BookingHistoryModel;
+import app.parking.com.parkingapp.model.FlightDetailsDTO;
 
 public class FlightDetailsAdapter extends BaseAdapter {
 
@@ -21,24 +22,16 @@ public class FlightDetailsAdapter extends BaseAdapter {
     private Activity mActivity;
     private LayoutInflater mLayoutInflater;
 
-    private ArrayList<BookingHistoryModel> mBookingHistoryList;
-    private ArrayList<String> dummyArrayList;
-
+    private ArrayList<FlightDetailsDTO> flightDetailsDTOArrayList;
     private Dialog mDialog;
 
-    public FlightDetailsAdapter(Activity mActivity, Dialog modelDialog) {
+    public FlightDetailsAdapter(Activity mActivity, ArrayList<FlightDetailsDTO> flightDetailsDTOList, Dialog modelDialog) {
         this.mActivity = mActivity;
         this.mDialog = modelDialog;
         try {
             mLayoutInflater = (LayoutInflater) mActivity
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            dummyArrayList = new ArrayList<>();
-            dummyArrayList.add("Audi");
-            dummyArrayList.add("Bentley");
-            dummyArrayList.add("BMW");
-            dummyArrayList.add("Chevrolet");
-            dummyArrayList.add("Daewoo");
-            dummyArrayList.add("Nissan");
+            this.flightDetailsDTOArrayList = flightDetailsDTOList;
 
 
         } catch (Exception e) {
@@ -49,8 +42,8 @@ public class FlightDetailsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (dummyArrayList != null) {
-            return dummyArrayList.size();
+        if (flightDetailsDTOArrayList != null) {
+            return flightDetailsDTOArrayList.size();
         } else {
             return 0;
         }
@@ -59,8 +52,8 @@ public class FlightDetailsAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
 
-        if (dummyArrayList != null) {
-            return dummyArrayList.get(position);
+        if (flightDetailsDTOArrayList != null) {
+            return flightDetailsDTOArrayList.get(position);
         } else {
             return null;
         }
@@ -76,35 +69,32 @@ public class FlightDetailsAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.car_model_row_layout, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.flight_details_row_layout, parent, false);
             holder = new ViewHolder();
 
-            holder.model_color = (TextView) convertView.findViewById(R.id.model_color);
-            holder.model_name = (TextView) convertView.findViewById(R.id.model_name);
-            holder.model_ll = (RelativeLayout) convertView.findViewById(R.id.model_ll);
+            holder.airline_value = (TextView) convertView.findViewById(R.id.airline_value);
+            holder.from_value = (TextView) convertView.findViewById(R.id.from_value);
+            holder.status_value = (TextView) convertView.findViewById(R.id.status_value);
+            holder.flight_value = (TextView) convertView.findViewById(R.id.flight_value);
+            holder.term_value = (TextView) convertView.findViewById(R.id.term_value);
+
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.model_color.setVisibility(View.GONE);
-        holder.model_name.setText(dummyArrayList.get(position));
-
-        holder.model_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-            }
-        });
+        holder.airline_value.setText(flightDetailsDTOArrayList.get(position).getAirline());
+        holder.flight_value.setText(flightDetailsDTOArrayList.get(position).getFlightNo());
+        holder.from_value.setText(flightDetailsDTOArrayList.get(position).getDestination());
+        holder.term_value.setText(flightDetailsDTOArrayList.get(position).getTerm());
+        holder.status_value.setText(flightDetailsDTOArrayList.get(position).getStatus());
 
         return convertView;
     }
 
 
     public class ViewHolder {
-        TextView model_name, model_color;
-        RelativeLayout model_ll;
-        RadioButton selected_img;
+        TextView airline_value, from_value, status_value, flight_value, term_value;
     }
 }

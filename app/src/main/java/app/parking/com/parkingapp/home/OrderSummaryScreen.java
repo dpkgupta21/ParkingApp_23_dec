@@ -69,9 +69,9 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
         }
 
 
-        venue_et.setText(createOrderResponseDTO.getVenueName());
-        drop_time_et.setText(createOrderResponseDTO.getDropOffTime());
-        picktime_tv_et.setText(createOrderResponseDTO.getPickUpTime());
+//        venue_et.setText(createOrderResponseDTO.getVenueName());
+//        drop_time_et.setText(createOrderResponseDTO.getDropOffTime());
+//        picktime_tv_et.setText(createOrderResponseDTO.getPickUpTime());
 
     }
 
@@ -82,6 +82,7 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
 
                 String auth = SessionManager.getInstance(OrderSummaryScreen.this).getAuthToken();
                 String request = new Gson().toJson(holdOrderDTO);
+                AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(OrderSummaryScreen.this, request, auth, manageHoldOrderResponse());
 
                 break;

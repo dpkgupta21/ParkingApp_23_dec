@@ -192,8 +192,8 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         AppUtils.showLog(TAG, orderRequest);
         String auth = SessionManager.getInstance(this).getAuthToken();
         CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(this, orderRequest, auth, createOrderResponseListner());
-        Intent intent = new Intent(AddServicesScreen.this, CreditCardScreen.class);
-        startActivity(intent);
+      /*  Intent intent = new Intent(AddServicesScreen.this, OrderDetailsScreenNew.class);
+        startActivity(intent);*/
 
     }
 
@@ -212,21 +212,13 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
                 createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
 
 
-                String orderid = "";
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(response);
-                    if (jsonObject.has("_orderId")) {
-                        orderid = jsonObject.get("_orderId") + "";
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
                 HoldOrderDTO holdOrderDTO = new HoldOrderDTO();
-                holdOrderDTO = new Gson().fromJson(response, HoldOrderDTO.class);
-                holdOrderDTO.setOrderId(orderid);
+
                 holdOrderDTO.setUserEmail(SessionManager.getInstance(AddServicesScreen.this).getEmail());
+                holdOrderDTO.setOrderId(createOrderResponseDTO.getOrderStatus().getOrder_id());
+                holdOrderDTO.setDropOffTime("2016-03-17T08:11:32.244Z");
+                holdOrderDTO.setPickUpTime("2016-03-14T08:11:32.244Z");
+                holdOrderDTO.setVenueName("Vancouver");
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(AddServicesScreen.this, OrderSummaryScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);

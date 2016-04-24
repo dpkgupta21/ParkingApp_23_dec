@@ -19,7 +19,7 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
 
     private RelativeLayout signup_button;
-    private EditText email_et, pwd_et, name_et, phone_et, cnfrm_pwd_et;
+    private EditText email_et, pwd_et, name_et, phone_et, cnfrm_pwd_et, lastname_et;
     private SignupAPIHandler mSignupHandler;
     private String TAG = SignupScreen.class.getSimpleName();
 
@@ -41,6 +41,7 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
         name_et = (EditText) findViewById(R.id.name_et);
         phone_et = (EditText) findViewById(R.id.phone_et);
         cnfrm_pwd_et = (EditText) findViewById(R.id.cnfrm_pwd_et);
+        lastname_et = (EditText) findViewById(R.id.lastname_et);
 
     }
 
@@ -59,28 +60,28 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                 String pwd = pwd_et.getText().toString().trim();
                 String firstname = name_et.getText().toString().trim();
                 String confrmpwd = cnfrm_pwd_et.getText().toString().trim();
-                String lastname = " ";
-                String mobNumber = "919460940608";
+                String lastname = lastname_et.getText().toString().trim();
+                String mobNumber = phone_et.getText().toString().trim();
 
 
                 if (firstname.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_firtsname), Snackbar.LENGTH_LONG).show();
 
+                } else if (lastname.isEmpty()) {
+                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+
                 } else if (email.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
+                } else if (mobNumber.isEmpty()) {
+                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+
                 } else if (pwd.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_pwd), Snackbar.LENGTH_LONG).show();
 
                 } else if (confrmpwd.isEmpty()) {
                     Snackbar.make(v, getString(R.string.please_enter_cnfrm_pwd), Snackbar.LENGTH_LONG).show();
-                } else if (confrmpwd.equalsIgnoreCase(pwd)) {
+                } else if (!confrmpwd.equalsIgnoreCase(pwd)) {
                     Snackbar.make(v, getString(R.string.pwd_mismatch), Snackbar.LENGTH_LONG).show();
-                } else if (lastname.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
-
-                } else if (mobNumber.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
-
                 } else {
                     mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname,
                             lastname, mobNumber, new WebAPIResponseListener() {

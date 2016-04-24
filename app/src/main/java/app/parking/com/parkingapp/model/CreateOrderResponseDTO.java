@@ -8,47 +8,49 @@ import java.util.ArrayList;
  */
 public class CreateOrderResponseDTO implements Serializable {
 
-    public String getVenueName() {
-        return venueName;
+    public VehicleInfoDTO getVehicleInfo() {
+        return vehicleInfo;
     }
 
-    public void setVenueName(String venueName) {
-        this.venueName = venueName;
+    public void setVehicleInfo(VehicleInfoDTO vehicleInfo) {
+        this.vehicleInfo = vehicleInfo;
     }
 
-    public String getDropOffTime() {
-        return dropOffTime;
+    public OrderStatusDTO getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setDropOffTime(String dropOffTime) {
-        this.dropOffTime = dropOffTime;
+    public void setOrderStatus(OrderStatusDTO orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public String getPickUpTime() {
-        return pickUpTime;
+    public OrderConfirmationDTO getOrderConfirmation() {
+        return orderConfirmation;
     }
 
-    public void setPickUpTime(String pickUpTime) {
-        this.pickUpTime = pickUpTime;
+    public void setOrderConfirmation(OrderConfirmationDTO orderConfirmation) {
+        this.orderConfirmation = orderConfirmation;
     }
 
-    public String getOrderTotal() {
-        return orderTotal;
+    public ServiceInfoDTO getServiceInfo() {
+        return serviceInfo;
     }
 
-    public void setOrderTotal(String orderTotal) {
-        this.orderTotal = orderTotal;
+    public void setServiceInfo(ServiceInfoDTO serviceInfo) {
+        this.serviceInfo = serviceInfo;
     }
 
-    public String getOrderTax() {
-        return orderTax;
-    }
+//    public FlightInfoDTO getFlightInfo() {
+//        return flightInfo;
+//    }
+//
+//    public void setFlightInfo(FlightInfoDTO flightInfo) {
+//        this.flightInfo = flightInfo;
+//    }
 
-    public void setOrderTax(String orderTax) {
-        this.orderTax = orderTax;
-    }
-
-    public String venueName = "", dropOffTime = "", pickUpTime = "", orderTotal = "", orderTax = "";
-
-
+    private VehicleInfoDTO vehicleInfo;
+    private OrderStatusDTO orderStatus;
+    private OrderConfirmationDTO orderConfirmation;
+    private ServiceInfoDTO serviceInfo;
+//    private FlightInfoDTO flightInfo;
 }

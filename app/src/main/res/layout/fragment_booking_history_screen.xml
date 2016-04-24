@@ -8,37 +8,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_ll"
-        android:layout_margin="@dimen/margin_20dp"
-        android:background="@drawable/add_servies_card_bg">
+        android:layout_below="@+id/toolbar_ll">
 
         <ImageView
             android:id="@+id/top_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_servies_icon" />
+            android:src="@drawable/add_servies_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/flight_dtls_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+
             android:layout_marginTop="@dimen/margin_15dp"
             android:singleLine="true"
             android:text="@string/order_history"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_20sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/top_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/flight_dtls_tv"
-            android:layout_marginLeft="@dimen/margin_20dp"
-            android:layout_marginRight="@dimen/margin_20dp"
             android:layout_marginTop="@dimen/margin_20dp"
-            android:background="@color/transparent_black" />
+
+            android:background="@color/transparent_black"
+            android:visibility="gone" />
 
         <ListView
             android:id="@+id/booking_listview"

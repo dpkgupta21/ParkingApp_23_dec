@@ -99,6 +99,7 @@
                             android:textSize="@dimen/text_size_22sp" />
 
                         <ImageView
+                            android:id="@+id/depart_plane_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
@@ -280,6 +281,7 @@
                             android:textSize="@dimen/text_size_22sp" />
 
                         <ImageView
+                            android:id="@+id/arrival_plane_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
@@ -397,7 +399,7 @@
                             android:textSize="@dimen/text_size_18sp" />
 
                         <TextView
-                            android:id="@+id/drop_pickup"
+                            android:id="@+id/pickup_term"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"

@@ -10,7 +10,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/margin_20dp"
         android:layout_marginRight="@dimen/margin_20dp"
-        android:background="@color/white"
+        android:background="@color/search_bg"
         android:padding="@dimen/margin_30dp">
 
         <TextView
@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@color/white"
+            android:background="@color/search_bg"
             android:gravity="center"
             android:padding="@dimen/margin_10dp"
-            android:text="@string/job_completed"
-            android:textColor="@color/black"
+            android:text="Please Make Payment"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_20sp"
             android:textStyle="normal" />
 
@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/margin_40"
             android:layout_marginRight="@dimen/margin_40"
             android:layout_marginTop="@dimen/margin_10dp"
-            android:background="@drawable/green_round_corner_btn_selector_btn"
+            android:background="@drawable/search_btn_selector_btn"
             android:padding="@dimen/margin_10dp">
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:text="@string/done"
+                android:text="@string/ok"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_18sp"
                 android:textStyle="normal" />

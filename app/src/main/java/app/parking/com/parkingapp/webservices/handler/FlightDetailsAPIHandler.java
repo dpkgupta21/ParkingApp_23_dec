@@ -4,44 +4,48 @@ import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request.Method;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.model.FlightDetailsDTO;
+import app.parking.com.parkingapp.model.ListOfServicesDTO;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 /**
- * Create ORder API Handler
+ * Services available for a place API Handler
  */
-public class CreateOrderAPIHandler {
+public class FlightDetailsAPIHandler {
     /**
-     * Instance object of Create Order API
+     * Instance object of ServicesAPIHandler API
      */
     private Activity mActivity;
     /**
      * Debug TAG
      */
-    private String TAG = CreateOrderAPIHandler.class.getSimpleName();
+    private String TAG = FlightDetailsAPIHandler.class.getSimpleName();
     /**
      * Request Data
      */
+    private String flightName, flightNo;
     private String auth_token;
-    private final String parameters;
+
+    private ArrayList<FlightDetailsDTO> flightDetailsDTOArrayList;
 
     /**
      * API Response Listener
@@ -52,14 +56,15 @@ public class CreateOrderAPIHandler {
      * @param mActivity
      * @param webAPIResponseListener
      */
-    public CreateOrderAPIHandler(Activity mActivity, String parameters,
-                                 String auth, WebAPIResponseListener webAPIResponseListener) {
+    public FlightDetailsAPIHandler(Activity mActivity, String flightNo, String flightName, String auth_token, WebAPIResponseListener webAPIResponseListener) {
         AppUtils
                 .showProgressDialog(mActivity, "Loading...", false);
         this.mActivity = mActivity;
-        this.parameters = parameters;
-        this.auth_token = auth;
+        this.auth_token = auth_token;
+        this.flightName = flightName;
+        this.flightNo = flightNo;
         this.mResponseListener = webAPIResponseListener;
+        flightDetailsDTOArrayList = new ArrayList<>();
         postAPICall();
 
     }
@@ -68,27 +73,26 @@ public class CreateOrderAPIHandler {
      * Making json object request
      */
     public void postAPICall() {
-        /**
-         * String Request
-         */
 
-        JSONObject mJsonObjectRequest = null;
+        JSONObject mJsonObjectRequest = new JSONObject();
         try {
-            mJsonObjectRequest = new JSONObject(parameters);
+            mJsonObjectRequest.put(GlobalKeys.flightName, flightName);
+            mJsonObjectRequest.put(GlobalKeys.flightNo, flightNo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-
         JsonObjectRequest mJsonRequest = new JsonObjectRequest(
-                Method.POST,
-                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.CREATE_ORDER_API)
+                Request.Method.POST,
+                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FLIGHT_INFO)
                         .trim(), mJsonObjectRequest,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mResponseListener.onSuccessOfResponse(response.toString());
+                        AppUtils.showInfoLog(TAG, "Response :"
+                                + response);
+
+                        mResponseListener.onSuccessOfResponse(response);
                         AppUtils.hideProgressDialog();
 
                     }
@@ -111,7 +115,6 @@ public class CreateOrderAPIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
-                params.put(GlobalKeys.AUTHTOKEN, auth_token);
                 return params;
             }
 
@@ -119,12 +122,13 @@ public class CreateOrderAPIHandler {
         // Adding request to request queue
         if (ParkingAppController.getInstance() != null) {
             ParkingAppController.getInstance().addToRequestQueue(
-                    mJsonRequest, GlobalKeys.PILLION_LOGOUT_REQUEST_KEY);
+                    mJsonRequest, GlobalKeys.PILLION_LOGIN_REQUEST_KEY);
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.ONE_SECOND * 20, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
+
 
 }

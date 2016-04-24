@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -16,6 +17,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.FlightArrivalDTO;
 import app.parking.com.parkingapp.model.FlightDepartureDTO;
@@ -25,7 +27,7 @@ import app.parking.com.parkingapp.utils.AppUtils;
 public class FlightDetailsScreen extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;
     private TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv, toolbar_right_tv;
-    private TextView flight_num_et, flight_number_depart_et;
+    private TextView flight_num_et, flight_number_depart_et, drop_term, pickup_term;
     private boolean isDropDateClicked = true, isDropTimeClicked = true;
     private Calendar calendar;
     private int mYear, mDepartYear, mArrivalYear;
@@ -39,7 +41,9 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
     private FlightDepartureDTO flightDepartureDTO;
     private String TAG = FlightDetailsScreen.class.getSimpleName();
     private RelativeLayout toolbar_right_rl;
+    private ImageView depart_plane_icon, arrival_plane_icon;
 
+    private FlightDetailInterface flightDetailInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +51,40 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.flight_details_screen);
         initViews();
         assignClicks();
-        AppDialogs.flightDetailsDialog(this);
+
+        manageInterface();
+
+    }
+
+    /**
+     * showing selected flight details on UI
+     *
+     * @return
+     */
+    private FlightDetailInterface manageInterface() {
+
+        flightDetailInterface = new FlightDetailInterface() {
+            @Override
+            public void onArrivalDetailsSelected(String airline, String from, String status, String flightNumber, String term, String departTime, String arrivalTime) {
+
+                flight_num_et.setText(flightNumber);
+                pickup_term.setText(term);
+            }
+
+            @Override
+            public void onDepartureDetailsSelected(String airline, String from, String status, String flightNumber, String term, String departTime, String arrivalTime) {
+                flight_number_depart_et.setText(flightNumber);
+                drop_term.setText(term);
+
+            }
+        };
+        return flightDetailInterface;
     }
 
     private void assignClicks() {
 
-        arrival_date_tv.setOnClickListener(this);
-        arrival_time_tv.setOnClickListener(this);
-        depart_time_tv.setOnClickListener(this);
-        depart_date_tv.setOnClickListener(this);
+        arrival_plane_icon.setOnClickListener(this);
+        depart_plane_icon.setOnClickListener(this);
         toolbar_right_rl.setOnClickListener(this);
 
 
@@ -84,8 +113,11 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
         depart_date_tv = (TextView) findViewById(R.id.depart_date_tv);
         flight_num_et = (TextView) findViewById(R.id.flight_num_et);
         flight_number_depart_et = (TextView) findViewById(R.id.flight_number_depart_et);
+        pickup_term = (TextView) findViewById(R.id.pickup_term);
+        drop_term = (TextView) findViewById(R.id.drop_term);
 
-
+        depart_plane_icon = (ImageView) findViewById(R.id.depart_plane_icon);
+        arrival_plane_icon = (ImageView) findViewById(R.id.arrival_plane_icon);
         calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
@@ -136,7 +168,7 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
                 flightDepartureDTO.setDestination("Tornoto");
                 createOrderDTO.setArrivalFlight(flightArrivalDTO);
                 createOrderDTO.setDestinationFlight(flightDepartureDTO);
-                startActivity(new Intent(this, AddServicesScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
+                startActivity(new Intent(this, VehicleDetailsScreen.class).putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
 
                 break;
 
@@ -167,6 +199,14 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 //                TimePickerDialog dialogDepartTime;
 //                dialogDepartTime = new TimePickerDialog(this, mTimeSetListner, mHour, mMinute, true);
 //                dialogDepartTime.show();
+                break;
+
+            case R.id.depart_plane_icon:
+                AppDialogs.flightDetailsDialog(this, manageInterface(), true);
+                break;
+            case R.id.arrival_plane_icon:
+                AppDialogs.flightDetailsDialog(this, manageInterface(), false);
+
                 break;
         }
 

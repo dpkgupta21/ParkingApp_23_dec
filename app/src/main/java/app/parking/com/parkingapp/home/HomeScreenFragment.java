@@ -210,7 +210,7 @@ public class HomeScreenFragment extends Fragment {
                     AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
                     createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
                     createOrderDTO.setVenueName("Vancouver");
-                    Intent intent = new Intent(getContext(), VehicleDetailsScreen.class);
+                    Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
                     intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
                     startActivity(intent);
                 } else {

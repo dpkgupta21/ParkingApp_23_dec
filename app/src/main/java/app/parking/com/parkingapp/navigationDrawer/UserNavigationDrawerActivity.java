@@ -222,19 +222,19 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 break;
             case 1:
                 fragment = new ViewBookingHistoryFragment();
-                title = "Booking History";
+                title = " ";
                 break;
             case 2:
                 // fragment = new AlertFragment();
-                title = "Order Discount";
+                title = " ";
                 break;
             case 3:
                 // fragment = new AlertFragment();
-                title = "About Us";
+                title = " ";
                 break;
             case 4:
                 // fragment = new AlertFragment();
-                title = "Notification";
+                title = " ";
                 break;
             default:
                 break;

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,9 +37,9 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
     private Toolbar mToolbar;
     private TextView toolbar_title, toolbar_right_tv, no_service_tv;
     private RelativeLayout toolbar_right_rl;
-
+    private ImageView payment;
     private ListView services_lv;
-    private RelativeLayout submit_button;
+    private RelativeLayout submit_button, action_button;
 
 
     @Override
@@ -51,8 +52,8 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
     }
 
     private void assignClicks() {
-        toolbar_right_rl.setOnClickListener(this);
-
+        action_button.setOnClickListener(this);
+        payment.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -63,7 +64,7 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
         services_lv = (ListView) findViewById(R.id.services_lv);
         no_service_tv = (TextView) findViewById(R.id.no_service_tv);
         submit_button = (RelativeLayout) findViewById(R.id.submit_button);
-
+        action_button = (RelativeLayout) findViewById(R.id.action_button);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(" ");
@@ -75,10 +76,9 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
 
-        toolbar_right_rl.setVisibility(View.VISIBLE);
-        toolbar_right_tv.setText(R.string.skip);
+        toolbar_right_rl.setVisibility(View.INVISIBLE);
 
-
+        payment = (ImageView) findViewById(R.id.payment);
     }
 
 
@@ -107,8 +107,8 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
         switch (v.getId()) {
 
 
-            case R.id.toolbar_right_rl:
-
+            case R.id.payment:
+                startActivity(new Intent(this, CreditCardScreen.class));
 
                 break;
         }

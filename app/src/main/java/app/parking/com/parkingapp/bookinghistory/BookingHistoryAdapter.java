@@ -32,7 +32,6 @@ public class BookingHistoryAdapter extends BaseAdapter {
             mLayoutInflater = (LayoutInflater) mActivity
                     .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

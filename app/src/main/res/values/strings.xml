@@ -193,6 +193,13 @@
     <string name="packed_time">Packed Time</string>
     <string name="airline_loc">Airline, Location or Flight #</string>
     <string name="search">Search</string>
+    <string name="airline">Airline</string>
+    <string name="from">From</string>
+    <string name="status">Status</string>
+    <string name="flight">Flight #</string>
+    <string name="terms">Term</string>
+    <string name="lastname">Last Name</string>
+    <string name="ok">Ok</string>
 
 </resources>
 
