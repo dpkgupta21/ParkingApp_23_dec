@@ -13,9 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -220,7 +217,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
                 holdOrderDTO.setPickUpTime("2016-03-14T08:11:32.244Z");
                 holdOrderDTO.setVenueName("Vancouver");
                 AppUtils.showLog(TAG, response);
-                Intent intent = new Intent(AddServicesScreen.this, OrderSummaryScreen.class);
+                Intent intent = new Intent(AddServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);

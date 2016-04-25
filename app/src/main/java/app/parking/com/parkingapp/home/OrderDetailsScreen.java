@@ -36,6 +36,8 @@ public class OrderDetailsScreen extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.order_details_screen);
         initViews();
         assignClicks();
+
+
     }
 
     private void assignClicks() {

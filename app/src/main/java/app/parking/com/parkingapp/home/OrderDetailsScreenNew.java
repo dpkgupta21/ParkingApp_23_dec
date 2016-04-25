@@ -48,6 +48,7 @@ public class OrderDetailsScreenNew extends AppCompatActivity implements View.OnC
         setContentView(R.layout.order_details_screen_new);
         initViews();
         assignClicks();
+        AppDialogs.paymentDialog(this);
 
     }
 

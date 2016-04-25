@@ -3,13 +3,16 @@ package app.parking.com.parkingapp.home;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -266,6 +269,66 @@ public class AppDialogs {
                     }
                     mModelDialog.dismiss();
 
+                }
+            });
+
+            try {
+                // Display the dialog
+                mModelDialog.show();
+            } catch (WindowManager.BadTokenException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    public static void paymentDialog(final Activity mActivity
+    ) {
+
+        try {
+            if (mModelDialog != null && mModelDialog.isShowing()) {
+                mModelDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (mActivity != null) {
+            mModelDialog = new Dialog(mActivity);
+            // hide to default title for Dialog
+            mModelDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            // inflate the layout dialog_layout.xml and set it as
+            // contentView
+            LayoutInflater inflater = (LayoutInflater) mActivity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.text_and_button_dialog, null,
+                    false);
+            mModelDialog.setCanceledOnTouchOutside(false);
+            mModelDialog.setContentView(view);
+            mModelDialog.setCancelable(false);
+            mModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            WindowManager.LayoutParams lp = mModelDialog.getWindow().getAttributes();
+            lp.dimAmount = 0.8f;
+            mModelDialog.getWindow().setAttributes(lp);
+
+
+            ImageView cancel_btn = (ImageView) mModelDialog.findViewById(R.id.cancel_btn);
+            RelativeLayout okButton = (RelativeLayout) mModelDialog.findViewById(R.id.okButton);
+
+            cancel_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.finish();
+                }
+            });
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.startActivity(new Intent(mActivity, CreditCardScreen.class));
                 }
             });
 

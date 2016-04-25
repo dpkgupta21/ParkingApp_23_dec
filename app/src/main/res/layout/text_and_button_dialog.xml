@@ -5,50 +5,63 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_marginRight="@dimen/margin_20dp"
-        android:background="@color/search_bg"
-        android:padding="@dimen/margin_30dp">
-
-        <TextView
-            android:id="@+id/messageText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/search_bg"
-            android:gravity="center"
-            android:padding="@dimen/margin_10dp"
-            android:text="Please Make Payment"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
-            android:textStyle="normal" />
+        android:layout_centerInParent="true">
 
         <RelativeLayout
-            android:id="@+id/closeButtonView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/messageText"
-            android:layout_marginLeft="@dimen/margin_40"
-            android:layout_marginRight="@dimen/margin_40"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:background="@drawable/search_btn_selector_btn"
-            android:padding="@dimen/margin_10dp">
+            android:layout_marginLeft="@dimen/margin_20dp"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:background="@color/search_bg"
+            android:padding="@dimen/margin_30dp">
 
             <TextView
-                android:id="@+id/button_text"
+                android:id="@+id/messageText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/search_bg"
                 android:gravity="center"
-                android:text="@string/ok"
+                android:padding="@dimen/margin_10dp"
+                android:text="Please Make Payment"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/text_size_20sp"
                 android:textStyle="normal" />
-        </RelativeLayout>
-    </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/okButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/messageText"
+                android:layout_marginLeft="@dimen/margin_40"
+                android:layout_marginRight="@dimen/margin_40"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:background="@drawable/search_btn_selector_btn"
+                android:padding="@dimen/margin_10dp">
+
+                <TextView
+                    android:id="@+id/button_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/ok"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:src="@drawable/dashboard_drop_off_calendar_icon" />
+    </RelativeLayout>
 </RelativeLayout>

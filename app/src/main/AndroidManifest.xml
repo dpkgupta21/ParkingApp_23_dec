@@ -67,7 +67,7 @@
         </activity>
 
         <activity
-            android:name=".home.OrderSummaryScreen"
+            android:name=".home.HoldOrderScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <activity
             android:name=".bookinghistory.BookingHistoryDetailScreen"

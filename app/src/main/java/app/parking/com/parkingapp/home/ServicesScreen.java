@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.iClasses.RemoveServices;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
@@ -179,7 +178,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 holdOrderDTO.setOrderId(orderid);
                 holdOrderDTO.setUserEmail(SessionManager.getInstance(ServicesScreen.this).getEmail());
                 AppUtils.showLog(TAG, response);
-                Intent intent = new Intent(ServicesScreen.this, OrderSummaryScreen.class);
+                Intent intent = new Intent(ServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);

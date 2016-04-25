@@ -25,20 +25,20 @@ import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.HoldOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
-public class OrderSummaryScreen extends AppCompatActivity implements View.OnClickListener {
+public class HoldOrderScreen extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;
     private RelativeLayout confirm_button;
     private HoldOrderDTO holdOrderDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private HoldOrderResponseDTO holdOrderResponseDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
-    private String TAG = OrderSummaryScreen.class.getSimpleName();
-    private TextView venue_et, drop_time_et, picktime_tv_et;
+    private String TAG = HoldOrderScreen.class.getSimpleName();
+    private TextView dest_tv, arrival_tv, drop_off_tv, pickup_tv, duration_tv, price_tv, toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_summary_screen);
+        setContentView(R.layout.hold_order_screen);
         initViews();
         assignClicks();
     }
@@ -49,16 +49,22 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.order_summary));
+        getSupportActionBar().setTitle(" ");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
+        toolbar_title.setVisibility(View.VISIBLE);
+        toolbar_title.setText(getResources().getString(R.string.parkforu));
 
+        dest_tv = (TextView) findViewById(R.id.dest_tv);
+        arrival_tv = (TextView) findViewById(R.id.arrival_tv);
+        drop_off_tv = (TextView) findViewById(R.id.drop_off_tv);
+        pickup_tv = (TextView) findViewById(R.id.pickup_tv);
+        duration_tv = (TextView) findViewById(R.id.duration_tv);
+        price_tv = (TextView) findViewById(R.id.price_tv);
         confirm_button = (RelativeLayout) findViewById(R.id.confirm_button);
-        venue_et = (TextView) findViewById(R.id.venue_et);
-        drop_time_et = (TextView) findViewById(R.id.drop_time_et);
-        picktime_tv_et = (TextView) findViewById(R.id.picktime_tv_et);
-
         if (getIntent() != null) {
             holdOrderDTO = (HoldOrderDTO) getIntent().getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
             createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
@@ -80,11 +86,11 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.confirm_button:
 
-                String auth = SessionManager.getInstance(OrderSummaryScreen.this).getAuthToken();
+                String auth = SessionManager.getInstance(HoldOrderScreen.this).getAuthToken();
                 String request = new Gson().toJson(holdOrderDTO);
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
-                        OrderSummaryScreen.this, request, auth, manageHoldOrderResponse());
+                        HoldOrderScreen.this, request, auth, manageHoldOrderResponse());
 
                 break;
         }
@@ -114,8 +120,8 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
                 purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
                 purchaseOrderDTO.setSlotId(slotId);
 
-                Intent intent = new Intent(OrderSummaryScreen.this,
-                        OrderConfirmationDetailsScreen.class);
+                Intent intent = new Intent(HoldOrderScreen.this,
+                        OrderDetailsScreenNew.class);
                 intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO);
                 intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);

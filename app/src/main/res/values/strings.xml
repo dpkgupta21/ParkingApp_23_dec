@@ -200,6 +200,11 @@
     <string name="terms">Term</string>
     <string name="lastname">Last Name</string>
     <string name="ok">Ok</string>
+    <string name="hold_order">Hold Order</string>
+    <string name="drop_off_">Drop Off</string>
+    <string name="pick_up_">Pick Up</string>
+    <string name="duration">Duration</string>
+    <string name="price">Price</string>
 
 </resources>
 
