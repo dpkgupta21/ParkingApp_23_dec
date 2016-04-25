@@ -8,6 +8,13 @@ import java.util.ArrayList;
  */
 public class CreateOrderResponseDTO implements Serializable {
 
+    private FlightInfoDTO flightInfo;
+    private VehicleInfoDTO vehicleInfo;
+    private ServiceInfoDTO serviceInfo;
+    private OrderStatusDTO orderStatus;
+    private OrderConfirmationDTO orderConfirmation;
+
+
     public VehicleInfoDTO getVehicleInfo() {
         return vehicleInfo;
     }
@@ -40,17 +47,13 @@ public class CreateOrderResponseDTO implements Serializable {
         this.serviceInfo = serviceInfo;
     }
 
-//    public FlightInfoDTO getFlightInfo() {
-//        return flightInfo;
-//    }
-//
-//    public void setFlightInfo(FlightInfoDTO flightInfo) {
-//        this.flightInfo = flightInfo;
-//    }
+    public FlightInfoDTO getFlightInfo() {
+        return flightInfo;
+    }
 
-    private VehicleInfoDTO vehicleInfo;
-    private OrderStatusDTO orderStatus;
-    private OrderConfirmationDTO orderConfirmation;
-    private ServiceInfoDTO serviceInfo;
-//    private FlightInfoDTO flightInfo;
+    public void setFlightInfo(FlightInfoDTO flightInfo) {
+        this.flightInfo = flightInfo;
+    }
+
+
 }

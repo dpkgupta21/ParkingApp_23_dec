@@ -7,6 +7,20 @@ import java.io.Serializable;
  */
 public class OrderConfirmationDTO implements Serializable {
 
+    private String paymentTransactionId = "";
+    private String venueName = "";
+    private String slotName = "";
+    private String slotLevel = "";
+    private String status = "";
+    private String slotId = "";
+
+    public String getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(String slotId) {
+        this.slotId = slotId;
+    }
 
     public String getPaymentTransactionId() {
         return paymentTransactionId;
@@ -48,5 +62,4 @@ public class OrderConfirmationDTO implements Serializable {
         this.status = status;
     }
 
-    String paymentTransactionId = "", venueName = "", slotName = "", slotLevel = "", status = "";
 }

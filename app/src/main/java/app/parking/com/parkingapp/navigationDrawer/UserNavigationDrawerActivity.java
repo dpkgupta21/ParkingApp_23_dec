@@ -258,8 +258,9 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         String deviceType = "ANDROID";
         String regId = ParkingPreference.getPushRegistrationId(mActivity);
         String auth = SessionManager.getInstance(mActivity).getAuthToken();
+        String email = SessionManager.getInstance(mActivity).getEmail();
         mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this, regId, deviceId,
-                deviceType, auth, new WebAPIResponseListener() {
+                deviceType, email, auth, new WebAPIResponseListener() {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
 

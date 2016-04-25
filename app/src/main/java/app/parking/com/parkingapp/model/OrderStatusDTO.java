@@ -7,6 +7,11 @@ import java.io.Serializable;
  */
 public class OrderStatusDTO implements Serializable {
 
+    private String status = "";
+    private String order_id = "";
+    private String orderTotal = "";
+    private String orderTax = "";
+
     public String getStatus() {
         return status;
     }
@@ -39,7 +44,5 @@ public class OrderStatusDTO implements Serializable {
         this.orderTax = orderTax;
     }
 
-    String status = "", order_id = "",
-            orderTotal = "",
-            orderTax = "";
+
 }

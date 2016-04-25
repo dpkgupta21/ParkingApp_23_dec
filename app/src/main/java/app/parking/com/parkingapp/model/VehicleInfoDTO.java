@@ -6,6 +6,9 @@ import java.io.Serializable;
  * Created by Harish on 4/24/2016.
  */
 public class VehicleInfoDTO implements Serializable {
+    private String vehicleMake = "";
+    private String vehicleColor = "";
+    private String vehicleModel = "";
 
     public String getVehicleMake() {
         return vehicleMake;
@@ -31,7 +34,7 @@ public class VehicleInfoDTO implements Serializable {
         this.vehicleModel = vehicleModel;
     }
 
-    String vehicleMake = "", vehicleColor = "", vehicleModel = "";
+
 
 
 

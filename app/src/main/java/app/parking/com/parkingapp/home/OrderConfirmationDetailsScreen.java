@@ -32,6 +32,7 @@ public class OrderConfirmationDetailsScreen extends AppCompatActivity implements
     private RelativeLayout confirm_button;
     private PurchaseOrderDTO purchaseOrderDTO;
     private HoldOrderResponseDTO holdOrderResponseDTO;
+    private CreateOrderResponseDTO createOrderResponseDTO;
     private String TAG = OrderConfirmationDetailsScreen.class.getSimpleName();
     private TextView venue_et, drop_time_et, picktime_tv_et, order_total_et, tax_et;
 
@@ -64,17 +65,19 @@ public class OrderConfirmationDetailsScreen extends AppCompatActivity implements
         if (getIntent() != null) {
             purchaseOrderDTO = (PurchaseOrderDTO) getIntent().getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
             holdOrderResponseDTO = (HoldOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY);
+            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
+                    getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
         } else {
             purchaseOrderDTO = new PurchaseOrderDTO();
             holdOrderResponseDTO = new HoldOrderResponseDTO();
         }
 
 
-        venue_et.setText(holdOrderResponseDTO.getVenueName());
-        drop_time_et.setText(holdOrderResponseDTO.getDropOffTime());
-        picktime_tv_et.setText(holdOrderResponseDTO.getPickUpTime());
-        order_total_et.setText(holdOrderResponseDTO.getOrderTotal());
-        tax_et.setText(holdOrderResponseDTO.getOrderTax());
+//        venue_et.setText(holdOrderResponseDTO.getVenueName());
+//        drop_time_et.setText(holdOrderResponseDTO.getDropOffTime());
+//        picktime_tv_et.setText(holdOrderResponseDTO.getPickUpTime());
+//        order_total_et.setText(holdOrderResponseDTO.getOrderTotal());
+//        tax_et.setText(holdOrderResponseDTO.getOrderTax());
 
     }
 
@@ -83,12 +86,16 @@ public class OrderConfirmationDetailsScreen extends AppCompatActivity implements
         switch (v.getId()) {
             case R.id.confirm_button:
 
-                startActivity(new Intent(OrderConfirmationDetailsScreen.this, CreditCardScreen.class).putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO));
+                Intent intent = new Intent(OrderConfirmationDetailsScreen.this,
+                        CreditCardScreen.class);
+                intent.putExtra(AppConstants.PURCHASE_ORDER_KEY,
+                        purchaseOrderDTO);
+                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY,
+                        createOrderResponseDTO);
+                startActivity(intent);
                 break;
         }
     }
-
-
 
 
     @Override

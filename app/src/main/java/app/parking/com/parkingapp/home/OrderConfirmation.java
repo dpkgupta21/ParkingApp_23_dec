@@ -48,8 +48,10 @@ public class OrderConfirmation extends AppCompatActivity implements View.OnClick
 
 
         if (getIntent() != null) {
-            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
-            AppUtils.showLog(TAG, purchaseOrderDTO.getPickUpTime() + " " + purchaseOrderDTO.getDropOffTime());
+            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().
+                    getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
+            AppUtils.showLog(TAG, purchaseOrderDTO.getPickUpTime() + " " +
+                    purchaseOrderDTO.getDropOffTime());
         } else {
             purchaseOrderDTO = new PurchaseOrderDTO();
         }

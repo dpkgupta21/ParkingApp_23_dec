@@ -83,7 +83,8 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
                 String auth = SessionManager.getInstance(OrderSummaryScreen.this).getAuthToken();
                 String request = new Gson().toJson(holdOrderDTO);
                 AppUtils.showLog(TAG, request);
-                HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(OrderSummaryScreen.this, request, auth, manageHoldOrderResponse());
+                HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
+                        OrderSummaryScreen.this, request, auth, manageHoldOrderResponse());
 
                 break;
         }
@@ -96,7 +97,7 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
 
-                holdOrderResponseDTO = new Gson().fromJson(response, HoldOrderResponseDTO.class);
+                createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
                 JSONObject jsonObject = null;
 
@@ -113,9 +114,11 @@ public class OrderSummaryScreen extends AppCompatActivity implements View.OnClic
                 purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
                 purchaseOrderDTO.setSlotId(slotId);
 
-                Intent intent = new Intent(OrderSummaryScreen.this, OrderConfirmationDetailsScreen.class);
+                Intent intent = new Intent(OrderSummaryScreen.this,
+                        OrderConfirmationDetailsScreen.class);
                 intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO);
                 intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
+                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
             }
 

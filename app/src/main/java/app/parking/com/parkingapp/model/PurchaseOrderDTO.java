@@ -62,15 +62,13 @@ public class PurchaseOrderDTO implements Serializable {
     String pickUpTime = "";
     String dropOffTime = "";
     String slotId = "";
+    String stripeToken = "";
 
-    public String getPurchaseStripeToken() {
-        return purchaseStripeToken;
+    public String getStripeToken() {
+        return stripeToken;
     }
 
-    public void setPurchaseStripeToken(String purchaseStripeToken) {
-        this.purchaseStripeToken = purchaseStripeToken;
+    public void setStripeToken(String stripeToken) {
+        this.stripeToken = stripeToken;
     }
-
-    String purchaseStripeToken = "";
-
 }

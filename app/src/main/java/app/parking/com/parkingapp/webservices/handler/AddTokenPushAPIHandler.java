@@ -38,7 +38,7 @@ public class AddTokenPushAPIHandler {
     /**
      * Request Data
      */
-    private String regToken, deviceId, deviceType, authToken;
+    private String regToken, deviceId, deviceType, email, authToken;
 
     private String device_token, device_platform;
     /**
@@ -53,7 +53,7 @@ public class AddTokenPushAPIHandler {
      * @param webAPIResponseListener
      */
     public AddTokenPushAPIHandler(Activity mActivity, String regToken,
-                                  String deviceId, String deviceType,
+                                  String deviceId, String deviceType, String email,
                                   String authToken, WebAPIResponseListener webAPIResponseListener) {
         AppUtils
                 .showProgressDialog(mActivity, "Login...", false);
@@ -61,6 +61,7 @@ public class AddTokenPushAPIHandler {
         this.regToken = regToken;
         this.deviceId = deviceId;
         this.deviceType = deviceType;
+        this.email = email;
         this.authToken = authToken;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
@@ -77,7 +78,7 @@ public class AddTokenPushAPIHandler {
 
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
-            String email = SessionManager.getInstance(mActivity).getEmail();
+
             mJsonObjectRequest.put(GlobalKeys.REG_TOKEN, regToken);
             mJsonObjectRequest.put(GlobalKeys.DEVICE_ID, deviceId);
             mJsonObjectRequest.put(GlobalKeys.DEVICE_TYPE, deviceType);
