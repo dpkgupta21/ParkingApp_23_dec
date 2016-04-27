@@ -188,7 +188,9 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
         String auth = SessionManager.getInstance(this).getAuthToken();
-        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(this, orderRequest, auth, createOrderResponseListner());
+        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(this,
+                orderRequest, auth,
+                createOrderResponseListner());
       /*  Intent intent = new Intent(AddServicesScreen.this, OrderDetailsScreenNew.class);
         startActivity(intent);*/
 
