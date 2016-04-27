@@ -16,13 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
+import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.FlightDetailsDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.FlightDetailsAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
@@ -37,6 +45,7 @@ public class AppDialogs {
      */
 
     private static Dialog mModelDialog;
+    private static ArrayList<FlightDetailsDTO> flightDetailsDTOList = null;
 
     public static void selectCarMake(final Activity mActivity,
                                      final TextView textView) {
@@ -191,8 +200,9 @@ public class AppDialogs {
     }
 
 
-    public static void flightDetailsDialog(final Activity mActivity, final FlightDetailInterface flightDetailInterface, final boolean isDepartSelected
-    ) {
+    public static void flightDetailsDialog(final Activity mActivity,
+                                           final FlightDetailInterface flightDetailInterface,
+                                           final boolean isDepartSelected) {
 
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
@@ -220,7 +230,8 @@ public class AppDialogs {
             lp.dimAmount = 0.8f;
             mModelDialog.getWindow().setAttributes(lp);
 
-            final ArrayList<FlightDetailsDTO> flightDetailsDTOList = new ArrayList<FlightDetailsDTO>();
+
+            //final ArrayList<FlightDetailsDTO> flightDetailsDTOList = new ArrayList<FlightDetailsDTO>();
             final ListView flightDetails = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             TextView search_btn = (TextView) mModelDialog.findViewById(R.id.search_btn);
@@ -233,15 +244,24 @@ public class AppDialogs {
                         public void onSuccessOfResponse(Object... arguments) {
 
                             String response = arguments[0].toString();
+                            JSONObject responseObject = null;
+                            try {
+                                responseObject = new JSONObject(response);
 
-                            FlightDetailsDTO flightDetailsDTO = new Gson().fromJson(response, FlightDetailsDTO.class);
+                                Type type = new TypeToken<List<FlightDetailsDTO>>() {
+                                }.getType();
 
-                            flightDetailsDTOList.clear();
-                            flightDetailsDTOList.add(flightDetailsDTO);
+
+                                flightDetailsDTOList = new Gson().
+                                        fromJson(responseObject.getJSONArray("flightResponse").toString(), type);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                             AppUtils.showLog(TAG, response);
 
-                            FlightDetailsAdapter adapter = new FlightDetailsAdapter(
-                                    mActivity, flightDetailsDTOList, mModelDialog);
+                            FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
+                                    flightDetailsDTOList, mModelDialog);
                             flightDetails.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
 
@@ -261,11 +281,23 @@ public class AppDialogs {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     AppUtils.showLog(TAG, position + "");
                     if (isDepartSelected) {
-                        flightDetailInterface.onDepartureDetailsSelected(flightDetailsDTOList.get(position).getAirline(), flightDetailsDTOList.get(position).getDestination(), flightDetailsDTOList.get(position).getStatus(), flightDetailsDTOList.get(position).getFlightNo(),
-                                flightDetailsDTOList.get(position).getTerm(), flightDetailsDTOList.get(position).getDeprtTime(), flightDetailsDTOList.get(position).getArrivalTime());
+                        flightDetailInterface.onDepartureDetailsSelected(
+                                flightDetailsDTOList.get(position).getAirline(),
+                                flightDetailsDTOList.get(position).getDestination(),
+                                flightDetailsDTOList.get(position).getStatus(),
+                                flightDetailsDTOList.get(position).getFlightNo(),
+                                flightDetailsDTOList.get(position).getTerm(),
+                                flightDetailsDTOList.get(position).getDeprtTime(),
+                                flightDetailsDTOList.get(position).getArrivalTime());
                     } else {
-                        flightDetailInterface.onArrivalDetailsSelected(flightDetailsDTOList.get(position).getAirline(), flightDetailsDTOList.get(position).getDestination(), flightDetailsDTOList.get(position).getStatus(), flightDetailsDTOList.get(position).getFlightNo(),
-                                flightDetailsDTOList.get(position).getTerm(), flightDetailsDTOList.get(position).getDeprtTime(), flightDetailsDTOList.get(position).getArrivalTime());
+                        flightDetailInterface.onArrivalDetailsSelected(
+                                flightDetailsDTOList.get(position).getAirline(),
+                                flightDetailsDTOList.get(position).getDestination(),
+                                flightDetailsDTOList.get(position).getStatus(),
+                                flightDetailsDTOList.get(position).getFlightNo(),
+                                flightDetailsDTOList.get(position).getTerm(),
+                                flightDetailsDTOList.get(position).getDeprtTime(),
+                                flightDetailsDTOList.get(position).getArrivalTime());
                     }
                     mModelDialog.dismiss();
 
@@ -285,8 +317,8 @@ public class AppDialogs {
     }
 
 
-    public static void paymentDialog(final Activity mActivity
-    ) {
+    public static void paymentDialog(final Activity mActivity,
+                                     final CreateOrderResponseDTO mCreateOrderResponseDTO) {
 
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
@@ -328,7 +360,17 @@ public class AppDialogs {
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.startActivity(new Intent(mActivity, CreditCardScreen.class));
+
+                    if(mModelDialog!=null){
+                        mModelDialog.dismiss();
+                        mModelDialog=null;
+                    }
+                    Intent intent = new Intent(mActivity,
+                            CreditCardScreen.class);
+
+                    intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, mCreateOrderResponseDTO);
+                    mActivity.startActivity(intent);
+
                 }
             });
 

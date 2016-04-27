@@ -73,16 +73,17 @@
                     android:src="@drawable/flight_detail_btn_normal" />
 
                 <RelativeLayout
-                    android:visibility="gone"
+                    android:id="@+id/relative_flight_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/margin_15dp"
                     android:layout_marginRight="@dimen/margin_15dp"
                     android:background="@drawable/order_details_card_bg_popup"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
 
-
-
+                    <include layout="@layout/info_popup_flight" />
 
                 </RelativeLayout>
 
@@ -99,6 +100,21 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/vehicle_details_normal" />
 
+                <RelativeLayout
+                    android:id="@+id/relative_vehicle_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+                    <include layout="@layout/info_popup_vehicle" />
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="@dimen/margin_5dp"
                     android:layout_height="50dp"
@@ -112,6 +128,20 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/add_servies_btn_normal" />
 
+                <RelativeLayout
+                    android:id="@+id/relative_service_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="@dimen/margin_5dp"
                     android:layout_height="50dp"
@@ -119,11 +149,25 @@
                     android:background="@color/order_details_horizntl_line_color" />
 
                 <ImageView
-                    android:id="@+id/confirmation"
+                    android:id="@+id/order_confirmation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/confirmation_btn_normal" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_order_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="@dimen/margin_5dp"
@@ -138,6 +182,20 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/payment_details_btn_normal" />
 
+                <RelativeLayout
+                    android:id="@+id/relative_payment_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="@dimen/margin_5dp"
                     android:layout_height="50dp"
@@ -150,6 +208,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/drop_off_btn_normal" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_drop_off_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+
+                </RelativeLayout>
 
                 <View
                     android:layout_width="@dimen/margin_5dp"
@@ -164,6 +236,20 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_10dp"
                     android:src="@drawable/pck_up_btn_normal" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_pick_up_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_15dp"
+                    android:background="@drawable/order_details_card_bg_popup"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone">
+
+
+                </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>

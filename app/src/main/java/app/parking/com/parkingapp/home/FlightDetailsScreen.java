@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.FlightArrivalDTO;
@@ -24,7 +25,7 @@ import app.parking.com.parkingapp.model.FlightDepartureDTO;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 
-public class FlightDetailsScreen extends AppCompatActivity implements View.OnClickListener {
+public class FlightDetailsScreen extends BaseActivity implements View.OnClickListener {
     private Toolbar mToolbar;
     private TextView toolbar_title, arrival_date_tv, arrival_time_tv, depart_time_tv, depart_date_tv, toolbar_right_tv;
     private TextView flight_num_et, flight_number_depart_et, drop_term, pickup_term;
@@ -46,7 +47,7 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
     private FlightDetailInterface flightDetailInterface;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flight_details_screen);
         initViews();
@@ -65,7 +66,13 @@ public class FlightDetailsScreen extends AppCompatActivity implements View.OnCli
 
         flightDetailInterface = new FlightDetailInterface() {
             @Override
-            public void onArrivalDetailsSelected(String airline, String from, String status, String flightNumber, String term, String departTime, String arrivalTime) {
+            public void onArrivalDetailsSelected(String airline, String from,
+                                                 String status, String flightNumber,
+                                                 String term, String departTime, String arrivalTime) {
+                setViewText(R.id.txt_departure_flight_origin_val, "Toronto");
+                setViewText(R.id.txt_departure_flight_destination_val, from);
+//                setViewText(R.id.depart_date_tv, "");
+//                setViewText(R.id.depart_time_tv, from);
 
                 flight_num_et.setText(flightNumber);
                 pickup_term.setText(term);

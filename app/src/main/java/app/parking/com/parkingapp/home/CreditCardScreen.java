@@ -205,8 +205,10 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
                     new TokenCallback() {
                         public void onSuccess(Token token) {
                             AppUtils.hideProgressDialog();
+                            purchaseOrderDTO =new PurchaseOrderDTO();
                             purchaseOrderDTO.setUserEmail(SessionManager.
                                     getInstance(CreditCardScreen.this).getEmail());
+
                             purchaseOrderDTO.setStripeToken(token.getId());
                             purchaseOrderDTO.setVenueName("Vancouver");
                             purchaseOrderDTO.setSlotId(createOrderResponseDTO.getOrderConfirmation().getSlotId());
@@ -249,13 +251,18 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
             @Override
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
+                createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
+
                 purchaseOrderResponseDTO = new Gson().fromJson(response, PurchaseOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
                 AppUtils.showToast(CreditCardScreen.this, "Payment Successfull");
 
-                startActivity(new Intent(CreditCardScreen.this,
-                        OrderDetailsScreenNew.class).
-                        putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO));
+                Intent intent= new Intent(CreditCardScreen.this,
+                        OrderDetailsScreenNew.class);
+                intent.putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO);
+                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
+                startActivity(intent);
+
             }
 
             @Override

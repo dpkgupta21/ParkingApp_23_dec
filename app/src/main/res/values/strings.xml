@@ -50,7 +50,7 @@
     <string name="total_cost">Total Cost</string>
     <string name="make_payment">Make Payment</string>
     <string name="order_details">Order Details</string>
-    <string name="confrim_order">Confirm Order</string>
+    <string name="confirm_order">Confirm Order</string>
     <string name="apply">Apply</string>
     <string name="enter_promocode"> Enter Promocode</string>
     <string name="title_activity_order_confirmation">OrderConfirmation</string>
@@ -205,6 +205,32 @@
     <string name="pick_up_">Pick Up</string>
     <string name="duration">Duration</string>
     <string name="price">Price</string>
+
+
+
+    <!--  Order status screen -->
+
+    <!-- info pop up flight info-->
+    <string name="arrival_flight_lbl">Arrival FLight</string>
+    <string name="destination_flight_lbl">Destination FLight</string>
+    <string name="origin_lbl">Origin</string>
+    <string name="destination_lbl">Destination</string>
+    <string name="arrival_time_lbl">Arrival Time</string>
+    <string name="departure_time_lbl">Departure Time</string>
+    <string name="flight_name_lbl">Flight Name</string>
+    <string name="flight_number_lbl">Flight Number</string>
+
+    <!-- info pop up vehicle info-->
+    <string name="vehicle_make_lbl">Vehicle Make</string>
+    <string name="vehicle_color_lbl">Vehicle Color</string>
+    <string name="vehicle_model_lbl">Vehicle Model</string>
+    <string name="vehicle_plate_number_lbl">Vehicle Plate Number</string>
+
+
+    <!-- info pop up order info-->
+    <string name="total_lbl">Total</string>
+    <string name="tax_lbl">Tax</string>
+    <string name="order_status">Status</string>
 
 </resources>
 

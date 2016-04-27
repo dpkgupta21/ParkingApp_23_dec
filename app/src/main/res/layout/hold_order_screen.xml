@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_15dp"
             android:singleLine="true"
-            android:text="@string/hold_order"
+            android:text="@string/order_confirm"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_20sp"
             android:textStyle="normal" />
@@ -340,8 +340,9 @@
 
             </RelativeLayout>
         </ScrollView>
-        <RelativeLayout
-            android:id="@+id/confirm_button"
+
+        <Button
+            android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -349,15 +350,12 @@
             android:layout_marginTop="@dimen/margin_10dp"
             android:background="@color/transparent_black"
             android:gravity="center"
-            android:padding="@dimen/margin_10dp">
+            android:padding="@dimen/margin_10dp"
+            android:text="@string/confirm_order"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hold_order"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
-        </RelativeLayout>
+        </Button>
 
     </RelativeLayout>
     <!--<RelativeLayout
