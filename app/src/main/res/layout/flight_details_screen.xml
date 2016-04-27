@@ -143,7 +143,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/calendar_icon"
-                                android:text="24 MAR,2016"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -166,7 +166,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/time_icon"
-                                android:text="12:30"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -176,7 +176,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_10dp"
                                 android:layout_toRightOf="@+id/depart_time_tv"
-                                android:text="PM"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -206,7 +206,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
-                            android:text="AA183"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18sp" />
 
@@ -223,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
-                            android:text="3"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18sp" />
 
@@ -276,9 +276,10 @@
                         android:padding="@dimen/margin_10dp">
 
                         <TextView
+                            android:id="@+id/txt_arrival_flight_origin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/london"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_22sp" />
 
@@ -293,7 +294,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/toronto"
+                            android:text=""
+                            android:id="@+id/txt_arrival_flight_destination"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_22sp" />
 
@@ -325,7 +327,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/calendar_icon"
-                                android:text="24 MAR,2016"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -348,7 +350,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/time_icon"
-                                android:text="12:30"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -358,7 +360,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_10dp"
                                 android:layout_toRightOf="@+id/arrival_time_tv"
-                                android:text="PM"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_18sp"
                                 android:textStyle="normal" />
@@ -388,7 +390,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
-                            android:text="AA183"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18sp" />
 
@@ -405,7 +407,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_10dp"
-                            android:text="3"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18sp" />
 

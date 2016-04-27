@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +23,7 @@ import app.parking.com.parkingapp.model.FlightArrivalDTO;
 import app.parking.com.parkingapp.model.FlightDepartureDTO;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.HelpMe;
 
 public class FlightDetailsScreen extends BaseActivity implements View.OnClickListener {
     private Toolbar mToolbar;
@@ -69,10 +69,10 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
             public void onArrivalDetailsSelected(String airline, String from,
                                                  String status, String flightNumber,
                                                  String term, String departTime, String arrivalTime) {
-                setViewText(R.id.txt_departure_flight_origin_val, "Toronto");
-                setViewText(R.id.txt_departure_flight_destination_val, from);
-//                setViewText(R.id.depart_date_tv, "");
-//                setViewText(R.id.depart_time_tv, from);
+                setViewText(R.id.txt_arrival_flight_origin, from);
+                setViewText(R.id.txt_arrival_flight_destination, "TORONTO");
+                setViewText(R.id.arrival_date_tv, HelpMe.getDisplayDate(arrivalTime));
+                setViewText(R.id.arrival_time_tv, HelpMe.getDisplayTime(arrivalTime));
 
                 flight_num_et.setText(flightNumber);
                 pickup_term.setText(term);
@@ -81,6 +81,12 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
             @Override
             public void onDepartureDetailsSelected(String airline, String from, String status, String flightNumber, String term, String departTime, String arrivalTime) {
                 flight_number_depart_et.setText(flightNumber);
+
+                setViewText(R.id.depart_date_tv,
+                        HelpMe.getDisplayDate(departTime));
+                setViewText(R.id.depart_time_tv, HelpMe.getDisplayTime(departTime));
+                setViewText(R.id.txt_departure_flight_origin_val, "TORONTO");
+                setViewText(R.id.txt_departure_flight_destination_val, from);
                 drop_term.setText(term);
 
             }
