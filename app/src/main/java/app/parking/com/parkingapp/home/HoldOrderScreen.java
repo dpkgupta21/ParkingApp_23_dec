@@ -2,12 +2,10 @@ package app.parking.com.parkingapp.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -22,12 +20,12 @@ import app.parking.com.parkingapp.model.DestinationFlightInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
-import app.parking.com.parkingapp.model.OrderConfirmationDTO;
 import app.parking.com.parkingapp.model.OrderStatusDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.HelpMe;
 import app.parking.com.parkingapp.webservices.handler.HoldOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -97,9 +95,15 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
         setViewText(R.id.dest_tv, destinationFlightDTO.getDestination());
         setViewText(R.id.arrival_tv, arrivalFlightDTO.getOrigin());
-        setViewText(R.id.drop_off_tv, destinationFlightDTO.getFlightDepatureTime());
-        setViewText(R.id.pickup_tv, arrivalFlightDTO.getFlightArrivalTime());
-        setViewText(R.id.duration_tv, "");
+        String drop_off = HelpMe.getDisplayDate(destinationFlightDTO.getFlightDepatureTime())
+                + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightDepatureTime());
+        setViewText(R.id.drop_off_tv, drop_off);
+        String pick_up = HelpMe.getDisplayDate(arrivalFlightDTO.getFlightArrivalTime())
+                + " " + HelpMe.getDisplayTime(arrivalFlightDTO.getFlightArrivalTime());
+        setViewText(R.id.pickup_tv, pick_up);
+        setViewText(R.id.duration_tv,
+                HelpMe.getDurationTime(destinationFlightDTO.getFlightDepatureTime(),
+                        arrivalFlightDTO.getFlightArrivalTime()));
         setViewText(R.id.price_tv, orderStatusDTO.getOrderTotal());
 
     }

@@ -25,10 +25,11 @@ public class HelpMe {
         Calendar rightNow = Calendar.getInstance();
     }
 
-    private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    //private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static final String DISPLAY_DATE_FORMAT = "dd MMM, yyyy";
 
-    private static final String DISPLAY_TIME_FORMAT = "HH:mm";
+    private static final String DISPLAY_TIME_FORMAT = "HH:mm a";
 
     private static DateFormat currentFormat = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT);
 

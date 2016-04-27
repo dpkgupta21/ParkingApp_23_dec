@@ -71,7 +71,9 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
                                                  String term, String departTime, String arrivalTime) {
                 setViewText(R.id.txt_arrival_flight_origin, from);
                 setViewText(R.id.txt_arrival_flight_destination, "TORONTO");
+                //setViewText(R.id.arrival_date_tv, HelpMe.getDisplayDate(createOrderDTO.getPickUpTime()));
                 setViewText(R.id.arrival_date_tv, HelpMe.getDisplayDate(arrivalTime));
+                //setViewText(R.id.arrival_time_tv, HelpMe.getDisplayTime(createOrderDTO.getPickUpTime()));
                 setViewText(R.id.arrival_time_tv, HelpMe.getDisplayTime(arrivalTime));
 
                 flight_num_et.setText(flightNumber);
@@ -82,8 +84,11 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
             public void onDepartureDetailsSelected(String airline, String from, String status, String flightNumber, String term, String departTime, String arrivalTime) {
                 flight_number_depart_et.setText(flightNumber);
 
+//                setViewText(R.id.depart_date_tv,
+//                        HelpMe.getDisplayDate(createOrderDTO.getDropOffTime()));
                 setViewText(R.id.depart_date_tv,
                         HelpMe.getDisplayDate(departTime));
+                //setViewText(R.id.depart_time_tv, HelpMe.getDisplayTime(createOrderDTO.getDropOffTime()));
                 setViewText(R.id.depart_time_tv, HelpMe.getDisplayTime(departTime));
                 setViewText(R.id.txt_departure_flight_origin_val, "TORONTO");
                 setViewText(R.id.txt_departure_flight_destination_val, from);
