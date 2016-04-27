@@ -17,7 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
@@ -66,7 +69,6 @@ public class HomeScreenFragment extends Fragment {
 
     }
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -109,21 +111,35 @@ public class HomeScreenFragment extends Fragment {
         mDropHour = calendar.get(Calendar.HOUR_OF_DAY);
         mDropMinute = calendar.get(Calendar.MINUTE);
 
-
-       /* pick_date_tv.setText(new StringBuilder()
+        String currentDate = new StringBuilder()
                 // Month is 0 based so add 1
                 .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                .append(mYear).append(" "));
+                .append(mYear).append(" ").toString();
+        String pickUpDate = new StringBuilder()
+                // Month is 0 based so add 1
+                .append(mMonth + 1).append("/ ").append(mDay + 1).append("/ ")
+                .append(mYear).append(" ").toString();
+        try {
+            Date date = new SimpleDateFormat("MM/dd/yyyy").parse(currentDate);
+            Date pickdate = new SimpleDateFormat("MM/dd/yyyy").parse(pickUpDate);
+            String requiredFormatedDate = new SimpleDateFormat("MMM d, yyyy").format(date);
+            String pickFormatedDate = new SimpleDateFormat("MMM d, yyyy").format(pickdate);
+            pick_date_tv.setText(pickFormatedDate);
+            drop_date_tv.setText(requiredFormatedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        drop_date_tv.setText(new StringBuilder()
+
+       /* drop_date_tv.setText(new StringBuilder()
                 // Month is 0 based so add 1
                 .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                .append(mYear).append(" "));
+                .append(mYear).append(" "));*/
 
         drop_time_tv.setText(mHour + ":" + mMinute);
 
         pick_time_tv.setText(mHour + ":" + mMinute);
-*/
+
 
         pick_date_rl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,9 +195,32 @@ public class HomeScreenFragment extends Fragment {
 
                 calendarDropoff = Calendar.getInstance();
                 calendarPickup = Calendar.getInstance();
-
-                calendarDropoff.set(mDropYear, mDropMonth, mDropDay, mDropHour, mDropMinute);
-                calendarPickup.set(mPickupYear, mPickupMonth, mPickupDay, mPickupHour, mPickupMinute);
+                Date pickDate = null;
+                Date dropDate = null;
+                int dropHour = 0, dropMinute = 0;
+                int pickHour = 0, pickMinute = 0;
+                try {
+                    pickDate = new SimpleDateFormat("MMM d, yyyy")
+                            .parse(pick_date_tv.getText().toString());
+                    dropDate = new SimpleDateFormat("MMM d, yyyy")
+                            .parse(drop_date_tv.getText().toString());
+                    dropHour = Integer.valueOf(drop_time_tv.getText().toString().split(":")[0]);
+                    pickHour = Integer.valueOf(pick_time_tv.getText().toString().split(":")[0]);
+                    dropMinute = Integer.valueOf(drop_time_tv.getText().toString().split(":")[1]);
+                    pickMinute = Integer.valueOf(pick_time_tv.getText().toString().split(":")[1]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar c = Calendar.getInstance();
+                Calendar c1 = Calendar.getInstance();
+                c.setTime(dropDate);
+                c1.setTime(pickDate);
+                calendarDropoff.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),
+                        dropHour, dropMinute);
+                //calendarDropoff.set(mDropYear, mDropMonth, mDropDay, mDropHour, mDropMinute);
+                calendarPickup.set(c1.get(Calendar.YEAR), c1.get(Calendar.MONTH), c1.get(Calendar.DAY_OF_MONTH),
+                        pickHour, pickMinute);
+                //calendarPickup.set(mPickupYear, mPickupMonth, mPickupDay, mPickupHour, mPickupMinute);
 
                 long dropoffTimestamp = calendarDropoff.getTimeInMillis();
                 AppUtils.showLog(TAG, "dropoffTimestamp " + dropoffTimestamp);
@@ -199,10 +238,14 @@ public class HomeScreenFragment extends Fragment {
                     int pickmonth = mPickupMonth + 1;
                     int dropmonth = mDropMonth + 1;
 
-                    pickTime = mPickupYear + "-" + pickmonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
+//                    pickTime = mPickupYear + "-" + pickmonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
+//                            ":00";
+                    pickTime = c1.get(Calendar.YEAR) + "-" + (c1.get(Calendar.MONTH) + 1) + "-" + c1.get(Calendar.DAY_OF_MONTH) + " " + pickHour + ":" + pickMinute +
                             ":00";
                     pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
-                    dropTime = mDropYear + "-" + dropmonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
+                    //dropTime = mDropYear + "-" + dropmonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
+                    dropTime = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + dropHour + ":" + dropMinute +
+                            ":00";
                     dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
 
                     createOrderDTO.setDropOffTime(dropTime);
