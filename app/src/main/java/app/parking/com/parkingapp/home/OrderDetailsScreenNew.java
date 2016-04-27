@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,7 +50,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private RelativeLayout toolbar_right_rl;
     private ImageView payment;
     private ListView services_lv;
-    private RelativeLayout submit_button, action_button;
+    ///private RelativeLayout submit_button;
     private CreateOrderResponseDTO createOrderResponseDTO;
 
 
@@ -59,8 +60,12 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         setContentView(R.layout.order_details_screen_new);
         initViews();
         assignClicks();
+//        Toast.makeText(OrderDetailsScreenNew.this, "Transaction Id :" +
+//                createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId(),
+//                Toast.LENGTH_SHORT).show();
         if (createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId() != null &&
-                !createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId().equalsIgnoreCase("")) {
+                !createOrderResponseDTO.getOrderConfirmation().
+                        getPaymentTransactionId().equalsIgnoreCase("")) {
 
         } else {
             AppDialogs.paymentDialog(this, createOrderResponseDTO);
@@ -69,7 +74,6 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     }
 
     private void assignClicks() {
-        action_button.setOnClickListener(this);
         payment.setOnClickListener(this);
         ImageView flight_details = (ImageView) findViewById(R.id.flight_details);
         ImageView vehicle_details = (ImageView) findViewById(R.id.vehicle_details);
@@ -77,7 +81,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         ImageView order_confirmation = (ImageView) findViewById(R.id.order_confirmation);
         ImageView drop_off = (ImageView) findViewById(R.id.drop_off);
         ImageView pick_up = (ImageView) findViewById(R.id.pick_up);
-
+        vehicle_details.setVisibility(View.VISIBLE);
         flight_details.setOnClickListener(this);
         vehicle_details.setOnClickListener(this);
         service_details.setOnClickListener(this);
@@ -95,11 +99,10 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         services_lv = (ListView) findViewById(R.id.services_lv);
         no_service_tv = (TextView) findViewById(R.id.no_service_tv);
-        submit_button = (RelativeLayout) findViewById(R.id.submit_button);
-        action_button = (RelativeLayout) findViewById(R.id.action_button);
+        //submit_button = (RelativeLayout) findViewById(R.id.submit_button);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(" ");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mToolbar.setNavigationIcon(R.drawable.back_button);
@@ -248,67 +251,67 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private void showDetailPopup(int status) {
         switch (status) {
             case 0:
-                setViewVisibility(R.id.relative_flight_info, 1);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_vehicle_info,View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 1:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 1);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info,View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info,View.GONE);
                 break;
             case 2:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 1);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 3:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 1);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 4:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 1);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 5:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 1);
-                setViewVisibility(R.id.relative_pick_up_info, 0);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 6:
-                setViewVisibility(R.id.relative_flight_info, 0);
-                setViewVisibility(R.id.relative_vehicle_info, 0);
-                setViewVisibility(R.id.relative_service_info, 0);
-                setViewVisibility(R.id.relative_order_info, 0);
-                setViewVisibility(R.id.relative_payment_info, 0);
-                setViewVisibility(R.id.relative_drop_off_info, 0);
-                setViewVisibility(R.id.relative_pick_up_info, 1);
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.VISIBLE);
                 break;
 
         }

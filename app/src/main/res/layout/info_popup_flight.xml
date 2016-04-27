@@ -12,14 +12,7 @@
         android:text="@string/arrival_flight_lbl"
         android:textSize="@dimen/text_size_20sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_flight_number_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_arrival_flight_lbl"
-        android:singleLine="true"
-        android:text="@string/flight_number_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_flight_number_val"
@@ -27,14 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_arrival_flight_lbl"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_flight_number_lbl"
         android:singleLine="true"
         android:text="@string/flight_number_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
 
+
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_flight_name_lbl"
+        android:id="@+id/txt_flight_name_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_arrival_flight_lbl"
@@ -44,98 +37,52 @@
         android:text="@string/flight_name_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_flight_name_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_arrival_flight_lbl"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_flight_name_lbl"
-        android:singleLine="true"
-        android:text="@string/flight_name_lbl"
-        android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_origin_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_flight_number_lbl"
-        android:singleLine="true"
-        android:text="@string/origin_lbl"
-        android:textSize="@dimen/text_size_16sp" />
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_origin_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_flight_number_lbl"
+        android:layout_below="@+id/txt_flight_name_val"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/txt_origin_lbl"
         android:singleLine="true"
         android:text="@string/origin_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_arrival_time_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_flight_number_lbl"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_toRightOf="@+id/txt_origin_val"
-        android:singleLine="true"
-        android:text="@string/arrival_time_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_arrival_time_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_flight_number_lbl"
+        android:layout_below="@+id/txt_flight_name_val"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@+id/txt_arrival_time_lbl"
+        android:layout_toRightOf="@+id/txt_origin_val"
         android:singleLine="true"
         android:text="@string/arrival_time_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_destination_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_origin_lbl"
-        android:singleLine="true"
-        android:text="@string/destination_lbl"
-        android:textSize="@dimen/text_size_16sp" />
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_destination_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_origin_lbl"
+        android:layout_below="@+id/txt_arrival_time_val"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/txt_destination_lbl"
         android:singleLine="true"
         android:text="@string/destination_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_destination_time_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_origin_lbl"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_toRightOf="@id/txt_destination_val"
-        android:singleLine="true"
-        android:text="@string/departure_time_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_destination_time_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_origin_lbl"
+        android:layout_below="@+id/txt_arrival_time_val"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_destination_time_lbl"
+        android:layout_toRightOf="@id/txt_destination_val"
         android:singleLine="true"
         android:text="@string/departure_time_lbl"
         android:textSize="@dimen/text_size_16sp" />
@@ -151,14 +98,7 @@
         android:text="@string/destination_flight_lbl"
         android:textSize="@dimen/text_size_20sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_flight_number_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_destination_flight_lbl"
-        android:singleLine="true"
-        android:text="@string/flight_number_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_dest_flight_number_val"
@@ -166,14 +106,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_destination_flight_lbl"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_dest_flight_number_lbl"
         android:singleLine="true"
         android:text="@string/flight_number_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
 
+
+
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_flight_name_lbl"
+        android:id="@+id/txt_dest_flight_name_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_destination_flight_lbl"
@@ -183,25 +124,6 @@
         android:text="@string/flight_name_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_flight_name_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_destination_flight_lbl"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_flight_name_lbl"
-        android:singleLine="true"
-        android:text="@string/flight_name_lbl"
-        android:textSize="@dimen/text_size_16sp" />
-
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_origin_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_flight_name_val"
-        android:singleLine="true"
-        android:text="@string/origin_lbl"
-        android:textSize="@dimen/text_size_16sp" />
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_dest_origin_val"
@@ -209,21 +131,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_dest_flight_name_val"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/txt_dest_origin_lbl"
         android:singleLine="true"
         android:text="@string/origin_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_arrival_time_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_flight_name_val"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_toRightOf="@+id/txt_dest_origin_val"
-        android:singleLine="true"
-        android:text="@string/arrival_time_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_dest_arrival_time_val"
@@ -231,50 +143,32 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_dest_flight_name_val"
         android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@+id/txt_dest_arrival_time_lbl"
+        android:layout_toRightOf="@+id/txt_dest_origin_val"
         android:singleLine="true"
         android:text="@string/arrival_time_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_destination_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_origin_lbl"
-        android:singleLine="true"
-        android:text="@string/destination_lbl"
-        android:textSize="@dimen/text_size_16sp" />
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_dest_destination_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_origin_lbl"
+        android:layout_below="@+id/txt_dest_arrival_time_val"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/txt_dest_destination_lbl"
         android:singleLine="true"
         android:text="@string/destination_lbl"
         android:textSize="@dimen/text_size_16sp" />
 
 
-    <app.parking.com.parkingapp.customViews.MyTextViewCustom
-        android:id="@+id/txt_dest_destination_time_lbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_origin_lbl"
-        android:layout_marginLeft="@dimen/margin_20dp"
-        android:layout_toRightOf="@id/txt_dest_destination_val"
-        android:singleLine="true"
-        android:text="@string/departure_time_lbl"
-        android:textSize="@dimen/text_size_16sp" />
+
 
     <app.parking.com.parkingapp.customViews.MyTextViewCustom
         android:id="@+id/txt_dest_destination_time_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dest_origin_lbl"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_toRightOf="@id/txt_dest_destination_time_lbl"
+        android:layout_below="@+id/txt_dest_arrival_time_val"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:layout_toRightOf="@id/txt_dest_destination_val"
         android:singleLine="true"
         android:text="@string/departure_time_lbl"
         android:textSize="@dimen/text_size_16sp" />

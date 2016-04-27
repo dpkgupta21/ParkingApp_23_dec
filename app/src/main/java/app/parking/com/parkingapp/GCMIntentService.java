@@ -19,6 +19,8 @@ import static app.parking.com.parkingapp.CommonUtilities.SENDER_ID;
 
 import java.util.Calendar;
 
+import app.parking.com.parkingapp.home.OrderDetailsScreenNew;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.view.LoginScreen;
 
@@ -172,8 +174,9 @@ public class GCMIntentService extends GCMBaseIntentService {
             PendingIntent intent = null;
             builder.setContentText(message);
             notificationIntent = new Intent(context,
-                    LoginScreen.class);
+                    UserNavigationDrawerActivity.class);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            notificationIntent.putExtra("fragmentPos",2);
             context.startActivity(notificationIntent);
 
 

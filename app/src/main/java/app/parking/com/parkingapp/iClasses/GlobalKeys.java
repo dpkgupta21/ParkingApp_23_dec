@@ -20,6 +20,7 @@ public interface GlobalKeys {
     String PURCHASE_ORDER_API = "order/purchaseOrder";
     String ADD_TOKEN_PUSH = "notification/addtoken";
     String FLIGHT_INFO = "order/flightinfo";
+    String ORDER_STATUS_INFO = "order/orderstatus";
 
 
     String PILLION_LOGIN_REQUEST_KEY = "login_api";

@@ -255,10 +255,11 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
 
                 purchaseOrderResponseDTO = new Gson().fromJson(response, PurchaseOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
-                AppUtils.showToast(CreditCardScreen.this, "Payment Successfull");
+                AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
 
                 Intent intent= new Intent(CreditCardScreen.this,
                         OrderDetailsScreenNew.class);
+                createOrderResponseDTO.getOrderConfirmation().setPaymentTransactionId("564321");
                 intent.putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);

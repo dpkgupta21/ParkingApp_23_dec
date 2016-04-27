@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ import app.parking.com.parkingapp.model.FlightDetailsDTO;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.HelpMe;
 import app.parking.com.parkingapp.webservices.handler.FlightDetailsAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -299,7 +301,10 @@ public class AppDialogs {
                                 flightDetailsDTOList.get(position).getDeprtTime(),
                                 flightDetailsDTOList.get(position).getArrivalTime());
                     }
-                    mModelDialog.dismiss();
+                    if (mModelDialog != null) {
+                        mModelDialog.dismiss();
+                        mModelDialog=null;
+                    }
 
                 }
             });
@@ -337,7 +342,7 @@ public class AppDialogs {
             // contentView
             LayoutInflater inflater = (LayoutInflater) mActivity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.text_and_button_dialog, null,
+            View view = inflater.inflate(R.layout.dialog_payment_confirmation, null,
                     false);
             mModelDialog.setCanceledOnTouchOutside(false);
             mModelDialog.setContentView(view);
@@ -349,22 +354,38 @@ public class AppDialogs {
 
 
             ImageView cancel_btn = (ImageView) mModelDialog.findViewById(R.id.cancel_btn);
-            RelativeLayout okButton = (RelativeLayout) mModelDialog.findViewById(R.id.okButton);
+            TextView txt_order_number_val =(TextView)mModelDialog.
+                    findViewById(R.id.txt_order_number_val);
+            TextView txt_slot_number_val =(TextView)mModelDialog.
+                    findViewById(R.id.txt_slot_number_val);
+            TextView txt_duration_val =(TextView)mModelDialog.
+                    findViewById(R.id.txt_duration_val);
+            TextView txt_amount_val =(TextView)mModelDialog.
+                    findViewById(R.id.txt_amount_val);
+
+
+            txt_order_number_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrder_id());
+            txt_slot_number_val.setText(mCreateOrderResponseDTO.getOrderConfirmation().getSlotId());
+            txt_duration_val.setText(HelpMe.getDurationTime(
+                    mCreateOrderResponseDTO.getFlightInfo().
+                            getDestinationFlight().getFlightDepatureTime(),
+                    mCreateOrderResponseDTO.getFlightInfo().
+                            getArrivalFlight().getFlightArrivalTime()));
+            txt_amount_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrderTotal());
+
+            Button okButton = (Button) mModelDialog.findViewById(R.id.okButton);
 
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.finish();
+
                 }
             });
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if(mModelDialog!=null){
-                        mModelDialog.dismiss();
-                        mModelDialog=null;
-                    }
+
                     Intent intent = new Intent(mActivity,
                             CreditCardScreen.class);
 

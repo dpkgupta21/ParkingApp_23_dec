@@ -28,6 +28,7 @@ import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.HelpMe;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -229,14 +230,16 @@ public class HomeScreenFragment extends Fragment {
 
                 long difference = pickupTimestamp - dropoffTimestamp;
 
-                long days = difference / (24 * 60 * 60 * 100);
+                long days = difference / (24 * 60 * 60 * 1000);
 
                 AppUtils.showLog(TAG, difference + " " + days);
 
                 if (days >= 1) {
 
-                    int pickmonth = mPickupMonth + 1;
-                    int dropmonth = mDropMonth + 1;
+                    String pickmonth = ""+(mPickupMonth + 1 < 9 ?
+                            ("0"+(mPickupMonth+1)) : (mPickupMonth+1));
+                    String dropmonth = ""+(mDropMonth + 1 < 9 ?
+                            ("0"+(mDropMonth+1)) : (mDropMonth+1));
 
 //                    pickTime = mPickupYear + "-" + pickmonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
 //                            ":00";
@@ -273,32 +276,40 @@ public class HomeScreenFragment extends Fragment {
             int mDay = dayOfMonth;
             if (!isDropDateClicked) {
 
-                mPickupDay = mDay;
+                mPickupDay = mDay ;
                 mPickupMonth = mMonth;
                 mPickupYear = mYear;
 
+                String date= ""+( mDay<9 ? ("0"+mDay):mDay);
+                String month= ""+( (mMonth+ 1)<9 ? ("0"+(mMonth+1)):(mMonth+1));
 
-                pick_date_tv.setText(new StringBuilder()
-                        // Month is 0 based so add 1
-                        .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                        .append(mYear).append(" "));
+                String displayDate=date +"-"+month+"-"+mYear;
+//                String displayDate = HelpMe.getDisplayDate(date + "-" + month + "-" + mYear,
+//                        HelpMe.SELECT_DATE_FORMAT, HelpMe.DISPLAY_DATE_FORMAT);
+                pick_date_tv.setText(displayDate);
             } else {
 
 
                 mDropDay = mDay;
                 mDropMonth = mMonth;
                 mDropYear = mYear;
-                drop_date_tv.setText(new StringBuilder()
-                        // Month is 0 based so add 1
-                        .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                        .append(mYear).append(" "));
+
+                String date= ""+( mDay<9 ? ("0"+mDay):mDay);
+                String month= ""+( (mMonth+ 1)<9 ? ("0"+(mMonth+1)):(mMonth+1));
+
+                String displayDate=date +"-"+month+"-"+mYear;
+//                String displayDate = HelpMe.getDisplayDate(date + "-" + month + "-" + mYear,
+//                        HelpMe.SELECT_DATE_FORMAT, HelpMe.DISPLAY_DATE_FORMAT);
+
+                drop_date_tv.setText(displayDate);
             }
 
         }
     };
 
 
-    private TimePickerDialog.OnTimeSetListener mTimeSetListner = new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener mTimeSetListner = new
+            TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             int hour = hourOfDay;
@@ -308,11 +319,16 @@ public class HomeScreenFragment extends Fragment {
                 mDropHour = hour;
                 mDropMinute = min;
 
-                drop_time_tv.setText(hour + ":" + min);
+                String mHour= ""+( hour<9 ? ("0"+hour):hour);
+                String mMin= ""+( min<9 ? ("0"+min):min);
+                drop_time_tv.setText(mHour + ":" + mMin);
             } else {
                 mPickupMinute = min;
                 mPickupHour = hour;
-                pick_time_tv.setText(hour + ":" + min);
+
+                String mHour= ""+( hour<9 ? ("0"+hour):hour);
+                String mMin= ""+( min<9 ? ("0"+min):min);
+                pick_time_tv.setText(mHour + ":" + mMin);
             }
 
         }

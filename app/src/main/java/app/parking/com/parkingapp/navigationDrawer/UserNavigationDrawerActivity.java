@@ -64,11 +64,14 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_nav_drawer_activity);
 
+
         mActivity = this;
+
+        int fragmentPos= getIntent().getIntExtra("fragmentPos",0);
         initViews();
         assignClickOnView();
         assignClickonNavigationMenu();
-        displayView(0);
+        displayView(fragmentPos);
 
         String pushRegistrationId = ParkingPreference.getPushRegistrationId(mActivity);
         if (pushRegistrationId == null || pushRegistrationId.equalsIgnoreCase("")) {
