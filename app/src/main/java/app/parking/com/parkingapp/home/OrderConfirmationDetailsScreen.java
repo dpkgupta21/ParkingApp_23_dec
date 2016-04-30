@@ -9,23 +9,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.stripe.android.model.Card;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
-import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
-import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.webservices.handler.HoldOrderAPIHandler;
-import app.parking.com.parkingapp.webservices.handler.PurchaseOrderAPIHandler;
-import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class OrderConfirmationDetailsScreen extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;

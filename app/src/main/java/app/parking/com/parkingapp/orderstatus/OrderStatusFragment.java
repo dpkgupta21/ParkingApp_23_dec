@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.orderstatus;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,7 @@ import app.parking.com.parkingapp.model.FlightInfoDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -32,6 +33,7 @@ public class OrderStatusFragment extends BaseFragment implements View.OnClickLis
     private Toolbar mToolbar;
     private View mView;
     private CreateOrderResponseDTO createOrderResponseDTO;
+    private Activity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,13 +48,15 @@ public class OrderStatusFragment extends BaseFragment implements View.OnClickLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mActivity = getActivity();
+
         assignClicks();
         try {
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.put("email", SessionManager.getInstance(getActivity()).getEmail());
+            jsonObject.put("email", ParkingPreference.getEmailId(mActivity));
 
-            String auth = SessionManager.getInstance(getActivity()).getAuthToken();
+            String auth = ParkingPreference.getKeyAuthtoken(mActivity);
             CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(getActivity(),
                     jsonObject.toString(), auth,
                     createOrderResponseListner());

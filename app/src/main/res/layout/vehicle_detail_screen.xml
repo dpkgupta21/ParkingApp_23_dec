@@ -47,7 +47,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/next_button"
             android:layout_below="@+id/vehicle_dtls_tv"
             android:layout_marginTop="@dimen/margin_10dp"
             android:isScrollContainer="false"
@@ -176,7 +175,6 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginRight="@dimen/margin_20dp"
                             android:layout_toLeftOf="@+id/model_color"
-
                             android:background="@null"
                             android:hint="@string/select_color"
                             android:singleLine="true"
@@ -189,7 +187,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_toLeftOf="@+id/model_color"
                             android:layout_toRightOf="@+id/color_tv"
                             android:background="@null"
                             android:gravity="right"
@@ -197,15 +194,6 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/model_color"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="right"
-                            android:background="@drawable/backgroud"
-                            android:visibility="gone" />
 
 
                     </RelativeLayout>

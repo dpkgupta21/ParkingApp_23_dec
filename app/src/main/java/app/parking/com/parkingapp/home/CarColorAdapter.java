@@ -28,17 +28,16 @@ public class CarColorAdapter extends BaseAdapter {
 
     private ArrayList<BookingHistoryModel> mBookingHistoryList;
     private ArrayList<String> dummyArrayList;
-    private TextView mTextView, mColorView;
+    private TextView mTextView;
 
     private String[] dummyColorArray;
 
     private Dialog mDialog;
 
-    public CarColorAdapter(Activity mActivity, TextView textView, TextView colorview, Dialog modelDialog) {
+    public CarColorAdapter(Activity mActivity, TextView textView, Dialog modelDialog) {
         this.mActivity = mActivity;
         this.mTextView = textView;
         this.mDialog = modelDialog;
-        mColorView = colorview;
         dummyColorArray = mActivity.getApplicationContext().getResources().getStringArray(R.array.color_bg);
         try {
 
@@ -113,11 +112,15 @@ public class CarColorAdapter extends BaseAdapter {
         holder.model_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mTextView.setText(dummyArrayList.get(position));
-                String color = dummyColorArray[position % dummyColorArray.length];
-                GradientDrawable drawable = (GradientDrawable) mColorView.getBackground();
-                drawable.setColor(Color.parseColor(color));
-                mDialog.dismiss();
+//                String color = dummyColorArray[position % dummyColorArray.length];
+//                GradientDrawable drawable = (GradientDrawable) mColorView.getBackground();
+//                drawable.setColor(Color.parseColor(color));
+                if (mDialog != null) {
+                    mDialog.dismiss();
+                    mDialog = null;
+                }
             }
         });
         return convertView;

@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +23,7 @@ import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.OrderStatusDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.HelpMe;
@@ -37,12 +38,16 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
     private HoldOrderResponseDTO holdOrderResponseDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
     private String TAG = HoldOrderScreen.class.getSimpleName();
+    private Activity mActivity;
     //private TextView dest_tv, arrival_tv, drop_off_tv, pickup_tv, duration_tv, price_tv, toolbar_title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hold_order_screen);
+
+        mActivity= HoldOrderScreen.this;
+
         initViews();
         assignClicks();
     }
@@ -119,7 +124,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.btn_confirm:
 
-                String auth = SessionManager.getInstance(HoldOrderScreen.this).getAuthToken();
+                String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                 String request = new Gson().toJson(holdOrderDTO);
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(

@@ -19,11 +19,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.fragments.BaseFragment;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.utils.BaseFragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,15 +35,14 @@ public class HomeScreenFragment extends BaseFragment {
     private Activity mActivity;
     private CreateOrderDTO createOrderDTO;
     private String TAG;
-    private boolean isDropDateClicked = true;
-    private boolean isDropTimeClicked = true;
+    private boolean isDropDateClicked;
+    private boolean isDropTimeClicked;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TAG = HomeScreenFragment.class.getSimpleName();
         view = inflater.inflate(R.layout.fragment_home_screen_new, container, false);
-        mActivity = HomeScreenFragment.this.getActivity();
         return view;
 
     }
@@ -51,6 +50,8 @@ public class HomeScreenFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mActivity = getActivity();
+
         createOrderDTO = new CreateOrderDTO();
 
         TextView toolbar_title = (TextView) mActivity.findViewById(R.id.toolbar_title);
@@ -235,12 +236,13 @@ public class HomeScreenFragment extends BaseFragment {
 
                 createOrderDTO.setDropOffTime(dropTime);
                 createOrderDTO.setPickUpTime(pickTime);
-                AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
-                createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
-                createOrderDTO.setVenueName("Vancouver");
+                createOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
+                createOrderDTO.setVenueName(AppConstants.VENUE_NAME);
+
                 Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
                 intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
                 startActivity(intent);
+
             } else {
                 Snackbar.make(view, "Order should be for atleast one day",
                         Snackbar.LENGTH_LONG).show();

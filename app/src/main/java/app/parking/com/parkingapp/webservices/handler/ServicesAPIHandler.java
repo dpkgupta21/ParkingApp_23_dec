@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.utils.AppConstants;
@@ -53,8 +54,7 @@ public class ServicesAPIHandler {
      * @param webAPIResponseListener
      */
     public ServicesAPIHandler(Activity mActivity, String auth_token, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Loading...", false);
+
         this.mActivity = mActivity;
         this.auth_token = auth_token;
         this.mResponseListener = webAPIResponseListener;
@@ -71,6 +71,7 @@ public class ServicesAPIHandler {
          * String Request
          */
 
+        CustomProgressDialog.showProgDialog(mActivity,null);
         JSONObject mJsonObjectRequest = new JSONObject();
 
         JsonArrayRequest mJsonArrayRequest = new JsonArrayRequest((AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FETCH_SERVICES + "Vancouver")
@@ -79,9 +80,9 @@ public class ServicesAPIHandler {
             public void onResponse(JSONArray response) {
                 AppUtils.showInfoLog(TAG, "Response :"
                         + response);
-
+                CustomProgressDialog.hideProgressDialog();
                 mResponseListener.onSuccessOfResponse(response.toString());
-                AppUtils.hideProgressDialog();
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -89,7 +90,7 @@ public class ServicesAPIHandler {
 
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
+                CustomProgressDialog.hideProgressDialog();
                 mResponseListener.onFailOfResponse(error);
 
             }

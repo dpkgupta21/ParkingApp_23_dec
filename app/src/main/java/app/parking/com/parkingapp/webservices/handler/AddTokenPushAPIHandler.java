@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
-import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
@@ -55,8 +55,8 @@ public class AddTokenPushAPIHandler {
     public AddTokenPushAPIHandler(Activity mActivity, String regToken,
                                   String deviceId, String deviceType, String email,
                                   String authToken, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Login...", false);
+
+
         this.mActivity = mActivity;
         this.regToken = regToken;
         this.deviceId = deviceId;
@@ -97,17 +97,21 @@ public class AddTokenPushAPIHandler {
                         AppUtils.showInfoLog(TAG, "Response :"
                                 + response);
 
+
+
                         parseLoginAPIResponse(response.toString());
                         mResponseListener.onSuccessOfResponse(response);
-                        AppUtils.hideProgressDialog();
+
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
+
                 mResponseListener.onFailOfResponse(error);
             }
         }) {

@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.HoldOrderAPIHandler;
@@ -29,11 +29,14 @@ public class OrderDetailsScreen extends AppCompatActivity implements View.OnClic
     private HoldOrderDTO holdOrderDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
     private String TAG = OrderDetailsScreen.class.getSimpleName();
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_details_screen);
+
+        mActivity = OrderDetailsScreen.this;
         initViews();
         assignClicks();
 
@@ -69,7 +72,7 @@ public class OrderDetailsScreen extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.confirm_button:
 
-                String auth = SessionManager.getInstance(OrderDetailsScreen.this).getAuthToken();
+                String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                 String request = new Gson().toJson(holdOrderDTO);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(OrderDetailsScreen.this, request, auth, manageHoldOrderResponse());
 

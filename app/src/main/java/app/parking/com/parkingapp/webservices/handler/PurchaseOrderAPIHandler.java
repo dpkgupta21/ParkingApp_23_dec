@@ -51,8 +51,7 @@ public class PurchaseOrderAPIHandler {
      */
     public PurchaseOrderAPIHandler(Activity mActivity, String parameters,
                                    String auth, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Wait...", false);
+
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
@@ -87,7 +86,7 @@ public class PurchaseOrderAPIHandler {
                     @Override
                     public void onResponse(JSONObject response) {
                         mResponseListener.onSuccessOfResponse(response.toString());
-                        AppUtils.hideProgressDialog();
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -95,7 +94,6 @@ public class PurchaseOrderAPIHandler {
             public void onErrorResponse(VolleyError error) {
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
                 mResponseListener.onFailOfResponse(error);
             }
         }) {

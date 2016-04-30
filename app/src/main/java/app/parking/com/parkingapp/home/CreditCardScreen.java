@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.stripe.android.Stripe;
@@ -23,16 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.activity.BaseActivity;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderResponseDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.PurchaseOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
-public class CreditCardScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CreditCardScreen extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
 
     private static final String TAG = CreditCardScreen.class.getSimpleName();
@@ -47,11 +51,14 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
     private String PUBLISHABLE_KEY = "pk_test_OpA06mOu6bmI6iGZMrahmKkc";
     private RelativeLayout toolbar_right_rl;
 
+    private Activity mActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.credit_card_screen);
+        mActivity = CreditCardScreen.this;
+
         initViews();
         assignClicks();
     }
@@ -66,7 +73,7 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(" ");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
 
@@ -190,34 +197,35 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
 
     private void generateStripeToken() {
         Card card = new Card(
-                card_num_et.getText().toString().trim(),
+                getTextViewText(R.id.card_num_et).trim(),
                 Integer.parseInt(month_spinner.getSelectedItem() + ""),
                 Integer.parseInt(year_spinner.getSelectedItem() + ""),
-                cvv_et.getText().toString().trim()
+                getTextViewText(R.id.cvv_et).trim()
         );
 
         boolean validation = card.validateCard();
         if (validation) {
-            AppUtils.showProgressDialog(CreditCardScreen.this, "Validating Card", false);
+            CustomProgressDialog.showProgDialog(mActivity, "Validating Card");
             new Stripe().createToken(
                     card,
                     PUBLISHABLE_KEY,
                     new TokenCallback() {
                         public void onSuccess(Token token) {
-                            AppUtils.hideProgressDialog();
-                            purchaseOrderDTO =new PurchaseOrderDTO();
-                            purchaseOrderDTO.setUserEmail(SessionManager.
-                                    getInstance(CreditCardScreen.this).getEmail());
 
+                            CustomProgressDialog.hideProgressDialog();
+
+                            purchaseOrderDTO = new PurchaseOrderDTO();
+                            purchaseOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
                             purchaseOrderDTO.setStripeToken(token.getId());
-                            purchaseOrderDTO.setVenueName("Vancouver");
-                            purchaseOrderDTO.setSlotId(createOrderResponseDTO.getOrderConfirmation().getSlotId());
-                            purchaseOrderDTO.setOrderId(createOrderResponseDTO.getOrderStatus().getOrder_id());
+                            purchaseOrderDTO.setVenueName(AppConstants.VENUE_NAME);
+                            purchaseOrderDTO.setSlotId(createOrderResponseDTO.
+                                    getOrderConfirmation().getSlotId());
+                            purchaseOrderDTO.setOrderId(createOrderResponseDTO.
+                                    getOrderStatus().getOrder_id());
                             purchaseOrderDTO.setPickUpTime("2016-05-21T19:00:00.000Z");
                             purchaseOrderDTO.setDropOffTime("2016-05-21T19:00:00.000Z");
 
-                            String auth = SessionManager.getInstance(CreditCardScreen.this).
-                                    getAuthToken();
+                            String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                             String request = new Gson().toJson(purchaseOrderDTO);
 
                             new PurchaseOrderAPIHandler(CreditCardScreen.this,
@@ -228,8 +236,9 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
 
                         public void onError(Exception error) {
                             AppUtils.showErrorLog(TAG, error.getLocalizedMessage());
-                            AppUtils.hideProgressDialog();
-                            AppUtils.showToast(CreditCardScreen.this, "Please Try Again");
+                            CustomProgressDialog.hideProgressDialog();
+                            AppUtils.showDialog(mActivity, "Alert!",
+                                    "Please try again.");
                         }
                     });
         } else if (!card.validateNumber()) {
@@ -257,8 +266,10 @@ public class CreditCardScreen extends AppCompatActivity implements AdapterView.O
                 AppUtils.showLog(TAG, response);
                 AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
 
-                Intent intent= new Intent(CreditCardScreen.this,
+                Intent intent = new Intent(CreditCardScreen.this,
                         OrderDetailsScreenNew.class);
+                Toast.makeText(CreditCardScreen.this, "Transaction id :"+createOrderResponseDTO.getOrderConfirmation().
+                        getPaymentTransactionId(), Toast.LENGTH_SHORT).show();
                 createOrderResponseDTO.getOrderConfirmation().setPaymentTransactionId("564321");
                 intent.putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);

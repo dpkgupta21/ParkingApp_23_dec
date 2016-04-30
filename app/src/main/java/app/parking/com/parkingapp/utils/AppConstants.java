@@ -11,6 +11,9 @@ public class
 
 
     public static int ONE_SECOND = 1000;
+    public static String VENUE_NAME = "Vancouver";
+    public static String COUNTRY_FOR_SERVICE = "TORONTO";
+
     public static String STORED_IMAGE_PATH = "ParkingApp";
     public static String CLICKED_IMAGE_PATH = "imagepath";
     public static String SERVICE = "service";

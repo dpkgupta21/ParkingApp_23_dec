@@ -26,9 +26,10 @@ public class HelpMe {
     }
 
     //private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private static final String REQUEST_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private static final String SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DISPLAY_DATE_FORMAT = "dd MMM, yyyy";
-    public static final String SELECT_DATE_FORMAT= "dd-MM-yyyy";
+    public static final String SELECT_DATE_FORMAT = "dd-MM-yyyy";
 
     private static final String DISPLAY_TIME_FORMAT = "HH:mm a";
 
@@ -40,9 +41,9 @@ public class HelpMe {
 
         String diff = null;
         try {
-
-            Date startDate = currentFormat.parse(startTime);
-            Date endDate = currentFormat.parse(endTime);
+            DateFormat df = new SimpleDateFormat(REQUEST_DATE_FORMAT);
+            Date startDate = df.parse(startTime);
+            Date endDate = df.parse(endTime);
             long timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
             diff = String.format("%d hour(s) %d min(s)", TimeUnit.MILLISECONDS.toHours(timeDiff),
                     TimeUnit.MILLISECONDS.toMinutes(timeDiff) -
@@ -61,7 +62,7 @@ public class HelpMe {
     public static String getDisplayDate(String dateString) {
 
         DateFormat df = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
-        String newDateString=null;
+        String newDateString = null;
 
         try {
             Date startDate = currentFormat.parse(dateString);
@@ -78,7 +79,7 @@ public class HelpMe {
     public static String getDisplayTime(String dateString) {
 
         DateFormat df = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
-        String newDateString=null;
+        String newDateString = null;
 
         try {
             Date startDate = currentFormat.parse(dateString);
@@ -91,7 +92,20 @@ public class HelpMe {
 
     }
 
+    public static Date getDateTimeObject(String dateString) {
 
+        DateFormat df = new SimpleDateFormat(REQUEST_DATE_FORMAT);
+        Date startDate = null;
+
+        try {
+            startDate = currentFormat.parse(dateString);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return startDate;
+
+    }
 
 
     public static void pullDb(Context context) {

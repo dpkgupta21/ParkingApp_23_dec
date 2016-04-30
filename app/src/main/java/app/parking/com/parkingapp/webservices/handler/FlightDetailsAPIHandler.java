@@ -57,8 +57,7 @@ public class FlightDetailsAPIHandler {
      * @param webAPIResponseListener
      */
     public FlightDetailsAPIHandler(Activity mActivity, String flightNo, String flightName, String auth_token, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Loading...", false);
+
         this.mActivity = mActivity;
         this.auth_token = auth_token;
         this.flightName = flightName;
@@ -93,7 +92,7 @@ public class FlightDetailsAPIHandler {
                                 + response);
 
                         mResponseListener.onSuccessOfResponse(response);
-                        AppUtils.hideProgressDialog();
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -101,7 +100,6 @@ public class FlightDetailsAPIHandler {
             public void onErrorResponse(VolleyError error) {
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
                 mResponseListener.onFailOfResponse(error);
             }
         }) {

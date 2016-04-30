@@ -6,7 +6,7 @@
 
 
     <app.parking.com.parkingapp.customViews.MyEditTextView
-        android:id="@+id/search"
+        android:id="@+id/edt_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_20dp"
@@ -15,13 +15,14 @@
         android:gravity="center_vertical|left"
         android:hint="@string/airline_loc"
         android:padding="@dimen/margin_20dp"
+        android:singleLine="true"
         android:textColor="@color/search_txt_color"
         android:textColorHint="@color/search_txt_color" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search"
+        android:layout_below="@+id/edt_search"
         android:background="@color/search_bg"
         android:paddingBottom="@dimen/margin_20dp">
 
@@ -30,15 +31,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:dividerHeight="0dp"
+            android:visibility="visible" />
+
+        <app.parking.com.parkingapp.customViews.MyTextViewCustom
+            android:id="@+id/txt_no_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_20dp"
+            android:gravity="center"
+            android:hint="@string/airline_loc"
+            android:padding="@dimen/margin_20dp"
+            android:text="No result found"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/search_bg">
 
-            <app.parking.com.parkingapp.customViews.MyTextView18
+            <Button
                 android:id="@+id/search_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

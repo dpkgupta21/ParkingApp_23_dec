@@ -2,8 +2,10 @@ package app.parking.com.parkingapp.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -148,63 +150,63 @@ public class AppUtils {
 
     }
 
-    /**
-     * Showing progress dialog
-     *
-     * @param msg
-     */
-    public static void showProgressDialog(final Activity mActivity,
-                                          final String msg, final boolean isCancelable) {
-        try {
-            if (mActivity != null && mProgressDialog != null
-                    && mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-            mProgressDialog = null;
-            if (mProgressDialog == null && mActivity != null) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mProgressDialog = new ProgressDialog(mActivity);
-                        mProgressDialog.setMessage(msg);
-                        mProgressDialog.setCancelable(isCancelable);
-                    }
-                });
-
-            }
-            if (mActivity != null && mProgressDialog != null
-                    && !mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Hide progress dialog
-     */
-    public static void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            try {
-                mProgressDialog.dismiss();
-                mProgressDialog = null;
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
-
-        } else {
-            showErrorLog(TAG, "mProgressDialog is null");
-        }
-    }
+//    /**
+//     * Showing progress dialog
+//     *
+//     * @param msg
+//     */
+//    public static void showProgressDialog(final Activity mActivity,
+//                                          final String msg, final boolean isCancelable) {
+//        try {
+//            if (mActivity != null && mProgressDialog != null
+//                    && mProgressDialog.isShowing()) {
+//                try {
+//                    mProgressDialog.dismiss();
+//                    mProgressDialog = null;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//            mProgressDialog = null;
+//            if (mProgressDialog == null && mActivity != null) {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mProgressDialog = new ProgressDialog(mActivity);
+//                        mProgressDialog.setMessage(msg);
+//                        mProgressDialog.setCancelable(isCancelable);
+//                    }
+//                });
+//
+//            }
+//            if (mActivity != null && mProgressDialog != null
+//                    && !mProgressDialog.isShowing()) {
+//                mProgressDialog.show();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    /**
+//     * Hide progress dialog
+//     */
+//    public static void hideProgressDialog() {
+//        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//            try {
+//                mProgressDialog.dismiss();
+//                mProgressDialog = null;
+//
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//                e.printStackTrace();
+//            }
+//
+//        } else {
+//            showErrorLog(TAG, "mProgressDialog is null");
+//        }
+//    }
 
     /**
      * Check device have internet connection or not
@@ -538,7 +540,7 @@ public class AppUtils {
 
     public static Date convertInUTCDate(String dateString) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
@@ -557,4 +559,60 @@ public class AppUtils {
         return sdf.format(date);
 
     }
+
+
+
+    public static AlertDialog showDialog(Context ctx, String title, String msg) {
+
+        return showDialog(ctx, title, msg,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+
+    public static AlertDialog showDialog(Context ctx, String title, String msg,
+                                         DialogInterface.OnClickListener listener) {
+
+        return showDialog(ctx, title, msg, "Ok", null, listener, null);
+    }
+
+
+    public static AlertDialog showDialog(Context ctx, String title, String msg,
+                                         String btn1, String btn2, DialogInterface.OnClickListener listener) {
+
+        return showDialog(ctx, title, msg, btn1, btn2, listener,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+
+    public static AlertDialog showDialog(Context ctx, String title, String msg,
+                                         String btn1, String btn2,
+                                         DialogInterface.OnClickListener listener1,
+                                         DialogInterface.OnClickListener listener2) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(title);
+        builder.setMessage(msg).setCancelable(false)
+                .setPositiveButton(btn1, listener1);
+        if (btn2 != null)
+            builder.setNegativeButton(btn2, listener2);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        return alert;
+
+    }
+
 }

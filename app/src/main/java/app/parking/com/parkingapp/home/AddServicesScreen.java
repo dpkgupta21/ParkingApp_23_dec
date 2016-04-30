@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
@@ -42,12 +43,14 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
     private CreateOrderDTO createOrderDTO;
     private ArrayList<ListOfServicesDTO> listOfServicesDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
+    private Activity mActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_services_screen);
+        mActivity = AddServicesScreen.this;
         initViews();
         assignClicks();
 
@@ -92,7 +95,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         listOfServicesDTO = new ArrayList<ListOfServicesDTO>();
 
         listOfServicesDTOArrayList = new ArrayList<>();
-        String auth = SessionManager.getInstance(this).getAuthToken();
+        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
 
         new ServicesAPIHandler(this, auth, fetchServiceResponseListner());
 
@@ -160,16 +163,6 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
                 submitOrder();
 
-                /*for (int i = 0; i < listOfServicesDTOArrayList.size(); i++) {
-                    if (!listOfServicesDTOArrayList.get(0).isAdded()) {
-                        listOfServicesDTOArrayList.remove(i);
-                    }
-                }
-
-                intent.putExtra(AppConstants.SERVICE, listOfServicesDTOArrayList);
-                setResult(RESULT_OK, intent);
-                finish();*/
-
                 break;
         }
 
@@ -187,7 +180,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         Gson gson = new Gson();
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
-        String auth = SessionManager.getInstance(this).getAuthToken();
+        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
         CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(this,
                 orderRequest, auth,
                 createOrderResponseListner());
@@ -213,7 +206,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
                 HoldOrderDTO holdOrderDTO = new HoldOrderDTO();
 
-                holdOrderDTO.setUserEmail(SessionManager.getInstance(AddServicesScreen.this).getEmail());
+                holdOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
                 holdOrderDTO.setOrderId(createOrderResponseDTO.getOrderStatus().getOrder_id());
                 holdOrderDTO.setDropOffTime(createOrderDTO.getDropOffTime());
                 holdOrderDTO.setPickUpTime(createOrderDTO.getPickUpTime());

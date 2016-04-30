@@ -51,8 +51,7 @@ public class HoldOrderAPIHandler {
      */
     public HoldOrderAPIHandler(Activity mActivity, String parameters,
                                String auth, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Loading...", false);
+
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
@@ -85,7 +84,7 @@ public class HoldOrderAPIHandler {
                     @Override
                     public void onResponse(JSONObject response) {
                         mResponseListener.onSuccessOfResponse(response.toString());
-                        AppUtils.hideProgressDialog();
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -93,7 +92,7 @@ public class HoldOrderAPIHandler {
             public void onErrorResponse(VolleyError error) {
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
+
                 mResponseListener.onFailOfResponse(error);
             }
         }) {

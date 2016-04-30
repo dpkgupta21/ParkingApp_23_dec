@@ -122,7 +122,7 @@
             android:textSize="@dimen/text_size_16sp" />
 
 
-        <RelativeLayout
+        <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,15 +130,12 @@
             android:layout_marginTop="@dimen/margin_20dp"
             android:background="@drawable/green_round_corner_btn_selector_btn"
             android:gravity="center"
-            android:padding="@dimen/margin_15dp">
+            android:padding="@dimen/margin_15dp"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
-        </RelativeLayout>
+        </Button>
     </RelativeLayout>
 
     <RelativeLayout

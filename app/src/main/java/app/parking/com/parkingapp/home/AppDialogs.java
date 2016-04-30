@@ -11,9 +11,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -27,10 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.FlightDetailsDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.HelpMe;
@@ -102,7 +104,7 @@ public class AppDialogs {
 
 
     public static void selectCarColor(final Activity mActivity,
-                                      final TextView textView, final TextView color_view) {
+                                      final TextView textView) {
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
                 mModelDialog.dismiss();
@@ -133,7 +135,7 @@ public class AppDialogs {
             ListView car_make_list = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             final CarColorAdapter adapter = new CarColorAdapter(
-                    mActivity, textView, color_view, mModelDialog);
+                    mActivity, textView, mModelDialog);
             car_make_list.setAdapter(adapter);
 
             try {
@@ -237,43 +239,71 @@ public class AppDialogs {
             final ListView flightDetails = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             TextView search_btn = (TextView) mModelDialog.findViewById(R.id.search_btn);
-
+            final EditText edtSearch = (EditText) mModelDialog.findViewById(R.id.edt_search);
             search_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new FlightDetailsAPIHandler(mActivity, "AA4135", "AMERICAN", SessionManager.getInstance(mActivity).getAuthToken(), new WebAPIResponseListener() {
-                        @Override
-                        public void onSuccessOfResponse(Object... arguments) {
-
-                            String response = arguments[0].toString();
-                            JSONObject responseObject = null;
-                            try {
-                                responseObject = new JSONObject(response);
-
-                                Type type = new TypeToken<List<FlightDetailsDTO>>() {
-                                }.getType();
 
 
-                                flightDetailsDTOList = new Gson().
-                                        fromJson(responseObject.getJSONArray("flightResponse").toString(), type);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    if (!edtSearch.getText().toString().isEmpty()) {
+
+                        CustomProgressDialog.showProgDialog(mActivity, "Searching...");
+                        new FlightDetailsAPIHandler(mActivity,
+                                edtSearch.getText().toString().trim(),
+                                edtSearch.getText().toString().trim(),
+                                ParkingPreference.getKeyAuthtoken(mActivity), new WebAPIResponseListener() {
+                            @Override
+                            public void onSuccessOfResponse(Object... arguments) {
+
+
+                                String response = arguments[0].toString();
+                                JSONObject responseObject = null;
+                                try {
+                                    responseObject = new JSONObject(response);
+
+                                    Type type = new TypeToken<List<FlightDetailsDTO>>() {
+                                    }.getType();
+
+
+                                    flightDetailsDTOList = new Gson().
+                                            fromJson(responseObject.getJSONArray("flightResponse").toString(), type);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                CustomProgressDialog.hideProgressDialog();
+                                AppUtils.showLog(TAG, response);
+                                if (flightDetailsDTOList.size() > 0) {
+
+                                    flightDetails.setVisibility(View.VISIBLE);
+
+                                    FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
+                                            flightDetailsDTOList, mModelDialog);
+                                    flightDetails.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+
+
+                                    ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                            setVisibility(View.GONE);
+
+                                } else {
+                                    ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                            setVisibility(View.VISIBLE);
+                                    flightDetails.setVisibility(View.GONE);
+                                }
+
                             }
 
-                            AppUtils.showLog(TAG, response);
-
-                            FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
-                                    flightDetailsDTOList, mModelDialog);
-                            flightDetails.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-
-                        }
-
-                        @Override
-                        public void onFailOfResponse(Object... arguments) {
-
-                        }
-                    });
+                            @Override
+                            public void onFailOfResponse(Object... arguments) {
+                                CustomProgressDialog.hideProgressDialog();
+                                AppUtils.showDialog(mActivity, "Alert!",
+                                        "Search field cannot be empty");
+                            }
+                        });
+                    } else {
+                        AppUtils.showDialog(mActivity, "Alert!",
+                                "Search field cannot be empty");
+                    }
                 }
             });
 
@@ -303,7 +333,7 @@ public class AppDialogs {
                     }
                     if (mModelDialog != null) {
                         mModelDialog.dismiss();
-                        mModelDialog=null;
+                        mModelDialog = null;
                     }
 
                 }
@@ -328,6 +358,7 @@ public class AppDialogs {
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
                 mModelDialog.dismiss();
+                mModelDialog = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -354,13 +385,13 @@ public class AppDialogs {
 
 
             ImageView cancel_btn = (ImageView) mModelDialog.findViewById(R.id.cancel_btn);
-            TextView txt_order_number_val =(TextView)mModelDialog.
+            TextView txt_order_number_val = (TextView) mModelDialog.
                     findViewById(R.id.txt_order_number_val);
-            TextView txt_slot_number_val =(TextView)mModelDialog.
+            TextView txt_slot_number_val = (TextView) mModelDialog.
                     findViewById(R.id.txt_slot_number_val);
-            TextView txt_duration_val =(TextView)mModelDialog.
+            TextView txt_duration_val = (TextView) mModelDialog.
                     findViewById(R.id.txt_duration_val);
-            TextView txt_amount_val =(TextView)mModelDialog.
+            TextView txt_amount_val = (TextView) mModelDialog.
                     findViewById(R.id.txt_amount_val);
 
 
@@ -378,6 +409,9 @@ public class AppDialogs {
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(mActivity,
+                            UserNavigationDrawerActivity.class);
+                    mActivity.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
                 }
             });

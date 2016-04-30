@@ -56,8 +56,7 @@ public class SignupAPIHandler {
     public SignupAPIHandler(Activity mActivity, String email,
                             String password, String firstName, String lastName,
                             String mobNumber, WebAPIResponseListener webAPIResponseListener) {
-        AppUtils
-                .showProgressDialog(mActivity, "Registering...", false);
+
         this.mActivity = mActivity;
         this.emailId = email;
         this.password = password;
@@ -101,7 +100,7 @@ public class SignupAPIHandler {
 
                         parseLoginAPIResponse(response.toString());
                         mResponseListener.onSuccessOfResponse(response);
-                        AppUtils.hideProgressDialog();
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -109,7 +108,6 @@ public class SignupAPIHandler {
             public void onErrorResponse(VolleyError error) {
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
-                AppUtils.hideProgressDialog();
                 mResponseListener.onFailOfResponse(error);
             }
         }) {

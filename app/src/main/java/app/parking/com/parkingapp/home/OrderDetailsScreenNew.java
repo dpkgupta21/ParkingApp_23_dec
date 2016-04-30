@@ -2,7 +2,6 @@ package app.parking.com.parkingapp.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,38 +9,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
-import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
-import app.parking.com.parkingapp.model.FlightArrivalDTO;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
-import app.parking.com.parkingapp.model.HoldOrderDTO;
-import app.parking.com.parkingapp.model.ListOfServicesDTO;
-import app.parking.com.parkingapp.model.OrderConfirmationDTO;
-import app.parking.com.parkingapp.model.OrderStatusDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
-import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
-import app.parking.com.parkingapp.webservices.handler.ServicesAPIHandler;
-import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickListener {
 
@@ -317,4 +296,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }

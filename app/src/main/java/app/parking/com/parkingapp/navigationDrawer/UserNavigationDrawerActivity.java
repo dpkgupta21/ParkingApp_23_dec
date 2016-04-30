@@ -33,7 +33,6 @@ import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
-import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.view.UserProfileScreen;
@@ -107,7 +106,8 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
 
-                Intent user_profile_intent = new Intent(UserNavigationDrawerActivity.this, UserProfileScreen.class);
+                Intent user_profile_intent = new Intent(UserNavigationDrawerActivity.this,
+                        UserProfileScreen.class);
                 startActivity(user_profile_intent);
             }
         });
@@ -146,11 +146,12 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
                     case R.id.nav_item_logout:
 
-                        String email = SessionManager.getInstance(mActivity).getEmail();
-                        String auth = SessionManager.getInstance(mActivity).getAuthToken();
+                        String email = ParkingPreference.getEmailId(mActivity);
+                        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
 
                         AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
-                        LogoutAPIHandler mLogoutAPIHandler = new LogoutAPIHandler(mActivity, email, auth, onLogoutResponseListner());
+                        LogoutAPIHandler mLogoutAPIHandler = new
+                                LogoutAPIHandler(mActivity, email, auth, onLogoutResponseListner());
 
 
                         mCurrentSelectedPosition = 5;
@@ -181,7 +182,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                         if (mJsonObject.has(GlobalKeys.MESSAGE)) {
 
                             String message = mJsonObject.getString(GlobalKeys.MESSAGE);
-                            SessionManager.getInstance(mActivity).clearSession();
+                            ParkingPreference.clearSession(mActivity);
                             Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
                             startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             AppUtils.showToast(mActivity, message);
@@ -260,10 +261,13 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
         String deviceType = "ANDROID";
         String regId = ParkingPreference.getPushRegistrationId(mActivity);
-        String auth = SessionManager.getInstance(mActivity).getAuthToken();
-        String email = SessionManager.getInstance(mActivity).getEmail();
-        mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this, regId, deviceId,
-                deviceType, email, auth, new WebAPIResponseListener() {
+        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+        String email = ParkingPreference.getEmailId(mActivity);
+
+        mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this,
+                regId, deviceId,
+                deviceType, email,
+                auth, new WebAPIResponseListener() {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
 

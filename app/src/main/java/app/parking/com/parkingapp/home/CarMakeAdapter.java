@@ -101,7 +101,10 @@ public class CarMakeAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mTextView.setText(dummyArrayList.get(position));
-                mDialog.dismiss();
+                if(mDialog!=null) {
+                    mDialog.dismiss();
+                    mDialog=null;
+                }
             }
         });
 

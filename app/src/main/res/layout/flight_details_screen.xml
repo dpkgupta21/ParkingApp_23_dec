@@ -126,7 +126,6 @@
                         android:layout_marginLeft="@dimen/margin_10dp"
                         android:layout_marginRight="@dimen/margin_10dp"
                         android:orientation="horizontal"
-
                         android:weightSum="2">
 
                         <RelativeLayout
@@ -156,7 +155,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_20dp"
                             android:layout_marginRight="@dimen/margin_20dp"
-
                             android:layout_weight="1"
                             android:gravity="right"
                             android:paddingBottom="@dimen/margin_10dp">

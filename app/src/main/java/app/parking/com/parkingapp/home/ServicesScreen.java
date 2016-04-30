@@ -24,7 +24,7 @@ import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
-import app.parking.com.parkingapp.preferences.SessionManager;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
@@ -51,6 +51,8 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.services_screen);
+
+        mActivity = ServicesScreen.this;
         initViews();
         assignClicks();
 
@@ -69,7 +71,6 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initViews() {
-        mActivity = this;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
@@ -143,7 +144,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         Gson gson = new Gson();
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
-        String auth = SessionManager.getInstance(mActivity).getAuthToken();
+        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
         CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
     }
 
@@ -176,7 +177,7 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
                 HoldOrderDTO holdOrderDTO = new HoldOrderDTO();
                 holdOrderDTO = new Gson().fromJson(response, HoldOrderDTO.class);
                 holdOrderDTO.setOrderId(orderid);
-                holdOrderDTO.setUserEmail(SessionManager.getInstance(ServicesScreen.this).getEmail());
+                holdOrderDTO.setUserEmail(ParkingPreference.getKeyAuthtoken(mActivity));
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(ServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
