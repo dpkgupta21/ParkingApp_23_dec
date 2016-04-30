@@ -215,12 +215,13 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
                 holdOrderDTO.setUserEmail(SessionManager.getInstance(AddServicesScreen.this).getEmail());
                 holdOrderDTO.setOrderId(createOrderResponseDTO.getOrderStatus().getOrder_id());
-                holdOrderDTO.setDropOffTime("2016-03-17T08:11:32.244Z");
-                holdOrderDTO.setPickUpTime("2016-03-14T08:11:32.244Z");
+                holdOrderDTO.setDropOffTime(createOrderDTO.getDropOffTime());
+                holdOrderDTO.setPickUpTime(createOrderDTO.getPickUpTime());
                 holdOrderDTO.setVenueName("Vancouver");
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(AddServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
+
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
 

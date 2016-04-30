@@ -97,10 +97,16 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.arrival_tv, arrivalFlightDTO.getOrigin());
         String drop_off = HelpMe.getDisplayDate(destinationFlightDTO.getFlightDepatureTime())
                 + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightDepatureTime());
+//        String drop_off = HelpMe.getDisplayDate(holdOrderDTO.getDropOffTime())
+//                + " " + HelpMe.getDisplayTime(holdOrderDTO.getDropOffTime());
         setViewText(R.id.drop_off_tv, drop_off);
+
         String pick_up = HelpMe.getDisplayDate(arrivalFlightDTO.getFlightArrivalTime())
                 + " " + HelpMe.getDisplayTime(arrivalFlightDTO.getFlightArrivalTime());
+//        String pick_up = HelpMe.getDisplayDate(holdOrderDTO.getPickUpTime())
+//                + " " + HelpMe.getDisplayTime(holdOrderDTO.getPickUpTime());
         setViewText(R.id.pickup_tv, pick_up);
+
         setViewText(R.id.duration_tv,
                 HelpMe.getDurationTime(destinationFlightDTO.getFlightDepatureTime(),
                         arrivalFlightDTO.getFlightArrivalTime()));

@@ -6,14 +6,10 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,48 +20,30 @@ import java.util.Date;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
-import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.SessionManager;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.utils.HelpMe;
+import app.parking.com.parkingapp.utils.BaseFragment;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class HomeScreenFragment extends Fragment {
+public class HomeScreenFragment extends BaseFragment {
 
 
     private View view;
-
     private Activity mActivity;
-
     private CreateOrderDTO createOrderDTO;
-    private LinearLayout pick_time_rl, pick_date_rl, drop_date_rl, drop_time_rl;
-    private RelativeLayout toolbar_right_rl;
-    private TextView pick_date_tv, drop_date_tv, drop_time_tv, pick_time_tv, toolbar_right_tv, toolbar_title, book_now_tv;
-    private static final int DROP_DATE_DIALOG = 121, PICK_DATE_DIALOG = 122;
-    private boolean isDropDateClicked = true, isDropTimeClicked = true;
-    private Toolbar mToolbar;
-
-    private Calendar calendar, calendarPickup, calendarDropoff;
-    private int mYear, mDropYear, mPickupYear;
-    private int mMonth, mDropMonth, mPickupMonth;
-    private int mDay, mDropDay, mPickupDay;
-    private int mHour, mDropHour, mPickupHour;
-    private int mMinute, mDropMinute, mPickupMinute;
-    private String dropTime, pickTime;
     private String TAG;
-
-    public HomeScreenFragment() {
-    }
-
+    private boolean isDropDateClicked = true;
+    private boolean isDropTimeClicked = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TAG = HomeScreenFragment.class.getSimpleName();
         view = inflater.inflate(R.layout.fragment_home_screen_new, container, false);
+        mActivity = HomeScreenFragment.this.getActivity();
         return view;
 
     }
@@ -73,264 +51,227 @@ public class HomeScreenFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-        mActivity = UserNavigationDrawerActivity.mActivity;
         createOrderDTO = new CreateOrderDTO();
-        pick_time_rl = (LinearLayout) view.findViewById(R.id.pick_time_rl);
-        pick_date_rl = (LinearLayout) view.findViewById(R.id.pick_date_rl);
-        drop_date_rl = (LinearLayout) view.findViewById(R.id.drop_date_rl);
-        drop_time_rl = (LinearLayout) view.findViewById(R.id.drop_time_rl);
-        pick_date_tv = (TextView) view.findViewById(R.id.pick_date_tv);
-        drop_date_tv = (TextView) view.findViewById(R.id.drop_date_tv);
-        drop_time_tv = (TextView) view.findViewById(R.id.drop_time_tv);
-        pick_time_tv = (TextView) view.findViewById(R.id.pick_time_tv);
-        book_now_tv = (TextView) view.findViewById(R.id.book_now_tv);
 
-        toolbar_title = (TextView) mActivity.findViewById(R.id.toolbar_title);
+        TextView toolbar_title = (TextView) mActivity.findViewById(R.id.toolbar_title);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(R.string.parkforu);
 
-        calendar = Calendar.getInstance();
-        mYear = calendar.get(Calendar.YEAR);
-        mMonth = calendar.get(Calendar.MONTH);
-        mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        mHour = calendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = calendar.get(Calendar.MINUTE);
+        showDateTimeAtFirst();
+
+        // applying clicks on views.
+        setClick(R.id.drop_date_rl, view);
+        setClick(R.id.drop_time_rl, view);
+        setClick(R.id.pick_date_rl, view);
+        setClick(R.id.pick_time_rl, view);
+        setClick(R.id.book_now_tv, view);
+    }
+
+    private void showDateTimeAtFirst() {
+        // for drop date and time
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        setViewText(R.id.drop_date_tv, dateFormat.format(currentDate), view);
+        setViewText(R.id.drop_time_tv, timeFormat.format(currentDate), view);
+
+        //for setting pick date and time, need to increase date by one.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, 1);
+        Date pickDate = calendar.getTime();
+
+        setViewText(R.id.pick_date_tv, dateFormat.format(pickDate), view);
+        setViewText(R.id.pick_time_tv, timeFormat.format(pickDate), view);
+
+        getDateDifference();
+    }
 
 
-        mPickupYear = mYear;
-        mPickupMonth = mMonth;
-        mPickupDay = mDay;
-        mPickupHour = mHour;
-        mPickupMinute = mMinute;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.drop_date_rl:
+                isDropDateClicked = true;
+                openDatePicker();
+                break;
+            case R.id.pick_date_rl:
+                isDropDateClicked = false;
+                openDatePicker();
+                break;
+            case R.id.drop_time_rl:
+                isDropTimeClicked = true;
+                openTimePicker();
+                break;
+            case R.id.pick_time_rl:
+                isDropTimeClicked = false;
+                openTimePicker();
+                break;
+            case R.id.book_now_tv:
+                bookNow();
+                break;
+        }
+    }
 
-
-        mDropYear = calendar.get(Calendar.YEAR);
-        mDropMonth = calendar.get(Calendar.MONTH);
-        mDropDay = calendar.get(Calendar.DAY_OF_MONTH);
-        mDropHour = calendar.get(Calendar.HOUR_OF_DAY);
-        mDropMinute = calendar.get(Calendar.MINUTE);
-
-        String currentDate = new StringBuilder()
-                // Month is 0 based so add 1
-                .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                .append(mYear).append(" ").toString();
-        String pickUpDate = new StringBuilder()
-                // Month is 0 based so add 1
-                .append(mMonth + 1).append("/ ").append(mDay + 1).append("/ ")
-                .append(mYear).append(" ").toString();
+    private void openDatePicker() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy");
         try {
-            Date date = new SimpleDateFormat("MM/dd/yyyy").parse(currentDate);
-            Date pickdate = new SimpleDateFormat("MM/dd/yyyy").parse(pickUpDate);
-            String requiredFormatedDate = new SimpleDateFormat("MMM d, yyyy").format(date);
-            String pickFormatedDate = new SimpleDateFormat("MMM d, yyyy").format(pickdate);
-            pick_date_tv.setText(pickFormatedDate);
-            drop_date_tv.setText(requiredFormatedDate);
+            if (isDropDateClicked) {
+                cal.setTime(sdf.parse(getViewText(R.id.drop_date_tv, view)));
+            } else {
+                cal.setTime(sdf.parse(getViewText(R.id.pick_date_tv, view)));
+            }
+            DatePickerDialog datePicker = new DatePickerDialog(mActivity,
+                    dateListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH));
+            datePicker.show();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-       /* drop_date_tv.setText(new StringBuilder()
-                // Month is 0 based so add 1
-                .append(mMonth + 1).append("/ ").append(mDay).append("/ ")
-                .append(mYear).append(" "));*/
-
-        drop_time_tv.setText(mHour + ":" + mMinute);
-
-        pick_time_tv.setText(mHour + ":" + mMinute);
-
-
-        pick_date_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getActivity().showDialog(PICK_DATE_DIALOG);
-                isDropDateClicked = false;
-                DatePickerDialog dialog = new DatePickerDialog(getContext(),
-                        mDateSetListener, mPickupYear, mPickupMonth, mPickupDay);
-                dialog.show();
-            }
-        });
-
-        pick_time_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isDropTimeClicked = false;
-                TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(), mTimeSetListner,
-                        mPickupHour, mPickupMinute, true);
-                dialog.show();
-            }
-        });
-
-        drop_date_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isDropDateClicked = true;
-                DatePickerDialog dialog = new DatePickerDialog(getContext(),
-                        mDateSetListener, mDropYear, mDropMonth, mDropDay);
-                dialog.show();
-
-
-            }
-        });
-
-        drop_time_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isDropTimeClicked = true;
-                TimePickerDialog dialog;
-                dialog = new TimePickerDialog(getContext(),
-                        mTimeSetListner,
-                        mDropHour,
-                        mDropMinute, true);
-                dialog.show();
-            }
-        });
-
-
-        book_now_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                calendarDropoff = Calendar.getInstance();
-                calendarPickup = Calendar.getInstance();
-                Date pickDate = null;
-                Date dropDate = null;
-                int dropHour = 0, dropMinute = 0;
-                int pickHour = 0, pickMinute = 0;
-                try {
-                    pickDate = new SimpleDateFormat("MMM d, yyyy")
-                            .parse(pick_date_tv.getText().toString());
-                    dropDate = new SimpleDateFormat("MMM d, yyyy")
-                            .parse(drop_date_tv.getText().toString());
-                    dropHour = Integer.valueOf(drop_time_tv.getText().toString().split(":")[0]);
-                    pickHour = Integer.valueOf(pick_time_tv.getText().toString().split(":")[0]);
-                    dropMinute = Integer.valueOf(drop_time_tv.getText().toString().split(":")[1]);
-                    pickMinute = Integer.valueOf(pick_time_tv.getText().toString().split(":")[1]);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Calendar c = Calendar.getInstance();
-                Calendar c1 = Calendar.getInstance();
-                c.setTime(dropDate);
-                c1.setTime(pickDate);
-                calendarDropoff.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),
-                        dropHour, dropMinute);
-                //calendarDropoff.set(mDropYear, mDropMonth, mDropDay, mDropHour, mDropMinute);
-                calendarPickup.set(c1.get(Calendar.YEAR), c1.get(Calendar.MONTH), c1.get(Calendar.DAY_OF_MONTH),
-                        pickHour, pickMinute);
-                //calendarPickup.set(mPickupYear, mPickupMonth, mPickupDay, mPickupHour, mPickupMinute);
-
-                long dropoffTimestamp = calendarDropoff.getTimeInMillis();
-                AppUtils.showLog(TAG, "dropoffTimestamp " + dropoffTimestamp);
-                long pickupTimestamp = calendarPickup.getTimeInMillis();
-                AppUtils.showLog(TAG, "pickupTimestamp " + pickupTimestamp);
-
-                long difference = pickupTimestamp - dropoffTimestamp;
-
-                long days = difference / (24 * 60 * 60 * 1000);
-
-                AppUtils.showLog(TAG, difference + " " + days);
-
-                if (days >= 1) {
-
-                    String pickmonth = ""+(mPickupMonth + 1 < 9 ?
-                            ("0"+(mPickupMonth+1)) : (mPickupMonth+1));
-                    String dropmonth = ""+(mDropMonth + 1 < 9 ?
-                            ("0"+(mDropMonth+1)) : (mDropMonth+1));
-
-//                    pickTime = mPickupYear + "-" + pickmonth + "-" + mPickupDay + " " + mPickupHour + ":" + mPickupMinute +
-//                            ":00";
-                    pickTime = c1.get(Calendar.YEAR) + "-" + (c1.get(Calendar.MONTH) + 1) + "-" + c1.get(Calendar.DAY_OF_MONTH) + " " + pickHour + ":" + pickMinute +
-                            ":00";
-                    pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
-                    //dropTime = mDropYear + "-" + dropmonth + "-" + mDropDay + " " + mDropHour + ":" + mDropMinute + ":" + 00;
-                    dropTime = c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH) + " " + dropHour + ":" + dropMinute +
-                            ":00";
-                    dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
-
-                    createOrderDTO.setDropOffTime(dropTime);
-                    createOrderDTO.setPickUpTime(pickTime);
-                    AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
-                    createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
-                    createOrderDTO.setVenueName("Vancouver");
-                    Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
-                    intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
-                    startActivity(intent);
-                } else {
-                    Snackbar.make(view, "Order should be for atleast one day", Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
-
     }
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            int mYear = year;
-            int mMonth = monthOfYear;
-            int mDay = dayOfMonth;
-            if (!isDropDateClicked) {
-
-                mPickupDay = mDay ;
-                mPickupMonth = mMonth;
-                mPickupYear = mYear;
-
-                String date= ""+( mDay<9 ? ("0"+mDay):mDay);
-                String month= ""+( (mMonth+ 1)<9 ? ("0"+(mMonth+1)):(mMonth+1));
-
-                String displayDate=date +"-"+month+"-"+mYear;
-//                String displayDate = HelpMe.getDisplayDate(date + "-" + month + "-" + mYear,
-//                        HelpMe.SELECT_DATE_FORMAT, HelpMe.DISPLAY_DATE_FORMAT);
-                pick_date_tv.setText(displayDate);
-            } else {
+    private void openTimePicker() {
+        Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePicker = new TimePickerDialog(mActivity, timeListener,
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+        timePicker.show();
+    }
 
 
-                mDropDay = mDay;
-                mDropMonth = mMonth;
-                mDropYear = mYear;
-
-                String date= ""+( mDay<9 ? ("0"+mDay):mDay);
-                String month= ""+( (mMonth+ 1)<9 ? ("0"+(mMonth+1)):(mMonth+1));
-
-                String displayDate=date +"-"+month+"-"+mYear;
-//                String displayDate = HelpMe.getDisplayDate(date + "-" + month + "-" + mYear,
-//                        HelpMe.SELECT_DATE_FORMAT, HelpMe.DISPLAY_DATE_FORMAT);
-
-                drop_date_tv.setText(displayDate);
-            }
-
-        }
-    };
-
-
-    private TimePickerDialog.OnTimeSetListener mTimeSetListner = new
-            TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            int hour = hourOfDay;
-            int min = minute;
-
+        public void onTimeSet(TimePicker v, int hourOfDay, int minute) {
+            String hours = hourOfDay < 10 ? "0" + hourOfDay : hourOfDay + "";
+            String minutes = minute < 10 ? "0" + minute : minute + "";
             if (isDropTimeClicked) {
-                mDropHour = hour;
-                mDropMinute = min;
-
-                String mHour= ""+( hour<9 ? ("0"+hour):hour);
-                String mMin= ""+( min<9 ? ("0"+min):min);
-                drop_time_tv.setText(mHour + ":" + mMin);
+                setViewText(R.id.drop_time_tv, hours + ":" + minutes, view);
             } else {
-                mPickupMinute = min;
-                mPickupHour = hour;
-
-                String mHour= ""+( hour<9 ? ("0"+hour):hour);
-                String mMin= ""+( min<9 ? ("0"+min):min);
-                pick_time_tv.setText(mHour + ":" + mMin);
+                setViewText(R.id.pick_time_tv, hours + ":" + minutes, view);
             }
-
+            getDateDifference();
         }
     };
+
+    DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker v, int year, int monthOfYear, int dayOfMonth) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy");
+                String month = (monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : monthOfYear + "";
+                String dateString = month + "/" + dayOfMonth + "/" + year;
+                Date date = new SimpleDateFormat("MM/dd/yyyy").parse(dateString);
+                if (isDropDateClicked) {
+                    setViewText(R.id.drop_date_tv, sdf.format(date), view);
+                } else {
+                    setViewText(R.id.pick_date_tv, sdf.format(date), view);
+                }
+                getDateDifference();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+
+    private void bookNow() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy");
+        Calendar dropCal = Calendar.getInstance();
+        Calendar pickCal = Calendar.getInstance();
+        try {
+            String dropTime = getViewText(R.id.drop_time_tv, view);
+            String pickTime = getViewText(R.id.pick_time_tv, view);
+
+            Date dropDate = sdf.parse(getViewText(R.id.drop_date_tv, view));
+            Date pickDate = sdf.parse(getViewText(R.id.pick_date_tv, view));
+
+            Calendar c = Calendar.getInstance();
+
+            //for getting drop off time stamp.
+            c.setTime(dropDate);
+            dropCal.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),
+                    Integer.valueOf(dropTime.split(":")[0]), Integer.valueOf(dropTime.split(":")[1]));
+
+            //for getting pickup time stamp
+            c.setTime(pickDate);
+            pickCal.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),
+                    Integer.valueOf(pickTime.split(":")[0]), Integer.valueOf(pickTime.split(":")[1]));
+
+            //date difference in days
+            long difference = pickDate.getTime() - dropDate.getTime();
+
+            long days = difference / (24 * 60 * 60 * 1000);
+
+            AppUtils.showLog(TAG, difference + " " + days);
+
+            if (days >= 1) {
+                //start of getting pickTime
+                String pickMonth = (pickCal.get(Calendar.MONTH) + 1) < 10
+                        ? "0" + (pickCal.get(Calendar.MONTH) + 1)
+                        : (pickCal.get(Calendar.MONTH) + 1) + "";
+                String pickDay = pickCal.get(Calendar.DAY_OF_MONTH) < 10
+                        ? "0" + pickCal.get(Calendar.DAY_OF_MONTH)
+                        : pickCal.get(Calendar.DAY_OF_MONTH) + "";
+
+                pickTime = pickCal.get(Calendar.YEAR) + "-" + pickMonth + "-" + pickDay
+                        + " " + pickTime.split(":")[0] + ":" + pickTime.split(":")[1] + ":00";
+                pickTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(pickTime));
+                //end of getting pickTime
+
+                //start of getting dropTime
+                String dropMonth = (dropCal.get(Calendar.MONTH) + 1) < 10
+                        ? "0" + (dropCal.get(Calendar.MONTH) + 1)
+                        : (dropCal.get(Calendar.MONTH) + 1) + "";
+                String dropDay = dropCal.get(Calendar.DAY_OF_MONTH) < 10
+                        ? "0" + dropCal.get(Calendar.DAY_OF_MONTH)
+                        : dropCal.get(Calendar.DAY_OF_MONTH) + "";
+
+                dropTime = dropCal.get(Calendar.YEAR) + "-" + dropMonth + "-" + dropDay + " "
+                        + dropTime.split(":")[0] + ":" + dropTime.split(":")[1] + ":00";
+                dropTime = AppUtils.convertoUTCFormat(AppUtils.convertInUTCDate(dropTime));
+                //end of getting dropTime
+
+                createOrderDTO.setDropOffTime(dropTime);
+                createOrderDTO.setPickUpTime(pickTime);
+                AppUtils.showLog(TAG, pickTime + " droptime: " + dropTime);
+                createOrderDTO.setUserEmail(SessionManager.getInstance(mActivity).getEmail());
+                createOrderDTO.setVenueName("Vancouver");
+                Intent intent = new Intent(getContext(), FlightDetailsScreen.class);
+                intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO);
+                startActivity(intent);
+            } else {
+                Snackbar.make(view, "Order should be for atleast one day",
+                        Snackbar.LENGTH_LONG).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void getDateDifference() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM d, yyyy HH:mm");
+            String dropDateTime = getViewText(R.id.drop_date_tv, view) + " "
+                    + getViewText(R.id.drop_time_tv, view);
+            String pickDateTime = getViewText(R.id.pick_date_tv, view) + " "
+                    + getViewText(R.id.pick_time_tv, view);
+
+            Date dropDate = sdf.parse(dropDateTime);
+            Date pickDate = sdf.parse(pickDateTime);
+
+            long diff = pickDate.getTime() - dropDate.getTime();
+
+            long diffInDays = diff / (24 * 60 * 60 * 1000);
+            long diffInHours = diff / (60 * 60 * 1000) % 24;
+
+            setViewText(R.id.days, diffInDays + " day(s)", view);
+            setViewText(R.id.hours, diffInHours + " hour(s)", view);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
