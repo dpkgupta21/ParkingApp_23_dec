@@ -232,5 +232,9 @@
     <string name="tax_lbl">Tax</string>
     <string name="order_status">Status</string>
 
+
+    <string name="departure_flight">Departure flight</string>
+    <string name="arrival_flight">Arrival flight</string>
+
 </resources>
 

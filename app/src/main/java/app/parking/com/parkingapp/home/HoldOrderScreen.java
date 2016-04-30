@@ -23,6 +23,8 @@ import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.OrderStatusDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
+import app.parking.com.parkingapp.model.ServiceInfoDTO;
+import app.parking.com.parkingapp.model.VehicleInfoDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
@@ -46,7 +48,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hold_order_screen);
 
-        mActivity= HoldOrderScreen.this;
+        mActivity = HoldOrderScreen.this;
 
         initViews();
         assignClicks();
@@ -112,9 +114,34 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 //                + " " + HelpMe.getDisplayTime(holdOrderDTO.getPickUpTime());
         setViewText(R.id.pickup_tv, pick_up);
 
+        //setting duration in pick up and drop off time.
         setViewText(R.id.duration_tv,
                 HelpMe.getDurationTime(destinationFlightDTO.getFlightDepatureTime(),
                         arrivalFlightDTO.getFlightArrivalTime()));
+
+        //setting departure fligh details.
+        setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());
+        String departure_flight_arrival = HelpMe.getDisplayDate(destinationFlightDTO.getFlightArrivalTime())
+                + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightArrivalTime());
+        setViewText(R.id.departure_flight_arrival_tv, departure_flight_arrival);
+        setViewText(R.id.departure_flight_departure_tv, drop_off);
+
+        //setting arrival flight details.
+        setViewText(R.id.arrival_flight_no_tv, arrivalFlightDTO.getFlightNumber());
+        setViewText(R.id.arrival_flight_arrival_tv, pick_up);
+        String arrival_flight_departure_time = HelpMe.getDisplayDate(arrivalFlightDTO.getFlightDepatureTime())
+                + " " + HelpMe.getDisplayTime(arrivalFlightDTO.getFlightDepatureTime());
+        setViewText(R.id.arrival_flight_departure_tv, arrival_flight_departure_time);
+
+        //setting vehicle details.
+        VehicleInfoDTO infoDTO = createOrderResponseDTO.getVehicleInfo();
+        setViewText(R.id.vehicle_make_tv, infoDTO.getVehicleMake());
+        setViewText(R.id.vehicle_model_tv, infoDTO.getVehicleModel());
+        setViewText(R.id.vehicle_color_tv, infoDTO.getVehicleColor());
+        setViewText(R.id.vehicle_platenumber_tv, getIntent().getStringExtra("plateNumber"));
+
+
+
         setViewText(R.id.price_tv, orderStatusDTO.getOrderTotal());
 
     }

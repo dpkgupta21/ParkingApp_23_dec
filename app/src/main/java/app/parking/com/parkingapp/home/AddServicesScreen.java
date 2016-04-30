@@ -214,7 +214,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(AddServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
-
+                intent.putExtra("plateNumber", createOrderDTO.getVehicle().getPlateNo());
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
 
