@@ -3,11 +3,14 @@ package app.parking.com.parkingapp.model;
 import java.io.Serializable;
 
 /**
- * Created by Harish on 2/28/2016.
+ * Created by Deepak on 2/28/2016.
  */
 public class VehicleDTO implements Serializable {
 
-    public String make, model, color, plateNo;
+    public String make;
+    public String model;
+    public String color;
+    public String plateNo;
 
     public String getMake() {
         return make;

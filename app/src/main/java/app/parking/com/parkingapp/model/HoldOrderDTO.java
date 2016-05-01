@@ -3,7 +3,7 @@ package app.parking.com.parkingapp.model;
 import java.io.Serializable;
 
 /**
- * Created by Harish on 3/6/2016.
+ * Created by Deepak on 3/6/2016.
  */
 public class HoldOrderDTO implements Serializable {
     public String getUserEmail() {
@@ -46,5 +46,9 @@ public class HoldOrderDTO implements Serializable {
         this.dropOffTime = dropOffTime;
     }
 
-    String userEmail = "", venueName = "", orderId = "", pickUpTime = "", dropOffTime = "";
+    private String userEmail = "";
+    private String venueName = "";
+    private String orderId = "";
+    private String pickUpTime = "";
+    private String dropOffTime = "";
 }

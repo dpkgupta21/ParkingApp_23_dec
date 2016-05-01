@@ -17,6 +17,7 @@ import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
+import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
@@ -31,6 +32,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private ListView services_lv;
     ///private RelativeLayout submit_button;
     private CreateOrderResponseDTO createOrderResponseDTO;
+    private PurchaseOrderDTO purchaseOrderDTO;
 
 
     @Override
@@ -42,14 +44,24 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 //        Toast.makeText(OrderDetailsScreenNew.this, "Transaction Id :" +
 //                createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId(),
 //                Toast.LENGTH_SHORT).show();
+        if (getIntent() != null) {
+            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().
+                    getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
+        }
+        createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
+                getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
+
+
         if (createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId() != null &&
                 !createOrderResponseDTO.getOrderConfirmation().
                         getPaymentTransactionId().equalsIgnoreCase("")) {
 
         } else {
-            AppDialogs.paymentDialog(this, createOrderResponseDTO);
+            AppDialogs.paymentDialog(this, createOrderResponseDTO, purchaseOrderDTO);
         }
 
+
+        setValue();
     }
 
     private void assignClicks() {
@@ -94,8 +106,6 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
         payment = (ImageView) findViewById(R.id.payment);
 
-        createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
-        setValue();
     }
 
 
@@ -231,7 +241,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         switch (status) {
             case 0:
                 setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
-                setViewVisibility(R.id.relative_vehicle_info,View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
                 setViewVisibility(R.id.relative_order_info, View.GONE);
                 setViewVisibility(R.id.relative_payment_info, View.GONE);
@@ -244,8 +254,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_service_info, View.GONE);
                 setViewVisibility(R.id.relative_order_info, View.GONE);
                 setViewVisibility(R.id.relative_payment_info, View.GONE);
-                setViewVisibility(R.id.relative_drop_off_info,View.GONE);
-                setViewVisibility(R.id.relative_pick_up_info,View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 2:
                 setViewVisibility(R.id.relative_flight_info, View.GONE);

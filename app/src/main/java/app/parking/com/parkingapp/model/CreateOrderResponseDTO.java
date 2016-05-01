@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Harish on 2/28/2016.
+ * Created by Deepak on 2/28/2016.
  */
 public class CreateOrderResponseDTO implements Serializable {
+
 
     private FlightInfoDTO flightInfo;
     private VehicleInfoDTO vehicleInfo;

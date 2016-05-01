@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
@@ -42,7 +43,6 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
     private String TAG = AddServicesScreen.class.getSimpleName();
     private CreateOrderDTO createOrderDTO;
     private ArrayList<ListOfServicesDTO> listOfServicesDTO;
-    private CreateOrderResponseDTO createOrderResponseDTO;
     private Activity mActivity;
 
 
@@ -54,6 +54,19 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         initViews();
         assignClicks();
 
+        if (getIntent() != null) {
+            createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
+            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
+        } else {
+            createOrderDTO = new CreateOrderDTO();
+        }
+
+        listOfServicesDTO = new ArrayList<ListOfServicesDTO>();
+
+        listOfServicesDTOArrayList = new ArrayList<>();
+        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+
+        new ServicesAPIHandler(mActivity, auth, fetchServiceResponseListner());
     }
 
     private void assignClicks() {
@@ -85,19 +98,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         toolbar_right_rl.setVisibility(View.VISIBLE);
         toolbar_right_tv.setText(R.string.skip);
 
-        if (getIntent() != null) {
-            createOrderDTO = (CreateOrderDTO) getIntent().getSerializableExtra(AppConstants.CREATE_ORDER);
-            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
-        } else {
-            createOrderDTO = new CreateOrderDTO();
-        }
 
-        listOfServicesDTO = new ArrayList<ListOfServicesDTO>();
-
-        listOfServicesDTOArrayList = new ArrayList<>();
-        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-
-        new ServicesAPIHandler(this, auth, fetchServiceResponseListner());
 
     }
 
@@ -181,11 +182,11 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(this,
+
+        CustomProgressDialog.showProgDialog(mActivity, null);
+        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity,
                 orderRequest, auth,
                 createOrderResponseListner());
-      /*  Intent intent = new Intent(AddServicesScreen.this, OrderDetailsScreenNew.class);
-        startActivity(intent);*/
 
     }
 
@@ -201,23 +202,24 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
             public void onSuccessOfResponse(Object... arguments) {
 
                 String response = (String) arguments[0];
-                createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
+                CreateOrderResponseDTO createOrderResponseDTO = new Gson().fromJson(response,
+                        CreateOrderResponseDTO.class);
 
 
                 HoldOrderDTO holdOrderDTO = new HoldOrderDTO();
-
                 holdOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
                 holdOrderDTO.setOrderId(createOrderResponseDTO.getOrderStatus().getOrder_id());
                 holdOrderDTO.setDropOffTime(createOrderDTO.getDropOffTime());
                 holdOrderDTO.setPickUpTime(createOrderDTO.getPickUpTime());
-                holdOrderDTO.setVenueName("Vancouver");
+                holdOrderDTO.setVenueName(createOrderDTO.getVenueName());
+
                 AppUtils.showLog(TAG, response);
                 Intent intent = new Intent(AddServicesScreen.this, HoldOrderScreen.class);
                 intent.putExtra(AppConstants.HOLD_ORDER_KEY, holdOrderDTO);
-                intent.putExtra("plateNumber", createOrderDTO.getVehicle().getPlateNo());
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
 
+                CustomProgressDialog.hideProgressDialog();
 
             }
 

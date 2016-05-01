@@ -31,6 +31,7 @@ import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.FlightDetailsDTO;
+import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
@@ -353,7 +354,8 @@ public class AppDialogs {
 
 
     public static void paymentDialog(final Activity mActivity,
-                                     final CreateOrderResponseDTO mCreateOrderResponseDTO) {
+                                     final CreateOrderResponseDTO mCreateOrderResponseDTO,
+                                     final PurchaseOrderDTO mPurchaseOrderDTO) {
 
         try {
             if (mModelDialog != null && mModelDialog.isShowing()) {
@@ -398,10 +400,8 @@ public class AppDialogs {
             txt_order_number_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrder_id());
             txt_slot_number_val.setText(mCreateOrderResponseDTO.getOrderConfirmation().getSlotId());
             txt_duration_val.setText(HelpMe.getDurationTime(
-                    mCreateOrderResponseDTO.getFlightInfo().
-                            getDestinationFlight().getFlightDepatureTime(),
-                    mCreateOrderResponseDTO.getFlightInfo().
-                            getArrivalFlight().getFlightArrivalTime()));
+                    mPurchaseOrderDTO.getDropOffTime(),
+                    mPurchaseOrderDTO.getPickUpTime()));
             txt_amount_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrderTotal());
 
             Button okButton = (Button) mModelDialog.findViewById(R.id.okButton);
@@ -409,9 +409,17 @@ public class AppDialogs {
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
                     Intent intent = new Intent(mActivity,
                             UserNavigationDrawerActivity.class);
                     mActivity.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    mActivity.finish();
+
+                    if (mModelDialog != null) {
+                        mModelDialog.dismiss();
+                        mModelDialog = null;
+                    }
 
                 }
             });
@@ -422,9 +430,19 @@ public class AppDialogs {
 
                     Intent intent = new Intent(mActivity,
                             CreditCardScreen.class);
-
                     intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, mCreateOrderResponseDTO);
+                    intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, mPurchaseOrderDTO);
                     mActivity.startActivity(intent);
+
+                    mActivity.finish();
+
+                    if (mModelDialog != null) {
+                        mModelDialog.dismiss();
+                        mModelDialog = null;
+                    }
+
+
+
 
                 }
             });

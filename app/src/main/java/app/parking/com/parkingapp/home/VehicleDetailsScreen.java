@@ -18,15 +18,7 @@ import app.parking.com.parkingapp.utils.AppUtils;
 public class VehicleDetailsScreen extends BaseActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    //private TextView  toolbar_right_tv;
-    //private RelativeLayout toolbar_right_rl;
-    //    private RelativeLayout color_ll;
-//    private LinearLayout make_ll;
-//    private TextView model_et;
-    // private EditText number_plate_et;
-    //private VehicleDetailsScreen mVehicleDetailsScreen;
     private CreateOrderDTO createOrderDTO;
-    //private VehicleDTO vehicleDTO;
     private String TAG = VehicleDetailsScreen.class.getSimpleName();
 
     @Override
@@ -83,8 +75,10 @@ public class VehicleDetailsScreen extends BaseActivity implements View.OnClickLi
                 vehicleDTO.setModel(getViewText(R.id.model_value_tv));
                 vehicleDTO.setPlateNo(getViewText(R.id.number_plate_et));
                 createOrderDTO.setVehicle(vehicleDTO);
+
                 Intent intent = new Intent(getApplicationContext(), AddServicesScreen.class);
                 startActivity(intent.putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
+
                 break;
             case R.id.make_ll:
                 TextView make_value_tv = (TextView) findViewById(R.id.make_value_tv);

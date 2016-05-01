@@ -35,6 +35,14 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
 
         manageInterface();
 
+
+        if (getIntent() != null) {
+            createOrderDTO = (CreateOrderDTO) getIntent().
+                    getSerializableExtra(AppConstants.CREATE_ORDER);
+            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
+        } else {
+            createOrderDTO = new CreateOrderDTO();
+        }
     }
 
     /**
@@ -115,13 +123,7 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
         setViewVisibility(R.id.toolbar_right_tv, View.VISIBLE);
         setViewText(R.id.toolbar_right_tv, getResources().getString(R.string.next));
 
-        if (getIntent() != null) {
-            createOrderDTO = (CreateOrderDTO) getIntent().
-                    getSerializableExtra(AppConstants.CREATE_ORDER);
-            AppUtils.showLog(TAG, createOrderDTO.getPickUpTime() + " " + createOrderDTO.getDropOffTime());
-        } else {
-            createOrderDTO = new CreateOrderDTO();
-        }
+
 
 
     }

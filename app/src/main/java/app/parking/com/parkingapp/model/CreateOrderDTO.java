@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Harish on 2/28/2016.
+ * Created by Deepak on 2/28/2016.
  */
 public class CreateOrderDTO implements Serializable {
 
-    public String userEmail, venueName, dropOffTime, pickUpTime;
+    public String userEmail;
+    public String  venueName;
+    public String dropOffTime;
+    public String pickUpTime;
     public VehicleDTO vehicle;
+    public FlightArrivalDTO arrivalFlight;
+    public FlightDepartureDTO destinationFlight;
+
 
     public VehicleDTO getVehicle() {
         return vehicle;
@@ -35,9 +41,6 @@ public class CreateOrderDTO implements Serializable {
         this.destinationFlight = destinationFlight;
     }
 
-
-    public FlightArrivalDTO arrivalFlight;
-    public FlightDepartureDTO destinationFlight;
 
     public ArrayList<ListOfServicesDTO> getServices() {
         return services;

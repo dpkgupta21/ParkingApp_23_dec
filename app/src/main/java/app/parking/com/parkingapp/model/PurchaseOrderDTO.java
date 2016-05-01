@@ -3,10 +3,17 @@ package app.parking.com.parkingapp.model;
 import java.io.Serializable;
 
 /**
- * Created by Harish on 3/6/2016.
+ * Created by Deepak on 3/6/2016.
  */
 public class PurchaseOrderDTO implements Serializable {
 
+    private String userEmail = "";
+    private String venueName = "";
+    private String orderId = "";
+    private String pickUpTime = "";
+    private String dropOffTime = "";
+    private String slotId = "";
+    private String purchaseStripeToken = "";
 
     public String getUserEmail() {
         return userEmail;
@@ -56,19 +63,11 @@ public class PurchaseOrderDTO implements Serializable {
         this.slotId = slotId;
     }
 
-    String userEmail = "";
-    String venueName = "";
-    String orderId = "";
-    String pickUpTime = "";
-    String dropOffTime = "";
-    String slotId = "";
-    String stripeToken = "";
-
-    public String getStripeToken() {
-        return stripeToken;
+    public String getPurchaseStripeToken() {
+        return purchaseStripeToken;
     }
 
-    public void setStripeToken(String stripeToken) {
-        this.stripeToken = stripeToken;
+    public void setPurchaseStripeToken(String purchaseStripeToken) {
+        this.purchaseStripeToken = purchaseStripeToken;
     }
 }

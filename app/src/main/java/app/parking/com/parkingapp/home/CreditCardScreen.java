@@ -3,13 +3,11 @@ package app.parking.com.parkingapp.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,9 +42,8 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
     private TextView toolbar_title, toolbar_right_tv;
     private Spinner month_spinner, year_spinner;
 
-    private EditText card_num_et, card_holder_name_et, cvv_et;
     private PurchaseOrderDTO purchaseOrderDTO;
-    private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
+    //private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private String PUBLISHABLE_KEY = "pk_test_OpA06mOu6bmI6iGZMrahmKkc";
     private RelativeLayout toolbar_right_rl;
@@ -61,6 +58,14 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
         initViews();
         assignClicks();
+
+        if (getIntent() != null) {
+            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().
+                    getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
+            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
+        } else {
+            purchaseOrderDTO = new PurchaseOrderDTO();
+        }
     }
 
     private void assignClicks() {
@@ -86,9 +91,6 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
         toolbar_right_rl.setVisibility(View.VISIBLE);
         toolbar_right_tv.setText(R.string.next);
 
-        card_num_et = (EditText) findViewById(R.id.card_num_et);
-        card_holder_name_et = (EditText) findViewById(R.id.card_holder_name_et);
-        cvv_et = (EditText) findViewById(R.id.cvv_et);
         // Spinner element
         month_spinner = (Spinner) findViewById(R.id.month_spinner);
         year_spinner = (Spinner) findViewById(R.id.year_spinner);
@@ -132,14 +134,6 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
         // attaching data adapter to spinner
         month_spinner.setAdapter(monthAdapter);
         year_spinner.setAdapter(yearAdapter);
-
-
-        if (getIntent() != null) {
-            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
-            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
-        } else {
-            purchaseOrderDTO = new PurchaseOrderDTO();
-        }
 
 
     }
@@ -188,7 +182,6 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
             case R.id.toolbar_right_tv:
 
                 generateStripeToken();
-                //startActivity(new Intent(CreditCardScreen.this, OrderDetailsScreenNew.class));
 
                 break;
         }
@@ -212,23 +205,16 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                     new TokenCallback() {
                         public void onSuccess(Token token) {
 
-                            CustomProgressDialog.hideProgressDialog();
 
-                            purchaseOrderDTO = new PurchaseOrderDTO();
-                            purchaseOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
-                            purchaseOrderDTO.setStripeToken(token.getId());
-                            purchaseOrderDTO.setVenueName(AppConstants.VENUE_NAME);
-                            purchaseOrderDTO.setSlotId(createOrderResponseDTO.
-                                    getOrderConfirmation().getSlotId());
-                            purchaseOrderDTO.setOrderId(createOrderResponseDTO.
-                                    getOrderStatus().getOrder_id());
-                            purchaseOrderDTO.setPickUpTime("2016-05-21T19:00:00.000Z");
-                            purchaseOrderDTO.setDropOffTime("2016-05-21T19:00:00.000Z");
+                            Toast.makeText(CreditCardScreen.this, "Token Id :"
+                                    + token.getId(), Toast.LENGTH_SHORT).show();
+                            purchaseOrderDTO.setPurchaseStripeToken(token.getId());
 
                             String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                             String request = new Gson().toJson(purchaseOrderDTO);
 
-                            new PurchaseOrderAPIHandler(CreditCardScreen.this,
+
+                            new PurchaseOrderAPIHandler(mActivity,
                                     request, auth, managePurchaseResponse());
 
 
@@ -242,13 +228,13 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                         }
                     });
         } else if (!card.validateNumber()) {
-            AppUtils.showToast(CreditCardScreen.this, "The card number that you entered is invalid");
+            AppUtils.showDialog(mActivity, "Alert!", "The card number that you entered is invalid");
         } else if (!card.validateExpiryDate()) {
-            AppUtils.showToast(CreditCardScreen.this, "The expiration date that you entered is invalid");
+            AppUtils.showDialog(mActivity, "Alert!", "The expiration date that you entered is invalid");
         } else if (!card.validateCVC()) {
-            AppUtils.showToast(CreditCardScreen.this, "The CVC code that you entered is invalid");
+            AppUtils.showDialog(mActivity, "Alert!", "The CVC code that you entered is invalid");
         } else {
-            AppUtils.showToast(CreditCardScreen.this, "The card details that you entered are invalid");
+            AppUtils.showDialog(mActivity, "Alert!", "The card details that you entered are invalid");
         }
 
 
@@ -262,28 +248,31 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                 String response = (String) arguments[0];
                 createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
 
-                purchaseOrderResponseDTO = new Gson().fromJson(response, PurchaseOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
-                AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
+                //AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
 
-                Intent intent = new Intent(CreditCardScreen.this,
+                Intent intent = new Intent(mActivity,
                         OrderDetailsScreenNew.class);
-                Toast.makeText(CreditCardScreen.this, "Transaction id :"+createOrderResponseDTO.getOrderConfirmation().
+                Toast.makeText(CreditCardScreen.this, "Transaction id :" + createOrderResponseDTO.getOrderConfirmation().
                         getPaymentTransactionId(), Toast.LENGTH_SHORT).show();
-                createOrderResponseDTO.getOrderConfirmation().setPaymentTransactionId("564321");
-                intent.putExtra(AppConstants.PURCHASE_ORDER_RESPONSE, purchaseOrderResponseDTO);
+
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
+                finish();
+
+                CustomProgressDialog.hideProgressDialog();
 
             }
 
             @Override
             public void onFailOfResponse(Object... arguments) {
 
+                CustomProgressDialog.hideProgressDialog();
             }
         };
 
         return webAPIResponseListener;
     }
+
 
 }

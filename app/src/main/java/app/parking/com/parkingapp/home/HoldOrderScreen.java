@@ -37,11 +37,8 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
     private Button confirm_button;
     private HoldOrderDTO holdOrderDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
-    private HoldOrderResponseDTO holdOrderResponseDTO;
-    private PurchaseOrderDTO purchaseOrderDTO;
     private String TAG = HoldOrderScreen.class.getSimpleName();
     private Activity mActivity;
-    //private TextView dest_tv, arrival_tv, drop_off_tv, pickup_tv, duration_tv, price_tv, toolbar_title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +52,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
     }
 
     private void assignClicks() {
+
         confirm_button.setOnClickListener(this);
     }
 
@@ -73,18 +71,15 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         confirm_button = (Button) findViewById(R.id.btn_confirm);
         confirm_button.setOnClickListener(this);
         if (getIntent() != null) {
-            holdOrderDTO = (HoldOrderDTO) getIntent().getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
-            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
-            AppUtils.showLog(TAG, holdOrderDTO.getPickUpTime() + " " + holdOrderDTO.getDropOffTime());
+            createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
+                    getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
+            //AppUtils.showLog(TAG, holdOrderDTO.getPickUpTime() + " " + holdOrderDTO.getDropOffTime());
         } else {
-            holdOrderDTO = new HoldOrderDTO();
+
             createOrderResponseDTO = new CreateOrderResponseDTO();
         }
 
         setResponseText(createOrderResponseDTO);
-//        venue_et.setText(createOrderResponseDTO.getVenueName());
-//        drop_time_et.setText(createOrderResponseDTO.getDropOffTime());
-//        picktime_tv_et.setText(createOrderResponseDTO.getPickUpTime());
 
     }
 
@@ -116,8 +111,8 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
         //setting duration in pick up and drop off time.
         setViewText(R.id.duration_tv,
-                HelpMe.getDurationTime(destinationFlightDTO.getFlightDepatureTime(),
-                        arrivalFlightDTO.getFlightArrivalTime()));
+                HelpMe.getDurationTime(holdOrderDTO.getDropOffTime(),
+                        holdOrderDTO.getPickUpTime()));
 
         //setting departure fligh details.
         setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());
@@ -138,8 +133,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.vehicle_make_tv, infoDTO.getVehicleMake());
         setViewText(R.id.vehicle_model_tv, infoDTO.getVehicleModel());
         setViewText(R.id.vehicle_color_tv, infoDTO.getVehicleColor());
-        setViewText(R.id.vehicle_platenumber_tv, getIntent().getStringExtra("plateNumber"));
-
+        setViewText(R.id.vehicle_platenumber_tv, infoDTO.getVehiclePlateNumber());
 
 
         setViewText(R.id.price_tv, orderStatusDTO.getOrderTotal());
@@ -152,10 +146,13 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
             case R.id.btn_confirm:
 
                 String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+                holdOrderDTO = (HoldOrderDTO) getIntent().
+                        getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
                 String request = new Gson().toJson(holdOrderDTO);
+
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
-                        HoldOrderScreen.this, request, auth, manageHoldOrderResponse());
+                        mActivity, request, auth, manageHoldOrderResponse());
 
                 break;
         }
@@ -170,27 +167,27 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
                 createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
                 AppUtils.showLog(TAG, response);
-                JSONObject jsonObject = null;
 
-                String slotId = "";
-                try {
-                    jsonObject = new JSONObject(response);
-                    if (jsonObject.has("_slotId")) {
-                        slotId = jsonObject.getString("_slotId");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                purchaseOrderDTO = new PurchaseOrderDTO();
-                purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
-                purchaseOrderDTO.setSlotId(slotId);
+                PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
+
+                purchaseOrderDTO.setSlotId(createOrderResponseDTO.getOrderConfirmation().getSlotId());
+                purchaseOrderDTO.setUserEmail(holdOrderDTO.getUserEmail());
+                purchaseOrderDTO.setDropOffTime(holdOrderDTO.getDropOffTime());
+                purchaseOrderDTO.setOrderId(holdOrderDTO.getOrderId());
+                purchaseOrderDTO.setVenueName(holdOrderDTO.getVenueName());
+                purchaseOrderDTO.setPickUpTime(holdOrderDTO.getPickUpTime());
+                purchaseOrderDTO.setPurchaseStripeToken("");
+
+
+                //purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
 
                 Intent intent = new Intent(HoldOrderScreen.this,
                         OrderDetailsScreenNew.class);
                 intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO);
-                intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
+                //intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
+
             }
 
             @Override
