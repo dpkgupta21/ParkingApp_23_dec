@@ -225,6 +225,7 @@
     <string name="vehicle_color_lbl">Vehicle Color</string>
     <string name="vehicle_model_lbl">Vehicle Model</string>
     <string name="vehicle_plate_number_lbl">Vehicle Plate Number</string>
+    <string name="plate_number_lbl">Plate Number</string>
 
 
     <!-- info pop up order info-->

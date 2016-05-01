@@ -32,7 +32,7 @@
             android:src="@drawable/vehicle_details_icon" />
 
         <TextView
-            android:id="@+id/vehicle_dtls_tv"
+            android:id="@+id/hold_order_lbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_confirm"
-            android:layout_below="@+id/vehicle_dtls_tv"
+            android:layout_below="@+id/hold_order_lbl"
             android:layout_marginTop="@dimen/margin_10dp"
             android:isScrollContainer="false"
             android:scrollbars="none">
@@ -90,112 +90,63 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/drop_off_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:hint="@string/pick_up_"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/pickup_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:hint="@string/duration"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/duration_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="@string/destination"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/dest_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="@string/arrival"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:textColor="@color/white"
-                            android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/arrival_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
 
@@ -222,76 +173,108 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_flight"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="Flight No."
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="Flight No."
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/departure_flight_no_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="Flight Name"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/departure_flight_name_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/departure_flight_no_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
                             android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
                             android:text="@string/arrival_time_lbl"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/departure_flight_arrival_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_time_lbl"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/departure_flight_departure_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -301,76 +284,108 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/arrival_flight"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="Flight No."
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="Flight No."
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/arrival_flight_no_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="Flight Name"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/arrival_flight_name_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
 
                         <TextView
-                            android:id="@+id/arrival_flight_no_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
                             android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
                             android:text="@string/arrival_time_lbl"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/arrival_flight_arrival_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_time_lbl"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/arrival_flight_departure_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>
@@ -395,100 +410,131 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/vehicle_details"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@string/vehicle_make_lbl"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/vehicle_make_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@string/vehicle_model_lbl"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/vehicle_model_tv"
-                            android:layout_width="wrap_content"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="@string/vehicle_make_lbl"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/vehicle_make_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="@string/vehicle_model_lbl"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/vehicle_model_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@string/vehicle_color_lbl"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/vehicle_color_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_10dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:text="@string/vehicle_plate_number_lbl"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="@string/vehicle_color_lbl"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
 
-                        <TextView
-                            android:id="@+id/vehicle_platenumber_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_5dp"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:background="@null"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
-                            android:textStyle="normal" />
+                                <TextView
+                                    android:id="@+id/vehicle_color_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:text="@string/plate_number_lbl"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/vehicle_platenumber_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -512,7 +558,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/service"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -523,7 +569,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="Service name"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -535,7 +581,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -546,7 +592,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/service_cost"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -558,7 +604,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>
@@ -583,7 +629,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/order_details"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -594,7 +640,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="Order per day"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -606,7 +652,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
 
@@ -618,7 +664,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="Order per day"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -630,7 +676,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -642,7 +688,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -653,7 +699,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp"
+                            android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>

@@ -95,8 +95,8 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
         OrderStatusDTO orderStatusDTO = createOrderResponseDTO.getOrderStatus();
 
-        setViewText(R.id.dest_tv, destinationFlightDTO.getDestination());
-        setViewText(R.id.arrival_tv, arrivalFlightDTO.getOrigin());
+       // setViewText(R.id.dest_tv, destinationFlightDTO.getDestination());
+        //setViewText(R.id.arrival_tv, arrivalFlightDTO.getOrigin());
         String drop_off = HelpMe.getDisplayDate(destinationFlightDTO.getFlightDepatureTime())
                 + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightDepatureTime());
 //        String drop_off = HelpMe.getDisplayDate(holdOrderDTO.getDropOffTime())
@@ -110,9 +110,9 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.pickup_tv, pick_up);
 
         //setting duration in pick up and drop off time.
-        setViewText(R.id.duration_tv,
-                HelpMe.getDurationTime(holdOrderDTO.getDropOffTime(),
-                        holdOrderDTO.getPickUpTime()));
+//        setViewText(R.id.duration_tv,
+//                HelpMe.getDurationTime(holdOrderDTO.getDropOffTime(),
+//                        holdOrderDTO.getPickUpTime()));
 
         //setting departure fligh details.
         setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());

@@ -85,6 +85,7 @@ public class PurchaseOrderAPIHandler {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        AppUtils.showLog(TAG,response.toString());
                         mResponseListener.onSuccessOfResponse(response.toString());
 
 
@@ -92,6 +93,7 @@ public class PurchaseOrderAPIHandler {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                AppUtils.showLog(TAG,error.toString());
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
                 mResponseListener.onFailOfResponse(error);
