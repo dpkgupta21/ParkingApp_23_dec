@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ParkNfly</string>
+    <string name="app_name">Parkforu</string>
     <string name="enter_email">Enter your Email</string>
     <string name="password">Password</string>
     <string name="forgot_pwd">Forgot Password?</string>

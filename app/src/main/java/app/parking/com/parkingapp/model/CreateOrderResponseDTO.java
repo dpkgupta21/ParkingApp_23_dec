@@ -14,7 +14,15 @@ public class CreateOrderResponseDTO implements Serializable {
     private ServiceInfoDTO serviceInfo;
     private OrderStatusDTO orderStatus;
     private OrderConfirmationDTO orderConfirmation;
+    private DriverInfo driverInfo;
 
+    public DriverInfo getDriverInfo() {
+        return driverInfo;
+    }
+
+    public void setDriverInfo(DriverInfo driverInfo) {
+        this.driverInfo = driverInfo;
+    }
 
     public VehicleInfoDTO getVehicleInfo() {
         return vehicleInfo;

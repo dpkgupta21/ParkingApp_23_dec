@@ -124,8 +124,6 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
         setViewText(R.id.toolbar_right_tv, getResources().getString(R.string.next));
 
 
-
-
     }
 
     @Override
@@ -134,13 +132,13 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.toolbar_right_rl:
 
+                if (flightArrivalDTO != null && flightDepartureDTO != null) {
+                    createOrderDTO.setArrivalFlight(flightArrivalDTO);
+                    createOrderDTO.setDestinationFlight(flightDepartureDTO);
 
-                createOrderDTO.setArrivalFlight(flightArrivalDTO);
-                createOrderDTO.setDestinationFlight(flightDepartureDTO);
-
-                startActivity(new Intent(this, VehicleDetailsScreen.class).
-                        putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
-
+                    startActivity(new Intent(this, VehicleDetailsScreen.class).
+                            putExtra(AppConstants.CREATE_ORDER, createOrderDTO));
+                }
                 break;
 
 

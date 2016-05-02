@@ -33,6 +33,13 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     ///private RelativeLayout submit_button;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
+    private boolean isFlight;
+    private boolean isVehicle;
+    private boolean isService;
+    private boolean isPayment;
+    private boolean isOrder;
+    private boolean isPickUpInfo;
+    private boolean isDropOffInfo;
 
 
     @Override
@@ -133,34 +140,62 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
         switch (v.getId()) {
             case R.id.flight_details:
-                showDetailPopup(0);
+                if (!isFlight) {
+                    showDetailPopup(0);
+                    isFlight = true;
+                } else {
+                    showDetailPopup(7);
+                    isFlight = false;
+                }
 
                 break;
             case R.id.vehicle_details:
-                showDetailPopup(1);
+                if (!isVehicle) {
+                    showDetailPopup(1);
+                    isVehicle = true;
+                } else {
+                    showDetailPopup(7);
+                    isVehicle = false;
+                }
+
 
                 break;
             case R.id.service_details:
-                showDetailPopup(2);
-
+                if (!isService) {
+                    showDetailPopup(2);
+                    isService = true;
+                } else {
+                    showDetailPopup(7);
+                    isService = false;
+                }
                 break;
 
             case R.id.order_confirmation:
-                showDetailPopup(3);
+                if (!isOrder) {
+                    showDetailPopup(3);
+                    isOrder = true;
+                } else {
+                    showDetailPopup(7);
+                    isOrder = false;
+                }
 
                 break;
 
             case R.id.payment:
-                showDetailPopup(4);
-
+                if (!isPayment) {
+                    showDetailPopup(4);
+                    isPayment = true;
+                } else {
+                    showDetailPopup(7);
+                    isPayment = false;
+                }
                 break;
-
             case R.id.drop_off:
-                showDetailPopup(5);
 
                 break;
             case R.id.pick_up:
-                showDetailPopup(6);
+
+
 
                 break;
         }
@@ -171,6 +206,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         showFlightInfo();
         showVehicleInfo();
         showServiceInfo();
+        showOrderInfo();
+        showPaymentInfo();
     }
 
     private void showFlightInfo() {
@@ -240,6 +277,12 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private void showDetailPopup(int status) {
         switch (status) {
             case 0:
+                isFlight = true;
+                isVehicle = false;
+                isOrder = false;
+                isService = false;
+                isPayment = false;
+
                 setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -249,6 +292,12 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 1:
+                isFlight = false;
+                isVehicle = true;
+                isOrder = false;
+                isService = false;
+                isPayment = false;
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.VISIBLE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -258,6 +307,12 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 2:
+                isFlight = false;
+                isVehicle = false;
+                isOrder = false;
+                isService = true;
+                isPayment = false;
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.VISIBLE);
@@ -267,6 +322,13 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 3:
+
+                isFlight = false;
+                isVehicle = false;
+                isOrder = true;
+                isService = false;
+                isPayment = false;
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -276,6 +338,13 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 4:
+
+                isFlight = false;
+                isVehicle = false;
+                isOrder = false;
+                isService = false;
+                isPayment = true;
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -285,6 +354,12 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 5:
+                isFlight = false;
+                isVehicle = false;
+                isOrder = false;
+                isService = false;
+                isPayment = false;
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -294,6 +369,13 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
             case 6:
+                isFlight = false;
+                isVehicle = false;
+                isOrder = false;
+                isService = false;
+                isPayment = false;
+
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -301,6 +383,21 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_payment_info, View.GONE);
                 setViewVisibility(R.id.relative_drop_off_info, View.GONE);
                 setViewVisibility(R.id.relative_pick_up_info, View.VISIBLE);
+                break;
+            case 7:
+                isFlight = false;
+                isVehicle = false;
+                isOrder = false;
+                isService = false;
+                isPayment = false;
+
+                setViewVisibility(R.id.relative_flight_info, View.GONE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
 
         }

@@ -11,19 +11,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
-import app.parking.com.parkingapp.model.HoldOrderResponseDTO;
 import app.parking.com.parkingapp.model.OrderStatusDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
@@ -46,6 +42,8 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.hold_order_screen);
 
         mActivity = HoldOrderScreen.this;
+        holdOrderDTO = (HoldOrderDTO) getIntent().
+                getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
 
         initViews();
         assignClicks();
@@ -84,49 +82,38 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
     }
 
     private void setResponseText(CreateOrderResponseDTO createOrderResponseDTO) {
-        FlightInfoDTO flightInfoDTO = createOrderResponseDTO.getFlightInfo();
 
+        // pick up drop off
+        setViewText(R.id.pickup_tv, HelpMe.getPickDropDisplayDateTime(holdOrderDTO.getPickUpTime()));
+        setViewText(R.id.drop_off_tv, HelpMe.getPickDropDisplayDateTime(holdOrderDTO.getDropOffTime()));
+        setViewText(R.id.duration_tv, HelpMe.getDurationTime(holdOrderDTO.getDropOffTime(),
+                holdOrderDTO.getPickUpTime()));
+
+
+        FlightInfoDTO flightInfoDTO = createOrderResponseDTO.getFlightInfo();
 
         // Arrival Flight
         DestinationFlightInfo arrivalFlightDTO = flightInfoDTO.getArrivalFlight();
-
         // Destination Flight
         DestinationFlightInfo destinationFlightDTO = flightInfoDTO.getDestinationFlight();
 
-        OrderStatusDTO orderStatusDTO = createOrderResponseDTO.getOrderStatus();
 
-       // setViewText(R.id.dest_tv, destinationFlightDTO.getDestination());
-        //setViewText(R.id.arrival_tv, arrivalFlightDTO.getOrigin());
-        String drop_off = HelpMe.getDisplayDate(destinationFlightDTO.getFlightDepatureTime())
-                + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightDepatureTime());
-//        String drop_off = HelpMe.getDisplayDate(holdOrderDTO.getDropOffTime())
-//                + " " + HelpMe.getDisplayTime(holdOrderDTO.getDropOffTime());
-        setViewText(R.id.drop_off_tv, drop_off);
-
-        String pick_up = HelpMe.getDisplayDate(arrivalFlightDTO.getFlightArrivalTime())
-                + " " + HelpMe.getDisplayTime(arrivalFlightDTO.getFlightArrivalTime());
-//        String pick_up = HelpMe.getDisplayDate(holdOrderDTO.getPickUpTime())
-//                + " " + HelpMe.getDisplayTime(holdOrderDTO.getPickUpTime());
-        setViewText(R.id.pickup_tv, pick_up);
-
-        //setting duration in pick up and drop off time.
-//        setViewText(R.id.duration_tv,
-//                HelpMe.getDurationTime(holdOrderDTO.getDropOffTime(),
-//                        holdOrderDTO.getPickUpTime()));
-
-        //setting departure fligh details.
+        //setting departure flight details.
         setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());
-        String departure_flight_arrival = HelpMe.getDisplayDate(destinationFlightDTO.getFlightArrivalTime())
-                + " " + HelpMe.getDisplayTime(destinationFlightDTO.getFlightArrivalTime());
-        setViewText(R.id.departure_flight_arrival_tv, departure_flight_arrival);
-        setViewText(R.id.departure_flight_departure_tv, drop_off);
+        setViewText(R.id.departure_flight_name_tv, destinationFlightDTO.getFlightName());
+        setViewText(R.id.departure_flight_arrival_tv,
+                HelpMe.getFlightDisplayDateTime(destinationFlightDTO.getFlightArrivalTime()));
+        setViewText(R.id.departure_flight_departure_tv,
+                HelpMe.getFlightDisplayDateTime(destinationFlightDTO.getFlightDepatureTime()));
 
         //setting arrival flight details.
         setViewText(R.id.arrival_flight_no_tv, arrivalFlightDTO.getFlightNumber());
-        setViewText(R.id.arrival_flight_arrival_tv, pick_up);
-        String arrival_flight_departure_time = HelpMe.getDisplayDate(arrivalFlightDTO.getFlightDepatureTime())
-                + " " + HelpMe.getDisplayTime(arrivalFlightDTO.getFlightDepatureTime());
-        setViewText(R.id.arrival_flight_departure_tv, arrival_flight_departure_time);
+        setViewText(R.id.arrival_flight_name_tv, arrivalFlightDTO.getFlightName());
+        setViewText(R.id.arrival_flight_arrival_tv,
+                HelpMe.getFlightDisplayDateTime(arrivalFlightDTO.getFlightArrivalTime()));
+        setViewText(R.id.arrival_flight_departure_tv,
+                HelpMe.getFlightDisplayDateTime(arrivalFlightDTO.getFlightDepatureTime()));
+
 
         //setting vehicle details.
         VehicleInfoDTO infoDTO = createOrderResponseDTO.getVehicleInfo();
@@ -135,7 +122,9 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.vehicle_color_tv, infoDTO.getVehicleColor());
         setViewText(R.id.vehicle_platenumber_tv, infoDTO.getVehiclePlateNumber());
 
+        OrderStatusDTO orderStatusDTO = createOrderResponseDTO.getOrderStatus();
 
+        setViewText(R.id.tax_tv, orderStatusDTO.getOrderTax());
         setViewText(R.id.price_tv, orderStatusDTO.getOrderTotal());
 
     }
@@ -146,10 +135,8 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
             case R.id.btn_confirm:
 
                 String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-                holdOrderDTO = (HoldOrderDTO) getIntent().
-                        getSerializableExtra(AppConstants.HOLD_ORDER_KEY);
                 String request = new Gson().toJson(holdOrderDTO);
-
+                CustomProgressDialog.showProgDialog(mActivity, null);
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
                         mActivity, request, auth, manageHoldOrderResponse());
@@ -178,13 +165,10 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
                 purchaseOrderDTO.setPickUpTime(holdOrderDTO.getPickUpTime());
                 purchaseOrderDTO.setPurchaseStripeToken("");
 
-
-                //purchaseOrderDTO = new Gson().fromJson(response, PurchaseOrderDTO.class);
-
+                CustomProgressDialog.hideProgressDialog();
                 Intent intent = new Intent(HoldOrderScreen.this,
                         OrderDetailsScreenNew.class);
                 intent.putExtra(AppConstants.PURCHASE_ORDER_KEY, purchaseOrderDTO);
-                //intent.putExtra(AppConstants.HOLD_ORDER_RESPONSE_KEY, holdOrderResponseDTO);
                 intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                 startActivity(intent);
 
@@ -192,7 +176,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailOfResponse(Object... arguments) {
-
+                CustomProgressDialog.hideProgressDialog();
             }
         };
 
