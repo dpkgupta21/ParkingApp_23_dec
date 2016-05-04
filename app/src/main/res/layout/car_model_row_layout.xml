@@ -15,6 +15,7 @@
             android:id="@+id/model_color"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/backgroud" />
 
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/model_color"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16sp"
@@ -32,13 +34,13 @@
             android:id="@+id/selected_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:visibility="invisible" />
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/horizontal_line_height"
         android:layout_below="@+id/model_ll"
-        android:background="@color/grey" />
+        android:background="@color/dark_grey" />
 </RelativeLayout>
