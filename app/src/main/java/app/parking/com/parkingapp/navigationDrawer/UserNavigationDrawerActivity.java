@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.WakeLocker;
 import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
+import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
@@ -66,7 +67,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
         mActivity = this;
 
-        int fragmentPos= getIntent().getIntExtra("fragmentPos",0);
+        int fragmentPos = getIntent().getIntExtra("fragmentPos", 0);
         initViews();
         assignClickOnView();
         assignClickonNavigationMenu();
@@ -127,21 +128,25 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                         displayView(0);
                         mCurrentSelectedPosition = 0;
                         return true;
-                    case R.id.nav_item_boooking_history:
+                    case R.id.nav_item_current_booking:
                         displayView(1);
                         mCurrentSelectedPosition = 1;
                         return true;
-                    case R.id.nav_item_order_discount:
+                    case R.id.nav_item_boooking_history:
                         displayView(2);
                         mCurrentSelectedPosition = 2;
                         return true;
-                    case R.id.nav_item_about:
+                    case R.id.nav_item_order_discount:
                         displayView(3);
                         mCurrentSelectedPosition = 3;
                         return true;
-                    case R.id.nav_item_notifications:
+                    case R.id.nav_item_about:
                         displayView(4);
                         mCurrentSelectedPosition = 4;
+                        return true;
+                    case R.id.nav_item_notifications:
+                        displayView(5);
+                        mCurrentSelectedPosition = 5;
                         return true;
 
                     case R.id.nav_item_logout:
@@ -225,11 +230,11 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 title = " ";
                 break;
             case 1:
-                fragment = new ViewBookingHistoryFragment();
+                fragment = new CurrentBookingFragment();
                 title = " ";
                 break;
             case 2:
-                // fragment = new AlertFragment();
+                fragment = new ViewBookingHistoryFragment();
                 title = " ";
                 break;
             case 3:
@@ -237,6 +242,10 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 title = " ";
                 break;
             case 4:
+                // fragment = new AlertFragment();
+                title = " ";
+                break;
+            case 5:
                 // fragment = new AlertFragment();
                 title = " ";
                 break;

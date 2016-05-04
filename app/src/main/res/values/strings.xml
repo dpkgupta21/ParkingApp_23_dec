@@ -20,6 +20,7 @@
     <string name="update">Update</string>
     <string name="home">Home</string>
     <string name="booking_history">Order History</string>
+    <string name="current_booking">Current Booking</string>
     <string name="order_discount">Order Discount</string>
     <string name="about_us">About Us</string>
     <string name="notification">Notification</string>
@@ -207,7 +208,6 @@
     <string name="price">Price</string>
 
 
-
     <!--  Order status screen -->
 
     <!-- info pop up flight info-->
@@ -236,6 +236,9 @@
 
     <string name="departure_flight">Departure flight</string>
     <string name="arrival_flight">Arrival flight</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
 

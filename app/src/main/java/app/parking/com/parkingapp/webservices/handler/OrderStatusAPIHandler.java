@@ -113,7 +113,7 @@ public class OrderStatusAPIHandler {
         // Adding request to request queue
         if (ParkingAppController.getInstance() != null) {
             ParkingAppController.getInstance().addToRequestQueue(
-                    mJsonRequest, GlobalKeys.HOLD_ORDER_API);
+                    mJsonRequest, GlobalKeys.ORDER_STATUS_INFO);
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(

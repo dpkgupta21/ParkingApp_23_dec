@@ -10,6 +10,11 @@
             android:title="@string/home" />
 
         <item
+            android:id="@+id/nav_item_current_booking"
+            android:icon="@drawable/side_menu_booking_history"
+            android:title="@string/current_booking" />
+
+        <item
             android:id="@+id/nav_item_boooking_history"
             android:icon="@drawable/side_menu_booking_history"
             android:title="@string/booking_history" />
