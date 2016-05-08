@@ -14,8 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_10dp"
             android:layout_marginRight="@dimen/margin_10dp"
-            android:background="@color/search_bg"
-            android:padding="@dimen/margin_30dp">
+            android:background="@color/payment_dialog_bg">
 
             <TextView
                 android:id="@+id/messageText"
@@ -25,6 +24,7 @@
                 android:layout_alignParentTop="true"
                 android:background="@color/search_bg"
                 android:gravity="center"
+                android:padding="@dimen/margin_20dp"
                 android:text="Please Make Payment"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_20sp"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/messageText"
-                android:background="#ffffff" />
+                android:background="@color/dark_grey" />
 
             <LinearLayout
                 android:id="@+id/linear_order"
@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/horizontal_seperator"
                 android:orientation="horizontal"
+                android:padding="@dimen/margin_7dp"
                 android:weightSum="2">
 
                 <TextView
@@ -54,8 +55,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Order Number"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -68,16 +68,24 @@
                     android:singleLine="true"
                     android:text="Order Number"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/horizontal_seperator_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linear_order"
+                android:background="@color/dark_grey" />
 
             <LinearLayout
                 android:id="@+id/linear_slot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_order"
+                android:layout_below="@+id/horizontal_seperator_2"
                 android:orientation="horizontal"
+                android:padding="@dimen/margin_7dp"
                 android:weightSum="2">
 
                 <TextView
@@ -89,8 +97,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Slot Number"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -103,17 +110,24 @@
                     android:singleLine="true"
                     android:text="Slot Number"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/horizontal_seperator_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linear_slot"
+                android:background="@color/dark_grey" />
 
             <LinearLayout
                 android:id="@+id/linear_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_slot"
+                android:layout_below="@+id/horizontal_seperator_3"
                 android:orientation="horizontal"
+                android:padding="@dimen/margin_7dp"
                 android:weightSum="2">
 
                 <TextView
@@ -125,8 +139,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Duration"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -139,17 +152,25 @@
                     android:singleLine="true"
                     android:text="duration"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
+
+            <View
+                android:id="@+id/horizontal_seperator_4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linear_duration"
+                android:background="@color/dark_grey" />
 
             <LinearLayout
                 android:id="@+id/linear_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_duration"
+                android:layout_below="@+id/horizontal_seperator_4"
                 android:orientation="horizontal"
+                android:padding="@dimen/margin_7dp"
                 android:weightSum="2">
 
                 <TextView
@@ -161,8 +182,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Amount"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -175,16 +195,26 @@
                     android:singleLine="true"
                     android:text="amount"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="normal" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/horizontal_seperator_5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linear_amount"
+                android:background="@color/dark_grey" />
 
             <Button
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linear_amount"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginLeft="@dimen/margin_15dp"
+                android:layout_marginRight="@dimen/margin_15dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:background="@drawable/search_btn_selector_btn"
                 android:padding="@dimen/margin_10dp"
                 android:text="@string/ok"

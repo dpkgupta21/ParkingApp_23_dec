@@ -96,6 +96,7 @@
     <string name="credit_card_details">Credit Card Details</string>
     <string name="card_number">Card Number</string>
     <string name="card_number_hint">****************</string>
+    <string name="card_hint">- - - -</string>
 
     <string name="card_holder_name">Card Holder Name</string>
     <string name="card_holder_name_hint">Enter CardHolder Name</string>
@@ -152,6 +153,9 @@
     <string name="order_total">Order Total</string>
     <string name="order_summary">Order Summary</string>
     <string name="trans_id">Transaction Id</string>
+    <string name="payment_success">Your transaction is successful. Your transaction is </string>
+    <string name="payment_success_header">Payment successfull</string>
+    <string name="txt_order_status">Order status</string>
 
 
     <!-- Android push notifications -->

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -423,6 +424,7 @@ public class AppDialogs {
 
                 }
             });
+
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -442,8 +444,6 @@ public class AppDialogs {
                     }
 
 
-
-
                 }
             });
 
@@ -457,6 +457,72 @@ public class AppDialogs {
             }
         }
 
+    }
+
+
+    public static void messageDialog(final Activity mActivity, String msg,
+                                     final CreateOrderResponseDTO createOrderResponseDTO) {
+        try {
+            if (mModelDialog != null && mModelDialog.isShowing()) {
+                mModelDialog.dismiss();
+                mModelDialog = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (mActivity != null) {
+            mModelDialog = new Dialog(mActivity);
+            // hide to default title for Dialog
+            mModelDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            // inflate the layout dialog_layout.xml and set it as
+            // contentView
+            LayoutInflater inflater = (LayoutInflater) mActivity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.simple_dialog_layout, null,
+                    false);
+            mModelDialog.setCanceledOnTouchOutside(false);
+            mModelDialog.setContentView(view);
+            mModelDialog.setCancelable(false);
+            mModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            WindowManager.LayoutParams lp = mModelDialog.getWindow().getAttributes();
+            lp.dimAmount = 0.8f;
+            mModelDialog.getWindow().setAttributes(lp);
+
+            TextView msgText = (TextView) mModelDialog.findViewById(R.id.txt_msg);
+            msgText.setText(msg + " " + createOrderResponseDTO.getOrderConfirmation().
+                    getPaymentTransactionId());
+
+            Button okButton = (Button) mModelDialog.findViewById(R.id.ok_btn);
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mActivity,
+                            OrderDetailsScreenNew.class);
+                    Toast.makeText(mActivity, "Transaction id :" +
+                                    createOrderResponseDTO.getOrderConfirmation().
+                                            getPaymentTransactionId(),
+                            Toast.LENGTH_SHORT).show();
+
+                    intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
+                    mActivity.startActivity(intent);
+                    mActivity.finish();
+
+                    CustomProgressDialog.hideProgressDialog();
+                }
+            });
+        }
+
+        try {
+            // Display the dialog
+            mModelDialog.show();
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

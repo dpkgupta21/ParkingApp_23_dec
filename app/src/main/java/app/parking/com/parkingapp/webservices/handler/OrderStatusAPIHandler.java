@@ -4,21 +4,27 @@ import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.utils.AppConstants;
-import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -75,8 +81,51 @@ public class OrderStatusAPIHandler {
             e.printStackTrace();
         }
 
+        JsonRequest<JSONArray> request = new JsonRequest<JSONArray>(Request.Method.POST,
+                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_STATUS_INFO).trim(),
+                mJsonObjectRequest.toString(),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        System.out.println(jsonArray.toString());
+                        mResponseListener.onSuccessOfResponse(jsonArray.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        WebserviceAPIErrorHandler.getInstance()
+                                .VolleyErrorHandler(volleyError, mActivity);
+                        mResponseListener.onFailOfResponse(volleyError);
+                    }
+                }) {
+            @Override
+            protected Response<JSONArray> parseNetworkResponse(NetworkResponse networkResponse) {
+                try {
+                    String jsonString = new String(networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(networkResponse.headers));
+                    return Response.success(new JSONArray(jsonString),
+                            HttpHeaderParser
+                                    .parseCacheHeaders(networkResponse));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
 
-        JsonObjectRequest mJsonRequest = new JsonObjectRequest(
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.AUTHTOKEN, auth_token);
+                return params;
+            }
+        };
+
+       /* JsonObjectRequest mJsonRequest = new JsonObjectRequest(
                 Method.POST,
                 (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_STATUS_INFO)
                         .trim(), mJsonObjectRequest,
@@ -95,11 +144,7 @@ public class OrderStatusAPIHandler {
                 mResponseListener.onFailOfResponse(error);
             }
         }) {
-            /*
-             * /* (non-Javadoc)
-             *
-             * @see com.android.volley.Request#getHeaders()
-             */
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -109,14 +154,16 @@ public class OrderStatusAPIHandler {
                 return params;
             }
 
-        };
+        };*/
+
+
         // Adding request to request queue
         if (ParkingAppController.getInstance() != null) {
             ParkingAppController.getInstance().addToRequestQueue(
-                    mJsonRequest, GlobalKeys.ORDER_STATUS_INFO);
+                    request, GlobalKeys.ORDER_STATUS_INFO);
         }
         // set request time-out
-        mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.ONE_SECOND * 20, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }

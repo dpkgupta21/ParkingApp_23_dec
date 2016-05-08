@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,7 +30,6 @@ import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.model.PurchaseOrderResponseDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
@@ -71,6 +73,34 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
     private void assignClicks() {
 
         toolbar_right_tv.setOnClickListener(this);
+        ((EditText) findViewById(R.id.card_num_et))
+                .addTextChangedListener(getTextWatcher(R.id.card_num_et2));
+        ((EditText) findViewById(R.id.card_num_et2))
+                .addTextChangedListener(getTextWatcher(R.id.card_num_et3));
+        ((EditText) findViewById(R.id.card_num_et3))
+                .addTextChangedListener(getTextWatcher(R.id.card_num_et4));
+    }
+
+    private TextWatcher getTextWatcher(final int id) {
+        TextWatcher mTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (start == 3) {
+                    ((EditText) findViewById(id)).requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        return mTextWatcher;
     }
 
     private void initViews() {
@@ -189,8 +219,11 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
 
     private void generateStripeToken() {
+        String cardNumber = getViewText(R.id.card_num_et).trim()
+                + getViewText(R.id.card_num_et2).trim() + getViewText(R.id.card_num_et3).trim()
+                + getViewText(R.id.card_num_et4).trim();
         Card card = new Card(
-                getTextViewText(R.id.card_num_et).trim(),
+                cardNumber,
                 Integer.parseInt(month_spinner.getSelectedItem() + ""),
                 Integer.parseInt(year_spinner.getSelectedItem() + ""),
                 getTextViewText(R.id.cvv_et).trim()
@@ -250,8 +283,9 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
                 AppUtils.showLog(TAG, response);
                 //AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
-
-                Intent intent = new Intent(mActivity,
+                AppDialogs.messageDialog(mActivity, mActivity.getString(R.string.payment_success),
+                        createOrderResponseDTO);
+                /*Intent intent = new Intent(mActivity,
                         OrderDetailsScreenNew.class);
                 Toast.makeText(CreditCardScreen.this, "Transaction id :" + createOrderResponseDTO.getOrderConfirmation().
                         getPaymentTransactionId(), Toast.LENGTH_SHORT).show();
@@ -260,7 +294,7 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                 startActivity(intent);
                 finish();
 
-                CustomProgressDialog.hideProgressDialog();
+                CustomProgressDialog.hideProgressDialog();*/
 
             }
 

@@ -283,6 +283,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = false;
 
+                checkClickedButton();
+
                 setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -298,6 +300,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = false;
 
+                checkClickedButton();
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.VISIBLE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -312,6 +316,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = true;
                 isPayment = false;
+
+                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -329,6 +335,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = false;
 
+                checkClickedButton();
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -345,6 +353,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = true;
 
+                checkClickedButton();
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -359,6 +369,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+
+                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -375,6 +387,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = false;
 
+                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -391,6 +404,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isService = false;
                 isPayment = false;
 
+                checkClickedButton();
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);
@@ -400,6 +415,38 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 setViewVisibility(R.id.relative_pick_up_info, View.GONE);
                 break;
 
+        }
+    }
+
+    private void checkClickedButton() {
+        if (isFlight) {
+            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
+        } else {
+            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_normal);
+        }
+
+        if (isVehicle) {
+            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
+        } else {
+            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_normal);
+        }
+
+        if (isOrder) {
+            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_white);
+        } else {
+            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_normal);
+        }
+
+        if (isService) {
+            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
+        } else {
+            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_normal);
+        }
+
+        if (isPayment) {
+            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_white);
+        } else {
+            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_normal);
         }
     }
 

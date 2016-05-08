@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="@dimen/margin_20dp">
 
                     <TextView
@@ -81,20 +81,80 @@
                         android:textSize="@dimen/text_size_18sp"
                         android:textStyle="normal" />
 
-                    <EditText
-                        android:id="@+id/card_num_et"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10dp"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="@string/card_number_hint"
-                        android:inputType="text"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
-                        android:textCursorDrawable="@null"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="normal" />
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <EditText
+                            android:id="@+id/card_num_et"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/card_hint"
+                            android:inputType="number"
+                            android:gravity="center_horizontal"
+                            android:maxLength="4"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/text_size_18sp"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/card_num_et2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/card_hint"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/text_size_18sp"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/card_num_et3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/card_hint"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/text_size_18sp"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/card_num_et4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/card_hint"
+                            android:inputType="number"
+                            android:gravity="center_horizontal"
+                            android:maxLength="4"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/text_size_18sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View
@@ -109,7 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="@dimen/margin_20dp">
 
                     <TextView
@@ -125,9 +185,8 @@
                         android:id="@+id/card_holder_name_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:background="@null"
-                        android:gravity="right"
                         android:hint="Name"
                         android:inputType="text"
                         android:textColor="@color/white"

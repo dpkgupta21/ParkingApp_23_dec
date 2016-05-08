@@ -35,6 +35,7 @@
     <color name="search_txt_color">#959E9B</color>
     <color name="search_btn_color">#4F8176</color>
     <color name="search_bg">#7EBAAB</color>
+    <color name="payment_dialog_bg">#7dbaab</color>
 
     <string-array name="color_bg">
         <item>#000000</item>

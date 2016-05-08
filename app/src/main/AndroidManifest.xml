@@ -18,7 +18,6 @@
 
     <uses-permission android:name="app.parking.com.parkingapp.permission.C2D_MESSAGE" />
 
-
     <application
         android:name=".application.ParkingAppController"
         android:allowBackup="true"
@@ -27,21 +26,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.LoginScreen">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".view.UserProfileScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".navigationDrawer.UserNavigationDrawerActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".home.VehicleDetailsScreen"
@@ -56,19 +59,16 @@
             android:label="@string/title_activity_order_confirmation"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
-
-
         <activity android:name=".view.SplashScreen">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".home.HoldOrderScreen"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".bookinghistory.BookingHistoryDetailScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
@@ -81,27 +81,19 @@
         <activity android:name=".home.OrderAmountScreen" />
         <activity
             android:name=".home.CreditCardScreen"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-
-            />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".view.SignupScreen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
         <activity
             android:name=".home.ServicesScreen"
             android:label="@string/title_activity_services_screen"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <activity
             android:name=".home.OrderConfirmationDetailsScreen"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".home.PurchaseReceiptDetailsScreen" />
         <activity android:name=".home.OrderDetailsScreenNew" />
 
@@ -123,6 +115,7 @@
         <service android:name=".GCMIntentService" />
 
         <!-- End Push Notification -->
+        <activity android:name=".currentbooking.CurrentBookingDetails"></activity>
     </application>
 
 </manifest>
