@@ -11,6 +11,15 @@ public class OrderStatusDTO implements Serializable {
     private String order_id = "";
     private String orderTotal = "";
     private String orderTax = "";
+    private String orderNumber = "";
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public String getStatus() {
         return status;

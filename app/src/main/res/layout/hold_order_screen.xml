@@ -29,7 +29,7 @@
             android:id="@+id/top_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/vehicle_details_icon" />
+            android:src="@drawable/order_summary_icon" />
 
         <TextView
             android:id="@+id/hold_order_lbl"
@@ -682,7 +682,7 @@
                             android:inputType="text"
                             android:singleLine="true"
                             android:text="Order Total"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textCursorDrawable="@null"
                             android:textSize="@dimen/text_size_20sp"
                             android:textStyle="normal" />

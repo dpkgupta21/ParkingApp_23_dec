@@ -283,7 +283,8 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
                 AppUtils.showLog(TAG, response);
                 //AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
-                AppDialogs.messageDialog(mActivity, mActivity.getString(R.string.payment_success),
+                AppDialogs.messageDialog(mActivity,
+                        mActivity.getString(R.string.payment_success),
                         createOrderResponseDTO);
                 /*Intent intent = new Intent(mActivity,
                         OrderDetailsScreenNew.class);

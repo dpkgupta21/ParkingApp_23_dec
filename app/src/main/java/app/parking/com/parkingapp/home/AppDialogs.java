@@ -398,8 +398,8 @@ public class AppDialogs {
                     findViewById(R.id.txt_amount_val);
 
 
-            txt_order_number_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrder_id());
-            txt_slot_number_val.setText(mCreateOrderResponseDTO.getOrderConfirmation().getSlotId());
+            txt_order_number_val.setText(mCreateOrderResponseDTO.getOrderStatus().getOrderNumber());
+            txt_slot_number_val.setText(mCreateOrderResponseDTO.getOrderConfirmation().getSlotNumber());
             txt_duration_val.setText(HelpMe.getDurationTime(
                     mPurchaseOrderDTO.getDropOffTime(),
                     mPurchaseOrderDTO.getPickUpTime()));
@@ -501,10 +501,10 @@ public class AppDialogs {
                 public void onClick(View v) {
                     Intent intent = new Intent(mActivity,
                             OrderDetailsScreenNew.class);
-                    Toast.makeText(mActivity, "Transaction id :" +
-                                    createOrderResponseDTO.getOrderConfirmation().
-                                            getPaymentTransactionId(),
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, "Transaction id :" +
+//                                    createOrderResponseDTO.getOrderConfirmation().
+//                                            getPaymentTransactionId(),
+//                            Toast.LENGTH_SHORT).show();
 
                     intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
                     mActivity.startActivity(intent);

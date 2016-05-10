@@ -177,9 +177,6 @@ public class GCMIntentService extends GCMBaseIntentService {
                     UserNavigationDrawerActivity.class);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             notificationIntent.putExtra("fragmentPos",2);
-            context.startActivity(notificationIntent);
-
-
             intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
             builder.setContentIntent(intent);
 

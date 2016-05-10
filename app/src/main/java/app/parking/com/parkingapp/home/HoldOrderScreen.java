@@ -124,8 +124,11 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
         OrderStatusDTO orderStatusDTO = createOrderResponseDTO.getOrderStatus();
 
-        setViewText(R.id.tax_tv, orderStatusDTO.getOrderTax());
-        setViewText(R.id.price_tv, orderStatusDTO.getOrderTotal());
+        String tax = orderStatusDTO.getOrderTax().equalsIgnoreCase("0") ? "" : orderStatusDTO.getOrderTax();
+        String total = orderStatusDTO.getOrderTotal().equalsIgnoreCase("0") ? "" :
+                orderStatusDTO.getOrderTotal();
+        setViewText(R.id.tax_tv, tax);
+        setViewText(R.id.price_tv, total);
 
     }
 

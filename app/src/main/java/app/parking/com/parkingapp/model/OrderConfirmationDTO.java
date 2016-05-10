@@ -13,6 +13,15 @@ public class OrderConfirmationDTO implements Serializable {
     private String slotLevel = "";
     private String status = "";
     private String slotId = "";
+    private String slotNumber = "";
+
+    public String getSlotNumber() {
+        return slotNumber;
+    }
+
+    public void setSlotNumber(String slotNumber) {
+        this.slotNumber = slotNumber;
+    }
 
     public String getSlotId() {
         return slotId;

@@ -120,6 +120,7 @@ public class CurrentBookingFragment extends BaseFragment {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
+
                 JSONObject obj = new JSONObject();
                 try {
                     obj.put("response", new JSONArray(response));
