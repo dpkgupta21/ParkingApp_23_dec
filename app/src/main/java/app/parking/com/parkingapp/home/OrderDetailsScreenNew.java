@@ -38,6 +38,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private boolean isService;
     private boolean isPayment;
     private boolean isOrder;
+    private boolean firstTime;
     private boolean isPickUpInfo;
     private boolean isDropOffInfo;
 
@@ -108,7 +109,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
-
+        firstTime = true;
         toolbar_right_rl.setVisibility(View.INVISIBLE);
 
         payment = (ImageView) findViewById(R.id.payment);
@@ -141,8 +142,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.flight_details:
                 if (!isFlight) {
-                    showDetailPopup(0);
-                    isFlight = true;
+                    showFlightInfo();
                 } else {
                     showDetailPopup(7);
                     isFlight = false;
@@ -151,8 +151,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 break;
             case R.id.vehicle_details:
                 if (!isVehicle) {
-                    showDetailPopup(1);
-                    isVehicle = true;
+                    showVehicleInfo();
                 } else {
                     showDetailPopup(7);
                     isVehicle = false;
@@ -162,8 +161,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 break;
             case R.id.service_details:
                 if (!isService) {
-                    showDetailPopup(2);
-                    isService = true;
+                    showServiceInfo();
                 } else {
                     showDetailPopup(7);
                     isService = false;
@@ -196,7 +194,6 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
             case R.id.pick_up:
 
 
-
                 break;
         }
 
@@ -204,36 +201,42 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
     private void setValue() {
         showFlightInfo();
-        showVehicleInfo();
-        showServiceInfo();
-        showOrderInfo();
-        showPaymentInfo();
+//        showVehicleInfo();
+//        showServiceInfo();
+//        showOrderInfo();
+//        showPaymentInfo();
     }
 
     private void showFlightInfo() {
         FlightInfoDTO flightInfoDTO = createOrderResponseDTO.getFlightInfo();
 
+        if (flightInfoDTO != null) {
+            // Arrival Flight
+            DestinationFlightInfo arrivalFlighDTO = flightInfoDTO.getArrivalFlight();
 
-        // Arrival Flight
-        DestinationFlightInfo arrivalFlighDTO = flightInfoDTO.getArrivalFlight();
-
-        setViewText(R.id.txt_flight_number_val, arrivalFlighDTO.getFlightNumber());
-        setViewText(R.id.txt_flight_name_val, arrivalFlighDTO.getFlightName());
-        setViewText(R.id.txt_arrival_time_val, arrivalFlighDTO.getFlightArrivalTime());
-        setViewText(R.id.txt_destination_time_val, arrivalFlighDTO.getFlightDepatureTime());
-        setViewText(R.id.txt_origin_val, arrivalFlighDTO.getOrigin());
-        setViewText(R.id.txt_destination_val, arrivalFlighDTO.getDestination());
+            setViewText(R.id.txt_flight_number_val, arrivalFlighDTO.getFlightNumber());
+            setViewText(R.id.txt_flight_name_val, arrivalFlighDTO.getFlightName());
+            setViewText(R.id.txt_arrival_time_val, arrivalFlighDTO.getFlightArrivalTime());
+            setViewText(R.id.txt_destination_time_val, arrivalFlighDTO.getFlightDepatureTime());
+            setViewText(R.id.txt_origin_val, arrivalFlighDTO.getOrigin());
+            setViewText(R.id.txt_destination_val, arrivalFlighDTO.getDestination());
 
 
-        // Destination Flight
-        DestinationFlightInfo destinationFlighDTO = flightInfoDTO.getDestinationFlight();
+            // Destination Flight
+            DestinationFlightInfo destinationFlighDTO = flightInfoDTO.getDestinationFlight();
 
-        setViewText(R.id.txt_dest_flight_number_val, destinationFlighDTO.getFlightNumber());
-        setViewText(R.id.txt_dest_flight_name_val, destinationFlighDTO.getFlightName());
-        setViewText(R.id.txt_dest_arrival_time_val, destinationFlighDTO.getFlightArrivalTime());
-        setViewText(R.id.txt_dest_destination_time_val, destinationFlighDTO.getFlightDepatureTime());
-        setViewText(R.id.txt_dest_origin_val, destinationFlighDTO.getOrigin());
-        setViewText(R.id.txt_dest_destination_val, destinationFlighDTO.getDestination());
+            setViewText(R.id.txt_dest_flight_number_val, destinationFlighDTO.getFlightNumber());
+            setViewText(R.id.txt_dest_flight_name_val, destinationFlighDTO.getFlightName());
+            setViewText(R.id.txt_dest_arrival_time_val, destinationFlighDTO.getFlightArrivalTime());
+            setViewText(R.id.txt_dest_destination_time_val, destinationFlighDTO.getFlightDepatureTime());
+            setViewText(R.id.txt_dest_origin_val, destinationFlighDTO.getOrigin());
+            setViewText(R.id.txt_dest_destination_val, destinationFlighDTO.getDestination());
+            showDetailPopup(0);
+            isFlight = true;
+
+        } else {
+            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
+        }
 
     }
 
@@ -244,15 +247,29 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         setViewText(R.id.txt_vehicle_model_val, vehicleInfoDTO.getVehicleModel());
         setViewText(R.id.txt_vehicle_color_val, vehicleInfoDTO.getVehicleColor());
         setViewText(R.id.txt_vehicle_plate_number_val, "");
+
+        if (vehicleInfoDTO != null && !vehicleInfoDTO.getVehicleModel().equalsIgnoreCase("")) {
+            showDetailPopup(1);
+            isVehicle = true;
+        } else {
+            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
+        }
     }
 
     private void showServiceInfo() {
         ServiceInfoDTO serviceInfoDTO = createOrderResponseDTO.getServiceInfo();
         List<Service> servicesList = serviceInfoDTO.getServices();
-        for (Service mService : servicesList) {
-            setViewText(R.id.txt_service_val, mService.getName());
-            setViewText(R.id.txt_service_price_val, mService.getPrice());
+        if (servicesList != null && servicesList.size() != 0) {
+            for (Service mService : servicesList) {
+                setViewText(R.id.txt_service_val, mService.getName());
+                setViewText(R.id.txt_service_price_val, mService.getPrice());
 
+            }
+
+            showDetailPopup(2);
+            isService = true;
+        } else {
+            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
         }
 
 
@@ -284,14 +301,17 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isPayment = false;
 
                 checkClickedButton();
-
-                setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
-                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
-                setViewVisibility(R.id.relative_service_info, View.GONE);
-                setViewVisibility(R.id.relative_order_info, View.GONE);
-                setViewVisibility(R.id.relative_payment_info, View.GONE);
-                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
-                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
+                if (!firstTime) {
+                    setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
+                    setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                    setViewVisibility(R.id.relative_service_info, View.GONE);
+                    setViewVisibility(R.id.relative_order_info, View.GONE);
+                    setViewVisibility(R.id.relative_payment_info, View.GONE);
+                    setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                    setViewVisibility(R.id.relative_pick_up_info, View.GONE);
+                } else {
+                    firstTime = false;
+                }
                 break;
             case 1:
                 isFlight = false;
@@ -419,13 +439,13 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     }
 
     private void checkClickedButton() {
-        if (isFlight) {
+        if (isFlight && !firstTime) {
             setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
         } else {
             setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_normal);
         }
 
-        if (isVehicle) {
+        if (isVehicle || createOrderResponseDTO.getVehicleInfo().getVehicleMake().equalsIgnoreCase("")) {
             setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
         } else {
             setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_normal);
@@ -437,7 +457,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
             setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_normal);
         }
 
-        if (isService) {
+        if (isService || (createOrderResponseDTO.getServiceInfo().getServices().size() == 0)) {
             setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
         } else {
             setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_normal);
