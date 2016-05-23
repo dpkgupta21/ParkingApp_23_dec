@@ -153,10 +153,12 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
                         String email = ParkingPreference.getEmailId(mActivity);
                         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+                        String userId = ParkingPreference.getUserid(mActivity);
 
                         AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
                         LogoutAPIHandler mLogoutAPIHandler = new
-                                LogoutAPIHandler(mActivity, email, auth, onLogoutResponseListner());
+                                LogoutAPIHandler(mActivity, email, auth, userId,
+                                onLogoutResponseListner());
 
 
                         mCurrentSelectedPosition = 5;
@@ -271,12 +273,13 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         String deviceType = "ANDROID";
         String regId = ParkingPreference.getPushRegistrationId(mActivity);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+        String userid = ParkingPreference.getUserid(mActivity);
         String email = ParkingPreference.getEmailId(mActivity);
 
         mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this,
                 regId, deviceId,
                 deviceType, email,
-                auth, new WebAPIResponseListener() {
+                auth,userid, new WebAPIResponseListener() {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
 

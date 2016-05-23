@@ -40,6 +40,7 @@ public class CreateOrderAPIHandler {
     /**
      * Request Data
      */
+    private String userId;
     private String auth_token;
     private final String parameters;
 
@@ -53,11 +54,13 @@ public class CreateOrderAPIHandler {
      * @param webAPIResponseListener
      */
     public CreateOrderAPIHandler(Activity mActivity, String parameters,
-                                 String auth, WebAPIResponseListener webAPIResponseListener) {
+                                 String auth, String userId,
+                                 WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
+        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -77,7 +80,6 @@ public class CreateOrderAPIHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         JsonObjectRequest mJsonRequest = new JsonObjectRequest(
@@ -111,6 +113,7 @@ public class CreateOrderAPIHandler {
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
+                params.put(GlobalKeys.USERID, userId);
                 return params;
             }
 

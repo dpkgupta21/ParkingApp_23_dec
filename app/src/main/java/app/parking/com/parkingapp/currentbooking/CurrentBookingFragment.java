@@ -93,8 +93,9 @@ public class CurrentBookingFragment extends BaseFragment {
         params.put("email", param);
         JSONObject jsonObject = new JSONObject(params);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+        String userId = ParkingPreference.getUserid(mActivity);
         OrderStatusAPIHandler orderStatusAPIHandler = new OrderStatusAPIHandler(mActivity,
-                jsonObject.toString(), auth, manageOrderStatusResponse());
+                jsonObject.toString(), auth,userId, manageOrderStatusResponse());
     }
 
     private void initViews() {

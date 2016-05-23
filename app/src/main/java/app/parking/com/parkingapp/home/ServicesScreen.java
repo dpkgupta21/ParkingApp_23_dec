@@ -145,7 +145,9 @@ public class ServicesScreen extends AppCompatActivity implements View.OnClickLis
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity, orderRequest, auth, createOrderResponseListner());
+        String userId = ParkingPreference.getUserid(mActivity);
+        CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity,
+                orderRequest, auth, userId, createOrderResponseListner());
     }
 
 

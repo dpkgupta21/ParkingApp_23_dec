@@ -23,9 +23,9 @@ import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 /**
- * Pillion Logout API Handler
+ * Pillion Forget Password API Handler
  */
-public class LogoutAPIHandler {
+public class ForgetPasswordAPIHandler {
     /**
      * Instance object of Logout API
      */
@@ -33,11 +33,11 @@ public class LogoutAPIHandler {
     /**
      * Debug TAG
      */
-    private String TAG = LogoutAPIHandler.class.getSimpleName();
+    private String TAG = ForgetPasswordAPIHandler.class.getSimpleName();
     /**
      * Request Data
      */
-    private String emailId, auth_token, userId;
+    private String emailId, auth_token;
 
     private String device_token, device_platform;
     /**
@@ -50,14 +50,11 @@ public class LogoutAPIHandler {
      * @param email
      * @param webAPIResponseListener
      */
-    public LogoutAPIHandler(Activity mActivity, String email,
-                            String auth, String userId,
-                            WebAPIResponseListener webAPIResponseListener) {
+    public ForgetPasswordAPIHandler(Activity mActivity, String email,
+                                     WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
         this.emailId = email;
-        this.auth_token = auth;
-        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -80,7 +77,7 @@ public class LogoutAPIHandler {
 
         JsonObjectRequest mJsonRequest = new JsonObjectRequest(
                 Method.POST,
-                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.LOGOUT_API)
+                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FORGOT_PASSWORD_API)
                         .trim(), mJsonObjectRequest,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -88,7 +85,7 @@ public class LogoutAPIHandler {
                         AppUtils.showInfoLog(TAG, "Response :"
                                 + response);
 
-                        parseLogoutAPIResponse(response.toString());
+                        //parseLogoutAPIResponse(response.toString());
                         mResponseListener.onSuccessOfResponse(response);
 
 
@@ -111,8 +108,7 @@ public class LogoutAPIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
-                params.put(GlobalKeys.AUTHTOKEN, auth_token);
-                params.put(GlobalKeys.USERID, userId);
+
                 return params;
             }
 
@@ -124,7 +120,7 @@ public class LogoutAPIHandler {
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                AppConstants.ONE_SECOND * 20, 0,
+                AppConstants.ONE_SECOND * 30, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
@@ -133,7 +129,7 @@ public class LogoutAPIHandler {
      *
      * @param response
      */
-    protected void parseLogoutAPIResponse(String response) {
-
-    }
+//    protected void parseLogoutAPIResponse(String response) {
+//
+//    }
 }

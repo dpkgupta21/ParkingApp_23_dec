@@ -15,6 +15,7 @@ public class ParkingPreference {
 
     public static final String EMAIL_ID = "emailId";
     public static final String KEY_AUTHTOKEN = "authentication_token";
+    public static final String USERID = "userid";
     public static final String IS_LOGIN = "is_login";
     public static final String PWD = "password";
     public static final String PUSH_REGISTRATION_ID = "push_reg_id";
@@ -48,6 +49,22 @@ public class ParkingPreference {
         String pushRegistrationId = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).
                 getString(
                         KEY_AUTHTOKEN, "");
+        return pushRegistrationId;
+
+    }
+
+    public static void setUserId(Context context, String email) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(USERID, String.valueOf(email));
+        editor.apply();
+    }
+
+    public static String getUserid(Context context) {
+        String pushRegistrationId = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).
+                getString(
+                        USERID, "");
         return pushRegistrationId;
 
     }

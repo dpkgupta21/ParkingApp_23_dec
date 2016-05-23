@@ -138,11 +138,12 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
             case R.id.btn_confirm:
 
                 String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+                String userId = ParkingPreference.getUserid(mActivity);
                 String request = new Gson().toJson(holdOrderDTO);
                 CustomProgressDialog.showProgDialog(mActivity, null);
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
-                        mActivity, request, auth, manageHoldOrderResponse());
+                        mActivity, request, auth,userId, manageHoldOrderResponse());
 
                 break;
         }

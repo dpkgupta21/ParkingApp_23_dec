@@ -2,8 +2,8 @@ package app.parking.com.parkingapp.home;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,8 +65,11 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
         listOfServicesDTOArrayList = new ArrayList<>();
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+        String userId = ParkingPreference.getUserid(mActivity);
 
-        new ServicesAPIHandler(mActivity, auth, fetchServiceResponseListner());
+        new ServicesAPIHandler(mActivity,
+                auth, userId,
+                fetchServiceResponseListner());
     }
 
     private void assignClicks() {
@@ -182,10 +185,11 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         String orderRequest = gson.toJson(createOrderDTO);
         AppUtils.showLog(TAG, orderRequest);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+        String userId = ParkingPreference.getUserid(mActivity);
 
         CustomProgressDialog.showProgDialog(mActivity, null);
         CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity,
-                orderRequest, auth,
+                orderRequest, auth,userId,
                 createOrderResponseListner());
 
     }

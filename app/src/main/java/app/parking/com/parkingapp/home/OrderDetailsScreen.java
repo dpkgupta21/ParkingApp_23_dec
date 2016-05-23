@@ -73,8 +73,10 @@ public class OrderDetailsScreen extends AppCompatActivity implements View.OnClic
             case R.id.confirm_button:
 
                 String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+                String userId = ParkingPreference.getUserid(mActivity);
                 String request = new Gson().toJson(holdOrderDTO);
-                HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(OrderDetailsScreen.this, request, auth, manageHoldOrderResponse());
+                HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
+                        OrderDetailsScreen.this, request, auth, userId,manageHoldOrderResponse());
 
                 break;
         }

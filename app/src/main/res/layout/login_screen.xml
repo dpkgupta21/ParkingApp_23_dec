@@ -56,7 +56,7 @@
                     android:background="@null"
                     android:hint="@string/enter_email"
                     android:inputType="textEmailAddress"
-                    android:text="customer3@test.com"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textColorHint="@color/white_faded"
                     android:textCursorDrawable="@null"
@@ -99,7 +99,7 @@
                     android:background="@null"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:text="test123"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textColorHint="@color/white_faded"
                     android:textCursorDrawable="@null"
@@ -133,9 +133,18 @@
             android:padding="@dimen/margin_15dp"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp">
+            android:textSize="@dimen/text_size_20sp" />
 
-        </Button>
+        <TextView
+            android:id="@+id/txt_forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_pwd_lbl"
+            android:layout_below="@+id/login_button"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20sp" />
+
     </RelativeLayout>
 
     <RelativeLayout

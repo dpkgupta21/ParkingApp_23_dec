@@ -114,6 +114,8 @@ public class LoginAPIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 return params;
             }
 
@@ -125,7 +127,7 @@ public class LoginAPIHandler {
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                AppConstants.ONE_SECOND * 20, 0,
+                AppConstants.ONE_SECOND * 30, 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 

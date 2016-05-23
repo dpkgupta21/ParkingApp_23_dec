@@ -242,6 +242,7 @@ public class AppDialogs {
                     .findViewById(R.id.listview);
             TextView search_btn = (TextView) mModelDialog.findViewById(R.id.search_btn);
             final EditText edtSearch = (EditText) mModelDialog.findViewById(R.id.edt_search);
+            final String tag= isDepartSelected?"depart":"arrival";
             search_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -253,7 +254,10 @@ public class AppDialogs {
                         new FlightDetailsAPIHandler(mActivity,
                                 edtSearch.getText().toString().trim(),
                                 edtSearch.getText().toString().trim(),
-                                ParkingPreference.getKeyAuthtoken(mActivity), new WebAPIResponseListener() {
+                                ParkingPreference.getKeyAuthtoken(mActivity),
+                                ParkingPreference.getUserid(mActivity),
+                                tag,
+                                new WebAPIResponseListener() {
                             @Override
                             public void onSuccessOfResponse(Object... arguments) {
 

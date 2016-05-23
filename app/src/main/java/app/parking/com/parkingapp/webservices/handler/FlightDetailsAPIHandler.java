@@ -44,6 +44,9 @@ public class FlightDetailsAPIHandler {
      */
     private String flightName, flightNo;
     private String auth_token;
+    private String userId;
+    private String tag;
+
 
     private ArrayList<FlightDetailsDTO> flightDetailsDTOArrayList;
 
@@ -56,10 +59,15 @@ public class FlightDetailsAPIHandler {
      * @param mActivity
      * @param webAPIResponseListener
      */
-    public FlightDetailsAPIHandler(Activity mActivity, String flightNo, String flightName, String auth_token, WebAPIResponseListener webAPIResponseListener) {
+    public FlightDetailsAPIHandler(Activity mActivity,
+                                   String flightNo, String flightName,
+                                   String auth_token, String userId, String tag,
+                                   WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
         this.auth_token = auth_token;
+        this.userId = userId;
+        this.tag = tag;
         this.flightName = flightName;
         this.flightNo = flightNo;
         this.mResponseListener = webAPIResponseListener;
@@ -76,7 +84,8 @@ public class FlightDetailsAPIHandler {
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
             mJsonObjectRequest.put(GlobalKeys.flightName, flightName);
-            mJsonObjectRequest.put(GlobalKeys.flightNo, flightNo);
+            //mJsonObjectRequest.put(GlobalKeys.flightNo, flightNo);
+            mJsonObjectRequest.put(GlobalKeys.TAG, tag);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -113,6 +122,10 @@ public class FlightDetailsAPIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.AUTHTOKEN,
+                        auth_token);
+                params.put(GlobalKeys.USERID,
+                        userId);
                 return params;
             }
 

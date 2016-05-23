@@ -245,10 +245,11 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
                             String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                             String request = new Gson().toJson(purchaseOrderDTO);
-
+                            String userId = ParkingPreference.getUserid(mActivity);
 
                             new PurchaseOrderAPIHandler(mActivity,
-                                    request, auth, managePurchaseResponse());
+                                    request, auth, userId,
+                                    managePurchaseResponse());
 
 
                         }

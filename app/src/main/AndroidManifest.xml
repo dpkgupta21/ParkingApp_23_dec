@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".view.LoginScreen">
 
             <!-- <intent-filter> -->
@@ -34,9 +35,12 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
+        <activity android:name=".view.ForgetPasswordScreen" />
         <activity
             android:name=".view.UserProfileScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <activity android:name=".navigationDrawer.UserNavigationDrawerActivity">
 
             <!-- <intent-filter> -->

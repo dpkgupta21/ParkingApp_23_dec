@@ -22,7 +22,8 @@ public class
     public static Bitmap fullScreenBitmap = null;
     public static String imageName = "";
 
-    public static String APP_WEBSERVICE_API_URL = "http://107.170.24.80:3000/api/";
+    //public static String APP_WEBSERVICE_API_URL = "http://107.170.24.80:3000/api/";
+    public static String APP_WEBSERVICE_API_URL = "http://159.203.81.9:8000/api/";
 
     public static String CREATE_ORDER = "create_order";
     public static String HOLD_ORDER_KEY = "hold_order";

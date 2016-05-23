@@ -38,6 +38,8 @@ public class PurchaseOrderAPIHandler {
      * Request Data
      */
     private String auth_token;
+    private String userId;
+
     private final String parameters;
 
     /**
@@ -50,11 +52,13 @@ public class PurchaseOrderAPIHandler {
      * @param webAPIResponseListener
      */
     public PurchaseOrderAPIHandler(Activity mActivity, String parameters,
-                                   String auth, WebAPIResponseListener webAPIResponseListener) {
+                                   String auth, String userId,
+                                   WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
+        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -110,6 +114,7 @@ public class PurchaseOrderAPIHandler {
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
+                params.put(GlobalKeys.USERID, userId);
                 return params;
             }
 

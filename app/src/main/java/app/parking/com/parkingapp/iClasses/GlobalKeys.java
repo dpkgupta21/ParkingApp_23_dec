@@ -8,11 +8,12 @@ public interface GlobalKeys {
     String HEADER_KEY_CONTENT_TYPE = "Content-Type";
     String HEADER_VALUE_CONTENT_TYPE = "application/json";
 
-
+    String ACCEPT_KEY_CONTENT_TYPE = "Accept";
     String PASSWORD = "password";
     String EMAIL = "email";
     String LOGIN_API = "users/login";
     String LOGOUT_API = "users/logout";
+    String FORGOT_PASSWORD_API = "users/forgetpassword";
     String SIGNUP_API = "users/signup";
     String CREATE_ORDER_API = "order/createOrder";
     String FETCH_SERVICES = "venue/services?name=";
@@ -30,6 +31,9 @@ public interface GlobalKeys {
 
     String MESSAGE = "message";
     String AUTHTOKEN = "authtoken";
+    String RESPONSE__USERID = "userId";
+    String TAG = "tag";
+    String USERID = "userid";
     String FIRSTNAME = "firstname";
     String LASTNAME = "lastname";
     String MOBILE_NO = "mobile_no";

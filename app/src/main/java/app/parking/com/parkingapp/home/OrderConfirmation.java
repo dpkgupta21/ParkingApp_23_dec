@@ -86,8 +86,11 @@ public class OrderConfirmation extends BaseActivity implements View.OnClickListe
                 purchaseOrderDTO.setUserEmail(ParkingPreference.getEmailId(mActivity));
                 String auth = ParkingPreference.getKeyAuthtoken(mActivity);
                 String request = new Gson().toJson(purchaseOrderDTO);
+                String userId = ParkingPreference.getUserid(mActivity);
 
-                new PurchaseOrderAPIHandler(OrderConfirmation.this, request, auth, managePurchaseResponse());
+                new PurchaseOrderAPIHandler(OrderConfirmation.this, request,
+                        auth, userId,
+                        managePurchaseResponse());
 
                 break;
         }

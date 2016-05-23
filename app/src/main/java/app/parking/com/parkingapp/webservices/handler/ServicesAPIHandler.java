@@ -41,6 +41,8 @@ public class ServicesAPIHandler {
      */
     private String venueName;
     private String auth_token;
+    private String userId;
+
 
     private ArrayList<ListOfServicesDTO> listOfServicesDTOs;
 
@@ -53,10 +55,13 @@ public class ServicesAPIHandler {
      * @param mActivity
      * @param webAPIResponseListener
      */
-    public ServicesAPIHandler(Activity mActivity, String auth_token, WebAPIResponseListener webAPIResponseListener) {
+    public ServicesAPIHandler(Activity mActivity, String auth_token,
+                              String userId,
+                              WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
         this.auth_token = auth_token;
+        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         listOfServicesDTOs = new ArrayList<>();
         postAPICall();
@@ -106,6 +111,7 @@ public class ServicesAPIHandler {
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
+                params.put(GlobalKeys.USERID, userId);
 
                 return params;
             }

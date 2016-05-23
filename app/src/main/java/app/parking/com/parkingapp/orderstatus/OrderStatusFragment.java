@@ -57,8 +57,9 @@ public class OrderStatusFragment extends BaseFragment implements View.OnClickLis
             jsonObject.put("email", ParkingPreference.getEmailId(mActivity));
 
             String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+            String userId = ParkingPreference.getUserid(mActivity);
             CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(getActivity(),
-                    jsonObject.toString(), auth,
+                    jsonObject.toString(), auth, userId,
                     createOrderResponseListner());
         } catch (JSONException e) {
             e.printStackTrace();

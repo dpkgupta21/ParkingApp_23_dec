@@ -38,7 +38,7 @@ public class AddTokenPushAPIHandler {
     /**
      * Request Data
      */
-    private String regToken, deviceId, deviceType, email, authToken;
+    private String regToken, deviceId, deviceType, email, authToken, userId;
 
     private String device_token, device_platform;
     /**
@@ -54,7 +54,8 @@ public class AddTokenPushAPIHandler {
      */
     public AddTokenPushAPIHandler(Activity mActivity, String regToken,
                                   String deviceId, String deviceType, String email,
-                                  String authToken, WebAPIResponseListener webAPIResponseListener) {
+                                  String authToken,String userId,
+                                  WebAPIResponseListener webAPIResponseListener) {
 
 
         this.mActivity = mActivity;
@@ -63,6 +64,7 @@ public class AddTokenPushAPIHandler {
         this.deviceType = deviceType;
         this.email = email;
         this.authToken = authToken;
+        this.userId=userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -126,6 +128,7 @@ public class AddTokenPushAPIHandler {
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, authToken);
+                params.put(GlobalKeys.USERID, userId);
                 return params;
             }
 
