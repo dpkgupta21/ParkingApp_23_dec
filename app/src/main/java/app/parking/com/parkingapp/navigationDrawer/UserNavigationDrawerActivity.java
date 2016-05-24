@@ -4,6 +4,7 @@ package app.parking.com.parkingapp.navigationDrawer;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.WakeLocker;
 import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
 import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
@@ -151,15 +153,23 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
                     case R.id.nav_item_logout:
 
-                        String email = ParkingPreference.getEmailId(mActivity);
-                        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-                        String userId = ParkingPreference.getUserid(mActivity);
+                        AppUtils.showDialog(mActivity, getString(R.string.logout),
+                                getString(R.string.logout_msg), "YES", "NO",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String email = ParkingPreference.getEmailId(mActivity);
+                                        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
+                                        String userId = ParkingPreference.getUserid(mActivity);
 
-                        AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
-                        LogoutAPIHandler mLogoutAPIHandler = new
-                                LogoutAPIHandler(mActivity, email, auth, userId,
-                                onLogoutResponseListner());
+                                        AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
+                                        CustomProgressDialog.showProgDialog(mActivity, null);
+                                        LogoutAPIHandler mLogoutAPIHandler = new
+                                                LogoutAPIHandler(mActivity, email, auth, userId,
+                                                onLogoutResponseListner());
 
+                                    }
+                                });
 
                         mCurrentSelectedPosition = 5;
 
@@ -182,7 +192,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         mWebAPIResponseListener = new WebAPIResponseListener() {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
-
+                CustomProgressDialog.hideProgressDialog();
                 try {
                     JSONObject mJsonObject = (JSONObject) arguments[0];
                     if (mJsonObject != null) {
@@ -192,7 +202,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                             ParkingPreference.clearSession(mActivity);
                             Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
                             startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            AppUtils.showToast(mActivity, message);
+                            //AppUtils.showToast(mActivity, message);
 
                             finish();
 
@@ -211,6 +221,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
             @Override
             public void onFailOfResponse(Object... arguments) {
+                CustomProgressDialog.hideProgressDialog();
                 AppUtils.showToast(mActivity, "Logout Failed");
 
             }
@@ -279,7 +290,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this,
                 regId, deviceId,
                 deviceType, email,
-                auth,userid, new WebAPIResponseListener() {
+                auth, userid, new WebAPIResponseListener() {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
 

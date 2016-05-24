@@ -28,6 +28,7 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="logout">Logout</string>
+    <string name="logout_msg">Do you want to logout?</string>
     <string name="drop_off">DROP OFF</string>
     <string name="pick_up">PICK UP</string>
     <string name="drop_date">Drop Date</string>

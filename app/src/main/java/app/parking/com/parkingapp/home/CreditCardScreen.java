@@ -1,7 +1,6 @@
 package app.parking.com.parkingapp.home;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +40,7 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
     private static final String TAG = CreditCardScreen.class.getSimpleName();
     private Toolbar mToolbar;
     private TextView toolbar_title, toolbar_right_tv;
-    private Spinner month_spinner, year_spinner;
+    //private Spinner month_spinner, year_spinner;
 
     private PurchaseOrderDTO purchaseOrderDTO;
     //private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
@@ -79,6 +77,9 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                 .addTextChangedListener(getTextWatcher(R.id.card_num_et3));
         ((EditText) findViewById(R.id.card_num_et3))
                 .addTextChangedListener(getTextWatcher(R.id.card_num_et4));
+
+        ((EditText) findViewById(R.id.edt_month))
+                .addTextChangedListener(getTextWatcher(R.id.edt_year));
     }
 
     private TextWatcher getTextWatcher(final int id) {
@@ -90,8 +91,14 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (start == 3) {
-                    ((EditText) findViewById(id)).requestFocus();
+                if (id != R.id.edt_year) {
+                    if (start == 3) {
+                        ((EditText) findViewById(id)).requestFocus();
+                    }
+                } else {
+                    if (start == 1) {
+                        findViewById(id).requestFocus();
+                    }
                 }
             }
 
@@ -122,12 +129,12 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
         toolbar_right_tv.setText(R.string.next);
 
         // Spinner element
-        month_spinner = (Spinner) findViewById(R.id.month_spinner);
-        year_spinner = (Spinner) findViewById(R.id.year_spinner);
+       // month_spinner = (Spinner) findViewById(R.id.month_spinner);
+        //year_spinner = (Spinner) findViewById(R.id.year_spinner);
 
         // Spinner click listener
-        month_spinner.setOnItemSelectedListener(this);
-        year_spinner.setOnItemSelectedListener(this);
+       // month_spinner.setOnItemSelectedListener(this);
+        //year_spinner.setOnItemSelectedListener(this);
         // Spinner Drop down elements
         List<String> month_list = new ArrayList<String>();
         month_list.add("01");
@@ -162,8 +169,8 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
-        month_spinner.setAdapter(monthAdapter);
-        year_spinner.setAdapter(yearAdapter);
+        //month_spinner.setAdapter(monthAdapter);
+        //year_spinner.setAdapter(yearAdapter);
 
 
     }
@@ -188,7 +195,7 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        switch (view.getId()) {
+       /* switch (view.getId()) {
             case R.id.month_spinner:
 
 
@@ -196,7 +203,7 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
             case R.id.year_spinner:
                 break;
-        }
+        }*/
 
     }
 
@@ -224,8 +231,8 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                 + getViewText(R.id.card_num_et4).trim();
         Card card = new Card(
                 cardNumber,
-                Integer.parseInt(month_spinner.getSelectedItem() + ""),
-                Integer.parseInt(year_spinner.getSelectedItem() + ""),
+                Integer.parseInt(getEditTextText(R.id.edt_month) + ""),
+                Integer.parseInt(getEditTextText(R.id.edt_year) + ""),
                 getTextViewText(R.id.cvv_et).trim()
         );
 

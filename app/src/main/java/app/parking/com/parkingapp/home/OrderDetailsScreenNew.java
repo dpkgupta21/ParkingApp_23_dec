@@ -21,6 +21,7 @@ import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.utils.AppConstants;
 
 public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickListener {
@@ -87,6 +88,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         order_confirmation.setOnClickListener(this);
         drop_off.setOnClickListener(this);
         pick_up.setOnClickListener(this);
+        setClick(R.id.action_button);
 
 
     }
@@ -102,9 +104,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.back_button);
+        //mToolbar.setNavigationIcon(R.drawable.back_button);
         toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
         toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
@@ -192,11 +193,18 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.pick_up:
-
-
+                break;
+            case R.id.action_button:
+                goToDashBoard();
                 break;
         }
 
+    }
+
+    private void goToDashBoard() {
+        Intent intent = new Intent(OrderDetailsScreenNew.this, UserNavigationDrawerActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     private void setValue() {
