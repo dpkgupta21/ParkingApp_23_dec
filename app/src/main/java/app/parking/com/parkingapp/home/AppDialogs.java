@@ -18,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +40,7 @@ import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.HelpMe;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.handler.FlightDetailsAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -242,7 +245,7 @@ public class AppDialogs {
                     .findViewById(R.id.listview);
             TextView search_btn = (TextView) mModelDialog.findViewById(R.id.search_btn);
             final EditText edtSearch = (EditText) mModelDialog.findViewById(R.id.edt_search);
-            final String tag= isDepartSelected?"depart":"arrival";
+            final String tag = isDepartSelected ? "depart" : "arrival";
             search_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -258,54 +261,54 @@ public class AppDialogs {
                                 ParkingPreference.getUserid(mActivity),
                                 tag,
                                 new WebAPIResponseListener() {
-                            @Override
-                            public void onSuccessOfResponse(Object... arguments) {
+                                    @Override
+                                    public void onSuccessOfResponse(Object... arguments) {
 
 
-                                String response = arguments[0].toString();
-                                JSONObject responseObject = null;
-                                try {
-                                    responseObject = new JSONObject(response);
+                                        String response = arguments[0].toString();
+                                        JSONArray responseArray = null;
+                                        try {
+                                            responseArray = new JSONArray(response);
 
-                                    Type type = new TypeToken<List<FlightDetailsDTO>>() {
-                                    }.getType();
-
-
-                                    flightDetailsDTOList = new Gson().
-                                            fromJson(responseObject.getJSONArray("flightResponse").toString(), type);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                CustomProgressDialog.hideProgressDialog();
-                                AppUtils.showLog(TAG, response);
-                                if (flightDetailsDTOList.size() > 0) {
-
-                                    flightDetails.setVisibility(View.VISIBLE);
-
-                                    FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
-                                            flightDetailsDTOList, mModelDialog);
-                                    flightDetails.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
+                                            Type type = new TypeToken<List<FlightDetailsDTO>>() {
+                                            }.getType();
 
 
-                                    ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
-                                            setVisibility(View.GONE);
+                                            flightDetailsDTOList = new Gson().
+                                                    fromJson(responseArray.toString(), type);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        CustomProgressDialog.hideProgressDialog();
+                                        AppUtils.showLog(TAG, response);
+                                        if (flightDetailsDTOList.size() > 0) {
 
-                                } else {
-                                    ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
-                                            setVisibility(View.VISIBLE);
-                                    flightDetails.setVisibility(View.GONE);
-                                }
+                                            flightDetails.setVisibility(View.VISIBLE);
 
-                            }
+                                            FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
+                                                    flightDetailsDTOList, mModelDialog);
+                                            flightDetails.setAdapter(adapter);
+                                            adapter.notifyDataSetChanged();
 
-                            @Override
-                            public void onFailOfResponse(Object... arguments) {
-                                CustomProgressDialog.hideProgressDialog();
-                                AppUtils.showDialog(mActivity, "Alert!",
-                                        "Search field cannot be empty");
-                            }
-                        });
+
+                                            ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                                    setVisibility(View.GONE);
+
+                                        } else {
+                                            ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                                    setVisibility(View.VISIBLE);
+                                            flightDetails.setVisibility(View.GONE);
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailOfResponse(Object... arguments) {
+                                        CustomProgressDialog.hideProgressDialog();
+                                        AppUtils.showDialog(mActivity, "Alert!",
+                                                "Search field cannot be empty");
+                                    }
+                                });
                     } else {
                         AppUtils.showDialog(mActivity, "Alert!",
                                 "Search field cannot be empty");
@@ -511,6 +514,65 @@ public class AppDialogs {
 //                            Toast.LENGTH_SHORT).show();
 
                     intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
+                    mActivity.startActivity(intent);
+                    mActivity.finish();
+
+                    CustomProgressDialog.hideProgressDialog();
+                }
+            });
+        }
+
+        try {
+            // Display the dialog
+            mModelDialog.show();
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void forgetPasswordSuccessfulDialog(final Activity mActivity, String msg) {
+        try {
+            if (mModelDialog != null && mModelDialog.isShowing()) {
+                mModelDialog.dismiss();
+                mModelDialog = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (mActivity != null) {
+            mModelDialog = new Dialog(mActivity);
+            // hide to default title for Dialog
+            mModelDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            // inflate the layout dialog_layout.xml and set it as
+            // contentView
+            LayoutInflater inflater = (LayoutInflater) mActivity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.simple_dialog_layout, null,
+                    false);
+            mModelDialog.setCanceledOnTouchOutside(false);
+            mModelDialog.setContentView(view);
+            mModelDialog.setCancelable(false);
+            mModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            WindowManager.LayoutParams lp = mModelDialog.getWindow().getAttributes();
+            lp.dimAmount = 0.8f;
+            mModelDialog.getWindow().setAttributes(lp);
+            TextView headerText = (TextView) mModelDialog.findViewById(R.id.txt_header);
+            TextView msgText = (TextView) mModelDialog.findViewById(R.id.txt_msg);
+            msgText.setText(msg);
+            headerText.setText("Message");
+
+            Button okButton = (Button) mModelDialog.findViewById(R.id.ok_btn);
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mActivity,
+                            LoginScreen.class);
                     mActivity.startActivity(intent);
                     mActivity.finish();
 

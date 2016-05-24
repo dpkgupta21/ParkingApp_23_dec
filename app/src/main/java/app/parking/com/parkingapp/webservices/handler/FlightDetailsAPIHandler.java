@@ -4,16 +4,21 @@ import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,17 +95,18 @@ public class FlightDetailsAPIHandler {
             e.printStackTrace();
         }
 
-        JsonObjectRequest mJsonRequest = new JsonObjectRequest(
+        JsonRequest<JSONArray> mJsonRequest = new JsonRequest<JSONArray>(
                 Request.Method.POST,
                 (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FLIGHT_INFO)
-                        .trim(), mJsonObjectRequest,
-                new Response.Listener<JSONObject>() {
+                        .trim(), mJsonObjectRequest.toString(),
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        AppUtils.showInfoLog(TAG, "Response :"
-                                + response);
+                    public void onResponse(JSONArray jsonArray) {
 
-                        mResponseListener.onSuccessOfResponse(response);
+                        AppUtils.showInfoLog(TAG, "Response :"
+                                + jsonArray.toString());
+
+                        mResponseListener.onSuccessOfResponse(jsonArray.toString());
 
 
                     }
@@ -112,6 +118,22 @@ public class FlightDetailsAPIHandler {
                 mResponseListener.onFailOfResponse(error);
             }
         }) {
+            @Override
+            protected Response<JSONArray> parseNetworkResponse(NetworkResponse networkResponse) {
+                try {
+                    String jsonString = new String(networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(networkResponse.headers));
+                    return Response.success(new JSONArray(jsonString),
+                            HttpHeaderParser
+                                    .parseCacheHeaders(networkResponse));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
+            }
+
             /*
              * /* (non-Javadoc)
              *
@@ -121,6 +143,8 @@ public class FlightDetailsAPIHandler {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN,
                         auth_token);

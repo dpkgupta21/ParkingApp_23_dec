@@ -61,35 +61,45 @@ public class HelpMe {
 
 
     public static String getDisplayDate(String dateString) {
-
-        DateFormat df = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
-        String newDateString = null;
-
         try {
-            Date startDate = currentFormat.parse(dateString);
-            newDateString = df.format(startDate);
-            System.out.println(newDateString);
-        } catch (ParseException e) {
+            DateFormat df = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
+            String newDateString = null;
+
+            try {
+                Date startDate = currentFormat.parse(dateString);
+                newDateString = df.format(startDate);
+                System.out.println(newDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return newDateString;
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return newDateString;
+
+        return "";
 
     }
 
 
     public static String getDisplayTime(String dateString) {
 
-        DateFormat df = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
-        String newDateString = null;
-
         try {
-            Date startDate = currentFormat.parse(dateString);
-            newDateString = df.format(startDate);
-            System.out.println(newDateString);
-        } catch (ParseException e) {
+            DateFormat df = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
+            String newDateString = null;
+
+            try {
+                Date startDate = currentFormat.parse(dateString);
+                newDateString = df.format(startDate);
+                System.out.println(newDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return newDateString;
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return newDateString;
+        return "";
 
     }
 

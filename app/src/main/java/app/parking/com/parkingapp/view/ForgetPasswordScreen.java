@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
+import app.parking.com.parkingapp.home.AppDialogs;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
@@ -57,56 +58,41 @@ public class ForgetPasswordScreen extends BaseActivity implements View.OnClickLi
                             mActivity,
                             email,
                             new WebAPIResponseListener() {
-                        @Override
-                        public void onSuccessOfResponse(Object... arguments) {
+                                @Override
+                                public void onSuccessOfResponse(Object... arguments) {
 
-                            try {
-                                JSONObject mJsonObject = (JSONObject) arguments[0];
-                                if (mJsonObject != null) {
-                                    if (mJsonObject.has(GlobalKeys.AUTHTOKEN) &&
-                                            mJsonObject.has(GlobalKeys.EMAIL)) {
+                                    try {
+                                        JSONObject mJsonObject = (JSONObject) arguments[0];
+                                        if (mJsonObject != null) {
+                                            if (mJsonObject.has(GlobalKeys.MESSAGE)) {
 
-                                        String email = mJsonObject.getString(GlobalKeys.EMAIL).
-                                                toLowerCase();
-                                        String auth = mJsonObject.getString(GlobalKeys.AUTHTOKEN);
+                                                AppDialogs.forgetPasswordSuccessfulDialog(mActivity,
+                                                        mJsonObject.getString(GlobalKeys.MESSAGE)
+                                                );
+                                            }
+                                        }
 
-                                        AppUtils.showLog(TAG, "email: " + email + " " + auth);
-                                        ParkingPreference.setEmailId(mActivity, email);
-                                        ParkingPreference.setKeyAuthtoken(mActivity, auth);
-                                        ParkingPreference.setIsLogin(mActivity, true);
+                                    } catch (JSONException e) {
                                         CustomProgressDialog.hideProgressDialog();
-
-                                        Intent intent = new Intent(ForgetPasswordScreen.this,
-                                                UserNavigationDrawerActivity.class);
-                                        startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-                                    } else {
-                                        CustomProgressDialog.hideProgressDialog();
-                                        AppUtils.showDialog(mActivity, "Message",
-                                                "Forget Password Failed");
+                                        e.printStackTrace();
                                     }
-                                } else {
-                                    CustomProgressDialog.hideProgressDialog();
-                                    AppUtils.showDialog(mActivity, "Message",
-                                            "Forget Password Failed");
-
                                 }
 
-                            } catch (JSONException e) {
-                                CustomProgressDialog.hideProgressDialog();
-                                e.printStackTrace();
-                            }
-                        }
 
-
-                        @Override
-                        public void onFailOfResponse(Object... arguments) {
-                            CustomProgressDialog.hideProgressDialog();
-
-                            AppUtils.showDialog(mActivity, "Message",
-                                    "Login Failed");
-                        }
-                    });
+                                @Override
+                                public void onFailOfResponse(Object... arguments) {
+                                    CustomProgressDialog.hideProgressDialog();
+                                    try {
+                                        JSONObject mJsonObject = (JSONObject) arguments[0];
+                                        if (mJsonObject.has(GlobalKeys.MESSAGE)) {
+                                            AppUtils.showDialog(mActivity, "Message",
+                                                    mJsonObject.getString(GlobalKeys.MESSAGE));
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
 
 
                 }
