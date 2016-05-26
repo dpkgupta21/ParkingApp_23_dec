@@ -27,7 +27,7 @@
                 android:padding="@dimen/margin_20dp"
                 android:text="Please Make Payment"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp"
+                android:textSize="@dimen/text_size_18sp"
                 android:textStyle="normal" />
 
             <View
@@ -55,7 +55,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Order Number"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:singleLine="true"
                     android:text="Order Number"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -97,7 +97,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Slot Number"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -110,7 +110,7 @@
                     android:singleLine="true"
                     android:text="Slot Number"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -139,7 +139,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Duration"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -152,7 +152,7 @@
                     android:singleLine="true"
                     android:text="duration"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -182,7 +182,7 @@
                     android:padding="@dimen/margin_10dp"
                     android:singleLine="true"
                     android:text="Amount"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
 
                 <TextView
@@ -195,7 +195,7 @@
                     android:singleLine="true"
                     android:text="amount"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
             </LinearLayout>
 
@@ -219,7 +219,7 @@
                 android:padding="@dimen/margin_10dp"
                 android:text="@string/ok"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18sp">
+                android:textSize="@dimen/text_size_16sp">
 
 
             </Button>

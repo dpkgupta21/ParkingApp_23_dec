@@ -60,7 +60,7 @@
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:text="FEB 21,2016"
                         android:textColor="@color/drop_text"
-                        android:textSize="@dimen/text_size_30sp"
+                        android:textSize="@dimen/text_size_18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -97,7 +97,7 @@
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:text="8:35 AM"
                         android:textColor="@color/drop_text"
-                        android:textSize="@dimen/text_size_30sp"
+                        android:textSize="@dimen/text_size_18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -152,7 +152,7 @@
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:text="FEB 21,2016"
                         android:textColor="@color/pick_text"
-                        android:textSize="@dimen/text_size_30sp"
+                        android:textSize="@dimen/text_size_18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -189,7 +189,7 @@
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:text="8:35 AM"
                         android:textColor="@color/pick_text"
-                        android:textSize="@dimen/text_size_30sp"
+                        android:textSize="@dimen/text_size_18sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -199,7 +199,7 @@
         </RelativeLayout>
     </ScrollView>
 
-    <app.parking.com.parkingapp.customViews.MyTextView20
+    <app.parking.com.parkingapp.customViews.MyTextView18
         android:id="@+id/book_now_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

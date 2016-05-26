@@ -40,7 +40,7 @@
             android:singleLine="true"
             android:text="@string/add_services"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
         <View
@@ -71,7 +71,7 @@
             android:layout_centerInParent="true"
             android:text="@string/no_services"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal"
             android:visibility="invisible" />
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_service"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_16sp" />
         </RelativeLayout>
 
     </RelativeLayout>

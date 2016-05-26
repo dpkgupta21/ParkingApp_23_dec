@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:text="@string/flight_details"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
 
@@ -79,7 +79,7 @@
                         android:padding="@dimen/margin_10dp"
                         android:text="@string/departure_caps"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_20sp" />
+                        android:textSize="@dimen/text_size_18sp" />
 
 
                     <LinearLayout
@@ -97,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_22sp" />
+                            android:textSize="@dimen/text_size_20sp" />
 
                         <ImageView
                             android:id="@+id/depart_plane_icon"
@@ -113,7 +113,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_22sp" />
+                            android:textSize="@dimen/text_size_20sp" />
 
                     </LinearLayout>
 
@@ -144,7 +144,7 @@
                                 android:drawableLeft="@drawable/calendar_icon"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
                         </RelativeLayout>
 
@@ -166,7 +166,7 @@
                                 android:drawableLeft="@drawable/time_icon"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
 
                             <TextView
@@ -176,7 +176,7 @@
                                 android:layout_toRightOf="@+id/depart_time_tv"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
                         </RelativeLayout>
 
@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/flight_no"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:id="@+id/flight_number_depart_et"
@@ -206,7 +206,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text="@string/term"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:id="@+id/drop_term"
@@ -223,7 +223,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                     </LinearLayout>
 
@@ -261,7 +261,7 @@
                         android:padding="@dimen/margin_10dp"
                         android:text="@string/arrival_caps"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_20sp" />
+                        android:textSize="@dimen/text_size_18sp" />
 
 
                     <LinearLayout
@@ -279,7 +279,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_22sp" />
+                            android:textSize="@dimen/text_size_20sp" />
 
                         <ImageView
                             android:id="@+id/arrival_plane_icon"
@@ -295,7 +295,7 @@
                             android:text=""
                             android:id="@+id/txt_arrival_flight_destination"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_22sp" />
+                            android:textSize="@dimen/text_size_20sp" />
 
                     </LinearLayout>
 
@@ -327,7 +327,7 @@
                                 android:drawableLeft="@drawable/calendar_icon"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
                         </RelativeLayout>
 
@@ -350,7 +350,7 @@
                                 android:drawableLeft="@drawable/time_icon"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
 
                             <TextView
@@ -360,7 +360,7 @@
                                 android:layout_toRightOf="@+id/arrival_time_tv"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/text_size_18sp"
+                                android:textSize="@dimen/text_size_16sp"
                                 android:textStyle="normal" />
                         </RelativeLayout>
 
@@ -381,7 +381,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/flight_no"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:id="@+id/flight_num_et"
@@ -390,7 +390,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -398,7 +398,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text="@string/term"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <TextView
                             android:id="@+id/pickup_term"
@@ -407,7 +407,7 @@
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_18sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                     </LinearLayout>
 

@@ -40,7 +40,7 @@
             android:singleLine="true"
             android:text="@string/order_confirm"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
 
@@ -90,7 +90,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -100,7 +100,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -113,7 +113,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -123,7 +123,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -136,7 +136,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -146,7 +146,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
 
@@ -159,6 +159,13 @@
                         android:layout_marginRight="@dimen/margin_20dp"
                         android:background="@color/transparent_black" />
 
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/horizontal_line_height"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        android:layout_marginRight="@dimen/margin_20dp"
+                        android:background="@color/transparent_black" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -173,7 +180,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_flight"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -195,7 +202,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="Flight No."
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -205,7 +212,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
 
@@ -222,7 +229,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="Flight Name"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -232,7 +239,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
                         </LinearLayout>
@@ -244,7 +251,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/arrival_time_lbl"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -306,7 +313,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="Flight No."
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -389,13 +396,6 @@
                             android:textStyle="normal" />
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/horizontal_line_height"
-                        android:layout_marginLeft="@dimen/margin_20dp"
-                        android:layout_marginRight="@dimen/margin_20dp"
-                        android:background="@color/transparent_black" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

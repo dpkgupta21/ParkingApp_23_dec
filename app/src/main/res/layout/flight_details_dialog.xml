@@ -16,6 +16,7 @@
         android:hint="@string/airline_loc"
         android:padding="@dimen/margin_20dp"
         android:singleLine="true"
+        android:textSize="@dimen/text_size_16sp"
         android:textColor="@color/search_txt_color"
         android:textColorHint="@color/search_txt_color" />
 

@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:text="@string/service_type"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_marginRight="@dimen/margin_20dp"
             android:layout_toLeftOf="@+id/cross_img"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <ImageView

@@ -28,11 +28,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:paddingLeft="@dimen/dimen_24"
+        android:paddingRight="@dimen/dimen_24"
         android:text="@string/screen4_title"
         android:textColor="#ffffff"
-        android:textSize="24sp" />
+        android:textSize="@dimen/text_size_18sp" />
 
     <TextView
         android:id="@+id/screen_desc"
@@ -41,11 +41,11 @@
         android:layout_weight="1"
         android:gravity="top|center_horizontal"
         android:minHeight="@dimen/welcome_content_min_height"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:paddingLeft="@dimen/dimen_24"
+        android:paddingRight="@dimen/dimen_24"
         android:text="@string/screen4_desc"
         android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="@dimen/text_size_16sp" />
 
     <View
         android:layout_width="match_parent"
