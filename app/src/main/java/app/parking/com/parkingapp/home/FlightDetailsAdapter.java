@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.bookinghistory.BookingHistoryModel;
 import app.parking.com.parkingapp.model.FlightDetailsDTO;
 
 public class FlightDetailsAdapter extends BaseAdapter {
@@ -25,7 +22,9 @@ public class FlightDetailsAdapter extends BaseAdapter {
     private ArrayList<FlightDetailsDTO> flightDetailsDTOArrayList;
     private Dialog mDialog;
 
-    public FlightDetailsAdapter(Activity mActivity, ArrayList<FlightDetailsDTO> flightDetailsDTOList, Dialog modelDialog) {
+    public FlightDetailsAdapter(Activity mActivity,
+                                ArrayList<FlightDetailsDTO> flightDetailsDTOList,
+                                Dialog modelDialog) {
         this.mActivity = mActivity;
         this.mDialog = modelDialog;
         try {
@@ -69,14 +68,14 @@ public class FlightDetailsAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.flight_details_row_layout, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.flight_info_search_item_layout, parent, false);
             holder = new ViewHolder();
 
             holder.airline_value = (TextView) convertView.findViewById(R.id.airline_value);
-            holder.from_value = (TextView) convertView.findViewById(R.id.from_value);
-            holder.status_value = (TextView) convertView.findViewById(R.id.status_value);
+            //holder.from_value = (TextView) convertView.findViewById(R.id.from_value);
+            //holder.status_value = (TextView) convertView.findViewById(R.id.status_value);
             holder.flight_value = (TextView) convertView.findViewById(R.id.flight_value);
-            holder.term_value = (TextView) convertView.findViewById(R.id.term_value);
+            //holder.term_value = (TextView) convertView.findViewById(R.id.term_value);
 
             convertView.setTag(holder);
 
@@ -86,9 +85,9 @@ public class FlightDetailsAdapter extends BaseAdapter {
 
         holder.airline_value.setText(flightDetailsDTOArrayList.get(position).getAirline());
         holder.flight_value.setText(flightDetailsDTOArrayList.get(position).getFlightNo());
-        holder.from_value.setText(flightDetailsDTOArrayList.get(position).getDestination());
-        holder.term_value.setText(flightDetailsDTOArrayList.get(position).getTerm());
-        holder.status_value.setText(flightDetailsDTOArrayList.get(position).getStatus());
+        //holder.from_value.setText(flightDetailsDTOArrayList.get(position).getDestination());
+        //holder.term_value.setText(flightDetailsDTOArrayList.get(position).getTerm());
+        //holder.status_value.setText(flightDetailsDTOArrayList.get(position).getStatus());
 
         return convertView;
     }
