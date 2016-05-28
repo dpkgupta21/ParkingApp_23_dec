@@ -60,7 +60,7 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/white_faded"
                     android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
 
 
@@ -103,23 +103,13 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/white_faded"
                     android:textCursorDrawable="@null"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
                 />
             </LinearLayout>
 
 
         </RelativeLayout>
-
-
-        <CheckBox
-            android:id="@+id/remember_chbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/center_rl"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:text="@string/remeber_me"
-            android:textSize="@dimen/text_size_16sp" />
 
 
         <Button
@@ -133,7 +123,7 @@
             android:padding="@dimen/margin_15dp"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <TextView
             android:id="@+id/txt_forget_pwd"
@@ -143,7 +133,17 @@
             android:layout_below="@+id/login_button"
             android:layout_marginTop="4dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_16sp" />
+
+        <CheckBox
+            android:id="@+id/remember_chbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remeber_me"
+            android:textSize="@dimen/text_size_14sp"
+            android:layout_below="@+id/center_rl"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:text="@string/no_acnt"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
             android:layout_toRightOf="@+id/no_acnt_tv"
             android:text="@string/register"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_16sp" />
     </RelativeLayout>
 
 </RelativeLayout>

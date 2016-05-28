@@ -28,7 +28,7 @@
                 android:padding="@dimen/margin_10dp"
                 android:text="Please Make Payment"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp"
+                android:textSize="@dimen/text_size_18sp"
                 android:textStyle="normal" />
 
             <RelativeLayout
@@ -50,7 +50,7 @@
                     android:gravity="center"
                     android:text="@string/ok"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18sp"
+                    android:textSize="@dimen/text_size_16sp"
                     android:textStyle="normal" />
             </RelativeLayout>
         </RelativeLayout>

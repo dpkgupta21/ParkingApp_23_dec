@@ -261,7 +261,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -271,7 +271,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_time_lbl"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -281,7 +281,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -291,7 +291,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/arrival_flight"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -313,7 +313,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="Flight No."
-                                    android:textSize="@dimen/text_size_18sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -323,7 +323,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
 
@@ -339,7 +339,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="Flight Name"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -349,7 +349,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
                         </LinearLayout>
@@ -362,7 +362,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/arrival_time_lbl"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -372,7 +372,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -382,7 +382,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/departure_time_lbl"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -392,7 +392,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>
@@ -410,7 +410,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/vehicle_details"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -432,7 +432,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="@string/vehicle_make_lbl"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -442,7 +442,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
 
@@ -458,7 +458,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="@string/vehicle_model_lbl"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -468,7 +468,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
                         </LinearLayout>
@@ -494,7 +494,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="@string/vehicle_color_lbl"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -504,7 +504,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
 
@@ -520,7 +520,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:text="@string/plate_number_lbl"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_16sp"
                                     android:textStyle="normal" />
 
                                 <TextView
@@ -530,7 +530,7 @@
                                     android:background="@null"
                                     android:singleLine="true"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/text_size_20sp"
+                                    android:textSize="@dimen/text_size_18sp"
                                     android:textStyle="normal" />
                             </LinearLayout>
                         </LinearLayout>
@@ -626,7 +626,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="@string/order_details"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -636,7 +636,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="Rate / day"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -649,7 +649,7 @@
                             android:singleLine="true"
                             android:text="20 $"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
 
@@ -660,7 +660,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:text="Tax"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -670,7 +670,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -684,7 +684,7 @@
                             android:text="Order Total"
                             android:textColor="@color/black"
                             android:textCursorDrawable="@null"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_18sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -694,7 +694,7 @@
                             android:background="@null"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp"
+                            android:textSize="@dimen/text_size_16sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>
@@ -726,7 +726,7 @@
             android:padding="@dimen/margin_10dp"
             android:text="@string/confirm_order"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp">
+            android:textSize="@dimen/text_size_16sp">
 
         </Button>
 

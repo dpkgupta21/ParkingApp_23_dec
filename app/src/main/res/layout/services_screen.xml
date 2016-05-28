@@ -73,7 +73,7 @@
                 android:text="@string/add_more_services"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/text_size_16sp"
                 android:textStyle="normal" />
 
             <RelativeLayout
@@ -87,7 +87,7 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="@dimen/margin_25dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_add_fields" />
             </RelativeLayout>
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_order"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_16sp" />
         </RelativeLayout>
     </RelativeLayout>
 

@@ -52,7 +52,7 @@
             android:padding="@dimen/margin_20dp"
             android:text="@string/explore"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="bold"
             android:visibility="invisible" />
     </RelativeLayout>

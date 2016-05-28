@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:text="Car Wash"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:gravity="right"
             android:text="$20"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
     </LinearLayout>

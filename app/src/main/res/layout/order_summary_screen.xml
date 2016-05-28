@@ -54,7 +54,7 @@
                         android:layout_weight="1"
                         android:text="@string/venuename"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -69,7 +69,7 @@
                         android:inputType="text"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -95,7 +95,7 @@
                         android:layout_weight="1"
                         android:text="@string/drop_time"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -109,7 +109,7 @@
                         android:inputType="text"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -136,7 +136,7 @@
                         android:layout_weight="1"
                         android:text="@string/pick_time"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -150,7 +150,7 @@
                         android:inputType="text"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@null"
-                        android:textSize="@dimen/text_size_18sp"
+                        android:textSize="@dimen/text_size_16sp"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:text="@string/confirm_order"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp" />
+            android:textSize="@dimen/text_size_16sp" />
     </RelativeLayout>
 
 </RelativeLayout>

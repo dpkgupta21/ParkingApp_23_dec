@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:text="@string/order_details"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20sp"
+            android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
         <View
@@ -273,7 +273,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/next"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_16sp" />
         </RelativeLayout>
     </RelativeLayout>
 

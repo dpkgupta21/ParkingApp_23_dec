@@ -26,7 +26,7 @@
                 android:layout_gravity="center"
                 android:text="@string/payment_success_header"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_18sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_5dp"
             android:text="dialog message"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <Button
             android:id="@+id/ok_btn"
