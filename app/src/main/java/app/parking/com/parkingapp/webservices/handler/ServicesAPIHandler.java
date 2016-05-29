@@ -110,6 +110,8 @@ public class ServicesAPIHandler {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
                 params.put(GlobalKeys.USERID, userId);
 

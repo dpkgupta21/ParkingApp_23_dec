@@ -89,7 +89,7 @@ public class PurchaseOrderAPIHandler {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        AppUtils.showLog(TAG,response.toString());
+                        AppUtils.showLog(TAG, response.toString());
                         mResponseListener.onSuccessOfResponse(response.toString());
 
 
@@ -97,7 +97,7 @@ public class PurchaseOrderAPIHandler {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AppUtils.showLog(TAG,error.toString());
+                AppUtils.showLog(TAG, error.toString());
                 WebserviceAPIErrorHandler.getInstance()
                         .VolleyErrorHandler(error, mActivity);
                 mResponseListener.onFailOfResponse(error);
@@ -112,6 +112,8 @@ public class PurchaseOrderAPIHandler {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
                 params.put(GlobalKeys.USERID, userId);

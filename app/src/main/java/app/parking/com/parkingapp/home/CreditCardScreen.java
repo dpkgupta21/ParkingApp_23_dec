@@ -34,7 +34,8 @@ import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.PurchaseOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
-public class CreditCardScreen extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CreditCardScreen extends BaseActivity implements AdapterView.OnItemSelectedListener,
+        View.OnClickListener {
 
 
     private static final String TAG = CreditCardScreen.class.getSimpleName();

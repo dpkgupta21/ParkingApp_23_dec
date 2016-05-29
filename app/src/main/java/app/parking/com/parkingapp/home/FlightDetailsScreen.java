@@ -60,19 +60,23 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
                 try {
                     setViewText(R.id.txt_arrival_flight_origin, from);
                     setViewText(R.id.txt_arrival_flight_destination, AppConstants.COUNTRY_FOR_SERVICE);
-                    setViewText(R.id.arrival_date_tv, HelpMe.getDisplayDate(arrivalTime));
-                    setViewText(R.id.arrival_time_tv, HelpMe.getDisplayTime(arrivalTime));
+                    setViewText(R.id.arrival_date_tv,
+                            HelpMe.showSelectedFlightInfoDate(createOrderDTO.getPickUpTime()));
+                    setViewText(R.id.arrival_time_tv,
+                            HelpMe.showSelectedFlightInfoTime(arrivalTime));
                     setViewText(R.id.flight_num_et, flightNumber);
                     setViewText(R.id.pickup_term, term);
 
                     flightArrivalDTO = new FlightArrivalDTO();
-                    flightArrivalDTO.setFlightArrivalTime(arrivalTime);
-                    flightArrivalDTO.setFlightDepatureTime(departTime);
+                    flightArrivalDTO.setFlightArrivalTime(HelpMe.saveFlightInfoDateTime(
+                            createOrderDTO.getPickUpTime(), arrivalTime));
+                    flightArrivalDTO.setFlightDepatureTime(HelpMe.saveFlightInfoDateTime(
+                            createOrderDTO.getPickUpTime(), departTime));
                     flightArrivalDTO.setFlightName(airline);
                     flightArrivalDTO.setFlightNumber(flightNumber);
                     flightArrivalDTO.setOrigin(from);
                     flightArrivalDTO.setDestination(AppConstants.COUNTRY_FOR_SERVICE);
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -86,21 +90,25 @@ public class FlightDetailsScreen extends BaseActivity implements View.OnClickLis
 
                 try {
 
-                    setViewText(R.id.depart_time_tv, HelpMe.getDisplayTime(departTime));
-                    setViewText(R.id.depart_date_tv, HelpMe.getDisplayDate(departTime));
+                    setViewText(R.id.depart_time_tv,
+                            HelpMe.showSelectedFlightInfoTime(departTime));
+                    setViewText(R.id.depart_date_tv, HelpMe.
+                            showSelectedFlightInfoDate(createOrderDTO.getDropOffTime()));
                     setViewText(R.id.txt_departure_flight_origin_val, AppConstants.COUNTRY_FOR_SERVICE);
                     setViewText(R.id.txt_departure_flight_destination_val, from);
                     setViewText(R.id.flight_number_depart_et, flightNumber);
                     setViewText(R.id.drop_term, term);
 
                     flightDepartureDTO = new FlightDepartureDTO();
-                    flightDepartureDTO.setFlightArrivalTime(arrivalTime);
-                    flightDepartureDTO.setFlightDepatureTime(departTime);
+                    flightDepartureDTO.setFlightArrivalTime(HelpMe.saveFlightInfoDateTime(
+                            createOrderDTO.getDropOffTime(), arrivalTime));
+                    flightDepartureDTO.setFlightDepatureTime(HelpMe.saveFlightInfoDateTime(
+                            createOrderDTO.getDropOffTime(), departTime));
                     flightDepartureDTO.setFlightName(airline);
                     flightDepartureDTO.setFlightNumber(flightNumber);
                     flightDepartureDTO.setOrigin(AppConstants.COUNTRY_FOR_SERVICE);
                     flightDepartureDTO.setDestination(from);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

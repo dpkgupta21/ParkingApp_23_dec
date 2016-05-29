@@ -102,17 +102,17 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());
         setViewText(R.id.departure_flight_name_tv, destinationFlightDTO.getFlightName());
         setViewText(R.id.departure_flight_arrival_tv,
-                HelpMe.getFlightDisplayDateTime(destinationFlightDTO.getFlightArrivalTime()));
+                destinationFlightDTO.getFlightArrivalTime());
         setViewText(R.id.departure_flight_departure_tv,
-                HelpMe.getFlightDisplayDateTime(destinationFlightDTO.getFlightDepatureTime()));
+                destinationFlightDTO.getFlightDepatureTime());
 
         //setting arrival flight details.
         setViewText(R.id.arrival_flight_no_tv, arrivalFlightDTO.getFlightNumber());
         setViewText(R.id.arrival_flight_name_tv, arrivalFlightDTO.getFlightName());
         setViewText(R.id.arrival_flight_arrival_tv,
-                HelpMe.getFlightDisplayDateTime(arrivalFlightDTO.getFlightArrivalTime()));
+                arrivalFlightDTO.getFlightArrivalTime());
         setViewText(R.id.arrival_flight_departure_tv,
-                HelpMe.getFlightDisplayDateTime(arrivalFlightDTO.getFlightDepatureTime()));
+                arrivalFlightDTO.getFlightDepatureTime());
 
 
         //setting vehicle details.
@@ -127,7 +127,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         String tax = orderStatusDTO.getOrderTax().equalsIgnoreCase("0") ? "" : orderStatusDTO.getOrderTax();
         String total = orderStatusDTO.getOrderTotal().equalsIgnoreCase("0") ? "" :
                 orderStatusDTO.getOrderTotal();
-        setViewText(R.id.tax_tv, tax);
+        //setViewText(R.id.tax_tv, tax);
         setViewText(R.id.price_tv, total);
 
     }
@@ -143,7 +143,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
                 CustomProgressDialog.showProgDialog(mActivity, null);
                 AppUtils.showLog(TAG, request);
                 HoldOrderAPIHandler holdOrderAPIHandler = new HoldOrderAPIHandler(
-                        mActivity, request, auth,userId, manageHoldOrderResponse());
+                        mActivity, request, auth, userId, manageHoldOrderResponse());
 
                 break;
         }

@@ -64,7 +64,7 @@ public class OrderStatusAPIHandler {
         this.mActivity = mActivity;
         this.parameters = parameters;
         this.auth_token = auth;
-        this.userId=userId;
+        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -123,6 +123,8 @@ public class OrderStatusAPIHandler {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.AUTHTOKEN, auth_token);
                 params.put(GlobalKeys.USERID, userId);

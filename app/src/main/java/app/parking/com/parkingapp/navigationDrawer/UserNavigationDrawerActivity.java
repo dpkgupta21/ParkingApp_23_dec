@@ -32,11 +32,13 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.WakeLocker;
 import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
 import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
+import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.view.UserProfileScreen;
 import app.parking.com.parkingapp.webservices.handler.AddTokenPushAPIHandler;
@@ -305,12 +307,37 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
             @Override
             public void onFailOfResponse(Object... arguments) {
-                AppUtils.showToast(UserNavigationDrawerActivity.this, "Login Failed");
+                try {
+                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                    if (mJsonObject != null) {
+                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
+                                && AppUtils.getWebServiceErrorCode(mJsonObject).
+                                equalsIgnoreCase(WebserviceResponseConstants.
+                                        ERROR_SESSION_EXPIRED)) {
+
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse", 1000);
+                        }
+
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
         });
     }
 
+
+    public void singleBtnCallbackResponse(Boolean flag, int code) {
+        if (flag) {
+            startActivity(new Intent(mActivity, LoginScreen.class));
+        }
+    }
 
     // For Push notification
     private void registrationPushNotification() {

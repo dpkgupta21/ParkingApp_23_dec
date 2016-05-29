@@ -306,7 +306,7 @@ public class AppDialogs {
                                     public void onFailOfResponse(Object... arguments) {
                                         CustomProgressDialog.hideProgressDialog();
                                         AppUtils.showDialog(mActivity, "Alert!",
-                                                "Search field cannot be empty");
+                                                "Some error occured");
                                     }
                                 });
                     } else {

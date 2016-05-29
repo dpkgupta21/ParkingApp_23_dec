@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.SignupAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -22,12 +24,13 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
     private EditText email_et, pwd_et, name_et, phone_et, cnfrm_pwd_et, lastname_et;
     private SignupAPIHandler mSignupHandler;
     private String TAG = SignupScreen.class.getSimpleName();
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_screen);
-
+        mActivity = SignupScreen.this;
         initViews();
         assignClick();
     }
@@ -91,7 +94,7 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
                             JSONObject mJsonObject = (JSONObject) arguments[0];
                             if (mJsonObject != null) {
-                                AppUtils.showToast(SignupScreen.this, "Registration Success");
+                                //AppUtils.showToast(SignupScreen.this, "Registration Success");
 
                                 Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
                                 startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -108,7 +111,19 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
                         @Override
                         public void onFailOfResponse(Object... arguments) {
-                            AppUtils.showToast(SignupScreen.this, "Registration Failed");
+                            JSONObject mJsonObject = (JSONObject) arguments[0];
+                            if (mJsonObject != null) {
+                                if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
+                                        && AppUtils.getWebServiceErrorCode(mJsonObject).
+                                        equalsIgnoreCase(WebserviceResponseConstants.
+                                                ERROR_USER_ALREADY_SIGNUP)) {
+                                    AppUtils.showDialog(mActivity, "Message",
+                                            AppUtils.getWebServiceErrorMsg(mJsonObject));
+                                }
+
+
+                            }
+
 
                         }
                     });

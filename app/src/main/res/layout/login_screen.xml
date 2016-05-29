@@ -17,6 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_above="@+id/center_rl"
+            android:layout_marginBottom="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/margin_40dp"
             android:src="@drawable/login_logo" />
 
@@ -116,7 +118,7 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/remember_chbox"
+            android:layout_below="@+id/center_rl"
             android:layout_marginTop="@dimen/margin_20dp"
             android:background="@drawable/green_round_corner_btn_selector_btn"
             android:gravity="center"
@@ -135,15 +137,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16sp" />
 
-        <CheckBox
-            android:id="@+id/remember_chbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/remeber_me"
-            android:textSize="@dimen/text_size_14sp"
-            android:layout_below="@+id/center_rl"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

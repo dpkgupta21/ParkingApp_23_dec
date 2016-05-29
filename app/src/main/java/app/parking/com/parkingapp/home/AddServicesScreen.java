@@ -14,10 +14,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
@@ -26,6 +29,8 @@ import app.parking.com.parkingapp.model.ListOfServicesDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.handler.ServicesAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
@@ -102,7 +107,6 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         toolbar_right_tv.setText(R.string.skip);
 
 
-
     }
 
     private WebAPIResponseListener fetchServiceResponseListner() {
@@ -127,7 +131,26 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFailOfResponse(Object... arguments) {
+                try {
+                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                    if (mJsonObject != null) {
+                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
+                                && AppUtils.getWebServiceErrorCode(mJsonObject).
+                                equalsIgnoreCase(WebserviceResponseConstants.
+                                        ERROR_SESSION_EXPIRED)) {
 
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse", 1000);
+                        }
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -189,7 +212,7 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
         CustomProgressDialog.showProgDialog(mActivity, null);
         CreateOrderAPIHandler createOrderAPIHandler = new CreateOrderAPIHandler(mActivity,
-                orderRequest, auth,userId,
+                orderRequest, auth, userId,
                 createOrderResponseListner());
 
     }
@@ -229,10 +252,37 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFailOfResponse(Object... arguments) {
+                try {
+                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                    if (mJsonObject != null) {
+                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
+                                && AppUtils.getWebServiceErrorCode(mJsonObject).
+                                equalsIgnoreCase(WebserviceResponseConstants.
+                                        ERROR_SESSION_EXPIRED)) {
 
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse", 1000);
+                        }
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
         return webAPIResponseListener;
 
     }
+
+
+    public void singleBtnCallbackResponse(Boolean flag, int code) {
+        if (flag) {
+            startActivity(new Intent(mActivity, LoginScreen.class));
+        }
+    }
+
 }

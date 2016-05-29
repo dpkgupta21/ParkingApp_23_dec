@@ -14,6 +14,9 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -613,6 +616,24 @@ public class AppUtils {
         alert.show();
         return alert;
 
+    }
+
+    public static String getWebServiceErrorCode(JSONObject json) {
+        try {
+            return json.getString("errorCode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getWebServiceErrorMsg(JSONObject json) {
+        try {
+            return json.getString("errMsg");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -59,8 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/horizontal_line_height"
                     android:layout_below="@+id/vehicle_dtls_tv"
-                    android:layout_marginLeft="@dimen/margin_20dp"
-                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:layout_marginLeft="@dimen/margin_5dp"
+                    android:layout_marginRight="@dimen/margin_5dp"
                     android:background="@color/transparent_black" />
 
                 <RelativeLayout
@@ -76,18 +76,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:padding="@dimen/margin_10dp"
+                        android:padding="@dimen/margin_5dp"
                         android:text="@string/departure_caps"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_18sp" />
 
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/departure_ll"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/drop_tv"
-                        android:layout_centerHorizontal="true"
                         android:gravity="center_vertical"
                         android:padding="@dimen/margin_10dp">
 
@@ -95,27 +94,33 @@
                             android:id="@+id/txt_departure_flight_origin_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/depart_plane_icon"
+                            android:gravity="left"
+                            android:singleLine="true"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <ImageView
                             android:id="@+id/depart_plane_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_10dp"
-                            android:layout_marginRight="@dimen/margin_10dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="@dimen/margin_5dp"
+                            android:layout_marginRight="@dimen/margin_5dp"
                             android:src="@drawable/flight_icon2" />
 
                         <TextView
                             android:id="@+id/txt_departure_flight_destination_val"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/depart_plane_icon"
+                            android:singleLine="true"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                     <LinearLayout
@@ -264,40 +269,43 @@
                         android:textSize="@dimen/text_size_18sp" />
 
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/arrival_ll"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pick_tv"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center_vertical"
                         android:padding="@dimen/margin_10dp">
 
                         <TextView
                             android:id="@+id/txt_arrival_flight_origin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrival_plane_icon"
+                            android:singleLine="true"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
                         <ImageView
                             android:id="@+id/arrival_plane_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:layout_marginLeft="@dimen/margin_10dp"
                             android:layout_marginRight="@dimen/margin_10dp"
                             android:src="@drawable/flight_icon2" />
 
                         <TextView
+                            android:id="@+id/txt_arrival_flight_destination"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/arrival_plane_icon"
+                            android:singleLine="true"
                             android:text=""
-                            android:id="@+id/txt_arrival_flight_destination"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_20sp" />
+                            android:textSize="@dimen/text_size_16sp" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                     <LinearLayout
@@ -308,7 +316,6 @@
                         android:layout_marginLeft="@dimen/margin_10dp"
                         android:layout_marginRight="@dimen/margin_10dp"
                         android:orientation="horizontal"
-
                         android:weightSum="2">
 
                         <RelativeLayout
@@ -338,7 +345,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_20dp"
                             android:layout_marginRight="@dimen/margin_20dp"
-
                             android:layout_weight="1"
                             android:gravity="right"
                             android:paddingBottom="@dimen/margin_10dp">

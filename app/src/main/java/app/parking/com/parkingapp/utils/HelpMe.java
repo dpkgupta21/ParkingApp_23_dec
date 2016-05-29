@@ -32,7 +32,9 @@ public class HelpMe {
     public static final String SELECT_DATE_FORMAT = "dd-MM-yyyy";
     public static final String DISPLAY_DATE_TIME_FORMAT = "dd MMM, yyyy HH:mm a";
 
-    private static final String DISPLAY_TIME_FORMAT = "HH:mm a";
+    private static final String DISPLAY_TIME_FORMAT = "HH:mm";
+    private static final String DISPLAY_FLIGHT_DATE_FORMAT = "MMM dd";
+    private static final String SERVER_FLIGHT_DATE_FORMAT = "MMM dd hh:mm";
 
     private static DateFormat currentFormat = new SimpleDateFormat(SERVER_DATE_TIME_FORMAT);
 
@@ -73,7 +75,7 @@ public class HelpMe {
                 e.printStackTrace();
             }
             return newDateString;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -96,7 +98,7 @@ public class HelpMe {
                 e.printStackTrace();
             }
             return newDateString;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
@@ -117,6 +119,104 @@ public class HelpMe {
         return startDate;
 
     }
+
+    public static Date getFlightInfoDateTimeObject(String dateString) {
+
+        DateFormat flightInfoFormat = new SimpleDateFormat("dd mmm HH:mm");
+        Date startDate = null;
+
+        try {
+            startDate = flightInfoFormat.parse(dateString);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return startDate;
+
+    }
+
+
+    // This method use to show date at flight Info screen from pickup and drop off  date
+    public static String showSelectedFlightInfoDate(String userSelectedDateTime) {
+
+        // Request / Input
+        DateFormat dropOffDateFormat = new SimpleDateFormat(REQUEST_DATE_FORMAT);
+        //DateFormat flightInputDatetimeFormat = new SimpleDateFormat(SERVER_FLIGHT_DATE_FORMAT);
+
+        // Response / Output
+        DateFormat flightInfoDateFormat = new SimpleDateFormat(DISPLAY_FLIGHT_DATE_FORMAT);
+        //DateFormat flightInfoTimeFormat = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
+        String changedDateTime = null;
+
+        try {
+            Date selectDate = dropOffDateFormat.parse(userSelectedDateTime);
+            //Date flightInfoDate = flightInputDatetimeFormat.parse(flightInfoDateTime);
+            String changedDate = flightInfoDateFormat.format(selectDate);
+            //String changedTime = flightInfoTimeFormat.format(flightInfoDate);
+            changedDateTime = changedDate;
+            System.out.println(changedDateTime);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changedDateTime;
+
+    }
+
+    // This method use to show time at flight Info screen from flight select time
+    public static String showSelectedFlightInfoTime(String flightInfoDateTime) {
+        String flightInfo= flightInfoDateTime.replace("mai", "May");
+        // Request / Input
+        //DateFormat dropOffDateFormat = new SimpleDateFormat(REQUEST_DATE_FORMAT);
+        DateFormat flightInputDatetimeFormat = new SimpleDateFormat(SERVER_FLIGHT_DATE_FORMAT);
+
+        // Response / Output
+        //DateFormat flightInfoDateFormat = new SimpleDateFormat(DISPLAY_FLIGHT_DATE_FORMAT);
+        DateFormat flightInfoTimeFormat = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
+        String changedDateTime = null;
+
+        try {
+            //Date dropOffDate = dropOffDateFormat.parse(dropOffDateTime);
+            Date flightInfoDate = flightInputDatetimeFormat.parse(flightInfo);
+            //String changedDate = flightInfoDateFormat.format(dropOffDate);
+            String changedTime = flightInfoTimeFormat.format(flightInfoDate);
+            changedDateTime = changedTime;
+            System.out.println(changedDateTime);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changedDateTime;
+
+    }
+
+    // This method use to show date at flight Info screen from pickup and drop off  date
+    public static String saveFlightInfoDateTime(String userSelectedDateTime, String flightInfoDateTime) {
+        String flightInfo= flightInfoDateTime.replace("mai", "May");
+        // Request / Input
+        DateFormat dropOffDateFormat = new SimpleDateFormat(REQUEST_DATE_FORMAT);
+        DateFormat flightInputDatetimeFormat = new SimpleDateFormat(SERVER_FLIGHT_DATE_FORMAT);
+
+        // Response / Output
+        DateFormat flightInfoDateFormat = new SimpleDateFormat(DISPLAY_FLIGHT_DATE_FORMAT);
+        DateFormat flightInfoTimeFormat = new SimpleDateFormat(DISPLAY_TIME_FORMAT);
+        String changedDateTime = null;
+
+        try {
+            Date selectDate = dropOffDateFormat.parse(userSelectedDateTime);
+            Date flightInfoDate = flightInputDatetimeFormat.parse(flightInfo);
+            String changedDate = flightInfoDateFormat.format(selectDate);
+            String changedTime = flightInfoTimeFormat.format(flightInfoDate);
+            changedDateTime = changedDate+" "+changedTime;
+            System.out.println(changedDateTime);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changedDateTime;
+
+    }
+
 
     public static String getPickDropDisplayDateTime(String dateString) {
 
