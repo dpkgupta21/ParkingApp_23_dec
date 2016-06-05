@@ -66,6 +66,9 @@
     <string name="reservation_number">Reservation Number</string>
     <string name="service">Services</string>
     <string name="edit">Edit</string>
+    <string name="slot_number">Slot number</string>
+    <string name="creation_date">Creation date</string>
+    <string name="order_number">Order number</string>
 
 
     <string name="screen1_title"> Double Save &amp; Up</string>

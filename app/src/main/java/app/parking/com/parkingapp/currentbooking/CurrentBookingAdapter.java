@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
-import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
+import app.parking.com.parkingapp.model.OrderHistoryDTO;
 
 /**
  * Created by Deepak Singh on 06-May-16.
@@ -18,9 +18,9 @@ import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 public class CurrentBookingAdapter extends BaseAdapter {
 
     private Context context;
-    private List<CreateOrderResponseDTO> list;
+    private List<OrderHistoryDTO> list;
 
-    public CurrentBookingAdapter(Context context, List<CreateOrderResponseDTO> list) {
+    public CurrentBookingAdapter(Context context, List<OrderHistoryDTO> list) {
         this.context = context;
         this.list = list;
     }
@@ -53,26 +53,26 @@ public class CurrentBookingAdapter extends BaseAdapter {
             holder = (CurrentBookingViewHolder) convertView.getTag();
         }
 
-        CreateOrderResponseDTO responseDTO = list.get(position);
-        holder.vehiclePlate.setText(responseDTO.getVehicleInfo().getVehiclePlateNumber());
-        holder.pickUp.setText(responseDTO.getFlightInfo().getArrivalFlight().getFlightArrivalTime());
-        holder.dropOff.setText(responseDTO.getFlightInfo()
+        OrderHistoryDTO responseDTO = list.get(position);
+        holder.orderNumber.setText(responseDTO.getOrderNo());
+        holder.slotNumber.setText(responseDTO.getSlotNo());
+        holder.creationDate.setText(responseDTO.getCreationDate()
                 .getDestinationFlight().getFlightDepatureTime());
-        holder.orderStatus.setText(responseDTO.getOrderStatus().getStatus());
+        holder.orderStatus.setText(responseDTO.getOrderStatus());
 
         return convertView;
     }
 
     public class CurrentBookingViewHolder {
-        TextView vehiclePlate;
-        TextView pickUp;
-        TextView dropOff;
+        TextView orderNumber;
+        TextView slotNumber;
+        TextView creationDate;
         TextView orderStatus;
 
         CurrentBookingViewHolder(View view) {
-            vehiclePlate = (TextView) view.findViewById(R.id.vehiclePlate);
-            pickUp = (TextView) view.findViewById(R.id.txt_pick_up_time);
-            dropOff = (TextView) view.findViewById(R.id.txt_drop_time_name);
+            orderNumber = (TextView) view.findViewById(R.id.order_number_value);
+            slotNumber = (TextView) view.findViewById(R.id.slot_value);
+            creationDate = (TextView) view.findViewById(R.id.creationd_date_value);
             orderStatus = (TextView) view.findViewById(R.id.order_status_value);
         }
     }

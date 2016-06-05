@@ -22,7 +22,10 @@ public interface GlobalKeys {
     String ADD_TOKEN_PUSH = "notification/addtoken";
     String FLIGHT_INFO = "order/flightinfo";
     String ORDER_STATUS_INFO = "order/orderstatus";
-
+    String ORDER_HISTORY = "order/history";
+    String ORDER_HISTORY_API_KEY = "order_history";
+    String ORDER_DETAILS = "order/details";
+    String ORDER_DETAILS_API_KEY = "order_details";
 
     String PILLION_LOGIN_REQUEST_KEY = "login_api";
     String PILLION_LOGOUT_REQUEST_KEY = "logout_api";

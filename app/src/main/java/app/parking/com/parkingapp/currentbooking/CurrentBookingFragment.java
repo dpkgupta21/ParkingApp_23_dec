@@ -30,16 +30,11 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.fragments.BaseFragment;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
-import app.parking.com.parkingapp.model.DestinationFlightInfo;
-import app.parking.com.parkingapp.model.FlightInfoDTO;
+import app.parking.com.parkingapp.model.OrderHistoryDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
-import app.parking.com.parkingapp.model.Service;
-import app.parking.com.parkingapp.model.ServiceInfoDTO;
-import app.parking.com.parkingapp.model.VehicleInfoDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
-import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.webservices.handler.OrderStatusAPIHandler;
+import app.parking.com.parkingapp.webservices.handler.OrderHistoryAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 
@@ -94,8 +89,7 @@ public class CurrentBookingFragment extends BaseFragment {
         JSONObject jsonObject = new JSONObject(params);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
         String userId = ParkingPreference.getUserid(mActivity);
-        OrderStatusAPIHandler orderStatusAPIHandler = new OrderStatusAPIHandler(mActivity,
-                jsonObject.toString(), auth,userId, manageOrderStatusResponse());
+        new OrderHistoryAPIHandler(mActivity, manageOrderStatusResponse());
     }
 
     private void initViews() {
@@ -122,19 +116,19 @@ public class CurrentBookingFragment extends BaseFragment {
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
 
-                JSONObject obj = new JSONObject();
-                try {
-                    obj.put("response", new JSONArray(response));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                JSONObject obj = new JSONObject();
+//
+//                try {
+//                    obj.put("response", new JSONArray(response));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
                 try {
                     Type type = new TypeToken<ArrayList<CreateOrderResponseDTO>>() {
                     }.getType();
-
-                    List<CreateOrderResponseDTO> createOrderResponseDTOs = new Gson()
-                            .fromJson(obj.getJSONArray("response").toString(),
-                                    type);
+                    JSONArray array = new JSONArray(response);
+                    List<OrderHistoryDTO> createOrderResponseDTOs = new Gson()
+                            .fromJson(array.toString(), type);
 
                     setListAdapter(createOrderResponseDTOs);
                 } catch (JSONException e) {
@@ -154,15 +148,16 @@ public class CurrentBookingFragment extends BaseFragment {
         return responseListener;
     }
 
-    private void setListAdapter(final List<CreateOrderResponseDTO> createOrderResponseDTOs) {
-        CurrentBookingAdapter adapter = new CurrentBookingAdapter(mActivity, createOrderResponseDTOs);
+    private void setListAdapter(final List<OrderHistoryDTO> orderDTO) {
+        CurrentBookingAdapter adapter = new CurrentBookingAdapter(mActivity, orderDTO);
         currentBookingList.setAdapter(adapter);
 
         currentBookingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, CurrentBookingDetails.class);
-                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTOs.get(position));
+                intent.putExtra("orderno", orderDTO.get(position).getOrderNo());
+                //intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTOs.get(position));
                 mActivity.startActivity(intent);
             }
         });

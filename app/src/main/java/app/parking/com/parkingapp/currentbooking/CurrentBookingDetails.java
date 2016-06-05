@@ -52,6 +52,8 @@ public class CurrentBookingDetails extends BaseActivity {
 //            purchaseOrderDTO = (PurchaseOrderDTO) getIntent().
 //                    getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
 //        }
+
+        callOrderDetailsWS();
         createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
                 getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
 
@@ -65,6 +67,10 @@ public class CurrentBookingDetails extends BaseActivity {
 //        }
 
         setValue();
+    }
+
+    private void callOrderDetailsWS() {
+
     }
 
 
