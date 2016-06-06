@@ -124,7 +124,7 @@ public class CurrentBookingFragment extends BaseFragment {
 //                    e.printStackTrace();
 //                }
                 try {
-                    Type type = new TypeToken<ArrayList<CreateOrderResponseDTO>>() {
+                    Type type = new TypeToken<ArrayList<OrderHistoryDTO>>() {
                     }.getType();
                     JSONArray array = new JSONArray(response);
                     List<OrderHistoryDTO> createOrderResponseDTOs = new Gson()

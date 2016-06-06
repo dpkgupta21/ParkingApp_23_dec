@@ -2,6 +2,13 @@ package app.parking.com.parkingapp.webservices.handler;
 
 import android.app.Activity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -14,11 +21,6 @@ import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 
 public class OrderDetailsAPIHandler {
@@ -36,22 +38,23 @@ public class OrderDetailsAPIHandler {
     }
 
     private void postAPICall() {
-        Map<String, String> param = new HashMap<>();
-        param.put("orderno", orderno);
         try {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("orderno", orderno);
             String url = (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_DETAILS).trim();
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, param,
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url,
+                    new JSONObject(params),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            AppUtils.showLog(TAG,response.toString());
+                            AppUtils.showLog(TAG, response.toString());
                             responseListener.onSuccessOfResponse(response.toString());
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorListener(VolleyError error) {
-                            AppUtils.showLog(TAG,error.toString());
+                        public void onErrorResponse(VolleyError error) {
+                            AppUtils.showLog(TAG, error.toString());
                             WebserviceAPIErrorHandler.getInstance()
                                     .VolleyErrorHandler(error, mActivity);
                             responseListener.onFailOfResponse(error);
@@ -60,12 +63,15 @@ public class OrderDetailsAPIHandler {
             ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
                     params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                            GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                    params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                             GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                     params.put(GlobalKeys.AUTHTOKEN, ParkingPreference.getKeyAuthtoken(mActivity));
                     params.put(GlobalKeys.USERID, ParkingPreference.getUserid(mActivity));
                     return params;
+
                 }
             };
 

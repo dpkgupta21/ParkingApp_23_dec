@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.currentbooking;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -20,7 +23,8 @@ import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
-import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.webservices.handler.OrderDetailsAPIHandler;
+import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class CurrentBookingDetails extends BaseActivity {
     private Toolbar mToolbar;
@@ -37,12 +41,13 @@ public class CurrentBookingDetails extends BaseActivity {
     private boolean isOrder;
     private boolean isPickUpInfo;
     private boolean isDropOffInfo;
+    private Activity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_booking_details);
-
+        mActivity = CurrentBookingDetails.this;
         initViews();
         assignClicks();
 //        Toast.makeText(OrderDetailsScreenNew.this, "Transaction Id :" +
@@ -54,8 +59,8 @@ public class CurrentBookingDetails extends BaseActivity {
 //        }
 
         callOrderDetailsWS();
-        createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
-                getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
+//        createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
+//                getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
 
 
         if (createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId() != null &&
@@ -66,11 +71,29 @@ public class CurrentBookingDetails extends BaseActivity {
 //            AppDialogs.paymentDialog(this, createOrderResponseDTO, purchaseOrderDTO);
 //        }
 
-        setValue();
     }
 
     private void callOrderDetailsWS() {
+        new OrderDetailsAPIHandler(mActivity, getIntent().getStringExtra("orderno"),
+                new WebAPIResponseListener() {
+                    @Override
+                    public void onSuccessOfResponse(Object... arguments) {
+                        try {
+                            String response = (String) arguments[0];
+                            createOrderResponseDTO = new Gson().fromJson(response,
+                                    CreateOrderResponseDTO.class);
+                            setValue();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onFailOfResponse(Object... arguments) {
+
+                    }
+                }
+        );
     }
 
 
@@ -412,7 +435,7 @@ public class CurrentBookingDetails extends BaseActivity {
                 isPayment = false;
 
                 checkClickedButton();
-                
+
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
                 setViewVisibility(R.id.relative_service_info, View.GONE);

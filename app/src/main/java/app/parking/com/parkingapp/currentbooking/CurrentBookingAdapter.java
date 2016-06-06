@@ -56,8 +56,7 @@ public class CurrentBookingAdapter extends BaseAdapter {
         OrderHistoryDTO responseDTO = list.get(position);
         holder.orderNumber.setText(responseDTO.getOrderNo());
         holder.slotNumber.setText(responseDTO.getSlotNo());
-        holder.creationDate.setText(responseDTO.getCreationDate()
-                .getDestinationFlight().getFlightDepatureTime());
+        holder.creationDate.setText(responseDTO.getCreationDate());
         holder.orderStatus.setText(responseDTO.getOrderStatus());
 
         return convertView;

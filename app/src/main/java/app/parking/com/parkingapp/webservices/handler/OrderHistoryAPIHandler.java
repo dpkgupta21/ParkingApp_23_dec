@@ -3,10 +3,11 @@ package app.parking.com.parkingapp.webservices.handler;
 import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 
@@ -37,7 +38,7 @@ public class OrderHistoryAPIHandler {
         try {
             String url = (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_HISTORY).trim();
 
-            JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+            JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url,
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
