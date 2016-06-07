@@ -3,7 +3,6 @@ package app.parking.com.parkingapp.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import org.json.JSONException;
@@ -14,12 +13,9 @@ import java.util.TimerTask;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.appIntroduction.WelcomeScreen;
-import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
-import app.parking.com.parkingapp.utils.AppConstants;
-import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.handler.LoginAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -62,8 +58,6 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void loginInBackground() {
-
-
 
         String email = ParkingPreference.getEmailId(mActivity);
         String pwd = ParkingPreference.getPassword(mActivity);

@@ -4,10 +4,12 @@ import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONArray;
 
@@ -38,7 +40,7 @@ public class OrderHistoryAPIHandler {
         try {
             String url = (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_HISTORY).trim();
 
-            JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, url,
+            JsonRequest<JSONArray> mJsonRequest = new JsonRequest<JSONArray>(Request.Method.GET, url, null,
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -56,6 +58,11 @@ public class OrderHistoryAPIHandler {
                     }
             ) {
                 @Override
+                protected Response<JSONArray> parseNetworkResponse(NetworkResponse networkResponse) {
+                    return null;
+                }
+
+                @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
@@ -69,10 +76,10 @@ public class OrderHistoryAPIHandler {
             // Adding request to request queue
             if (ParkingAppController.getInstance() != null) {
                 ParkingAppController.getInstance().addToRequestQueue(
-                        jsonRequest, GlobalKeys.ORDER_HISTORY_API_KEY);
+                        mJsonRequest, GlobalKeys.ORDER_HISTORY_API_KEY);
             }
             // set request time-out
-            jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+            mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
                     AppConstants.ONE_SECOND * 30, 0,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         } catch (Exception e) {

@@ -62,6 +62,7 @@ public class ForgetPasswordScreen extends BaseActivity implements View.OnClickLi
                                 public void onSuccessOfResponse(Object... arguments) {
 
                                     try {
+                                        CustomProgressDialog.hideProgressDialog();
                                         JSONObject mJsonObject = (JSONObject) arguments[0];
                                         if (mJsonObject != null) {
                                             if (mJsonObject.has(GlobalKeys.MESSAGE)) {

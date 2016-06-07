@@ -37,6 +37,7 @@ import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
+import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.view.LoginScreen;
@@ -200,13 +201,16 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                     if (mJsonObject != null) {
                         if (mJsonObject.has(GlobalKeys.MESSAGE)) {
 
-                            String message = mJsonObject.getString(GlobalKeys.MESSAGE);
-                            ParkingPreference.clearSession(mActivity);
-                            Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
-                            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            //AppUtils.showToast(mActivity, message);
+                            JSONObject msgJsonObj = mJsonObject.getJSONObject(GlobalKeys.MESSAGE);
+                            if(msgJsonObj.getString("responseCode").
+                                    equalsIgnoreCase(WebserviceResponseConstants.RESPONSE_CODE_LOGOUT)) {
+                                ParkingPreference.clearSession(mActivity);
+                                Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+                                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                //AppUtils.showToast(mActivity, message);
 
-                            finish();
+                                finish();
+                            }
 
                         } else {
                             AppUtils.showToast(mActivity, "Logout Failed");
