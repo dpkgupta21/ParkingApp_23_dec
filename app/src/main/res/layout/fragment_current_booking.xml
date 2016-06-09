@@ -13,8 +13,8 @@
             android:id="@+id/currentBookingLIst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:dividerHeight="0dp" />
+            android:dividerHeight="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_10dp" />
 
         <!--<RelativeLayout
             android:id="@+id/action_button"

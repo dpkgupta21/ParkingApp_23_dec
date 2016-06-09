@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ParkingCustomer.iml" filepath="$PROJECT_DIR$/ParkingCustomer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Parking_Customer.iml" filepath="$PROJECT_DIR$/Parking_Customer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParkingApp_23_dec.iml" filepath="$PROJECT_DIR$/ParkingApp_23_dec.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/volley/volley.iml" filepath="$PROJECT_DIR$/volley/volley.iml" />
     </modules>
   </component>
 </project>

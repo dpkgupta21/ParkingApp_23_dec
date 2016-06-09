@@ -30,11 +30,11 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.fragments.BaseFragment;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
-import app.parking.com.parkingapp.model.OrderHistoryDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
+import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.webservices.handler.OrderHistoryAPIHandler;
+import app.parking.com.parkingapp.webservices.handler.OrderStatusAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 
@@ -89,7 +89,8 @@ public class CurrentBookingFragment extends BaseFragment {
         JSONObject jsonObject = new JSONObject(params);
         String auth = ParkingPreference.getKeyAuthtoken(mActivity);
         String userId = ParkingPreference.getUserid(mActivity);
-        new OrderHistoryAPIHandler(mActivity, manageOrderStatusResponse());
+        new OrderStatusAPIHandler(mActivity, jsonObject.toString(), auth,
+                userId, manageOrderStatusResponse());
     }
 
     private void initViews() {
@@ -124,10 +125,10 @@ public class CurrentBookingFragment extends BaseFragment {
 //                    e.printStackTrace();
 //                }
                 try {
-                    Type type = new TypeToken<ArrayList<OrderHistoryDTO>>() {
+                    Type type = new TypeToken<ArrayList<CreateOrderResponseDTO>>() {
                     }.getType();
                     JSONArray array = new JSONArray(response);
-                    List<OrderHistoryDTO> createOrderResponseDTOs = new Gson()
+                    List<CreateOrderResponseDTO> createOrderResponseDTOs = new Gson()
                             .fromJson(array.toString(), type);
 
                     setListAdapter(createOrderResponseDTOs);
@@ -148,7 +149,7 @@ public class CurrentBookingFragment extends BaseFragment {
         return responseListener;
     }
 
-    private void setListAdapter(final List<OrderHistoryDTO> orderDTO) {
+    private void setListAdapter(final List<CreateOrderResponseDTO> orderDTO) {
         CurrentBookingAdapter adapter = new CurrentBookingAdapter(mActivity, orderDTO);
         currentBookingList.setAdapter(adapter);
 
@@ -156,8 +157,8 @@ public class CurrentBookingFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, CurrentBookingDetails.class);
-                intent.putExtra("orderno", orderDTO.get(position).getOrderNo());
-                //intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTOs.get(position));
+                //intent.putExtra("orderno", orderDTO.get(position).getOrderNo());
+                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, orderDTO.get(position));
                 mActivity.startActivity(intent);
             }
         });

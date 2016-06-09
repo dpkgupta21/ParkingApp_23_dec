@@ -39,7 +39,7 @@ public class OrderDetailsAPIHandler {
 
     private void postAPICall() {
         try {
-            JSONObject requestJsonObj=new JSONObject();
+            JSONObject requestJsonObj = new JSONObject();
             requestJsonObj.put("orderno", orderno);
             String url = (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_DETAILS).trim();
             JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url,

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_15dp"
+    android:layout_marginTop="@dimen/margin_2dp"
     android:background="@color/light_black">
 
     <RelativeLayout
@@ -17,13 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/order_number"
+            android:text="@string/vehicle_num_plate"
             android:textColor="@color/light_black"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/order_number_value"
+            android:id="@+id/plate_number_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -37,74 +37,100 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
-            android:layout_below="@+id/order_number_value"
+            android:layout_below="@+id/plate_number_value"
             android:layout_marginTop="@dimen/margin_15dp"
             android:background="@color/dark_grey" />
 
+
         <TextView
-            android:id="@+id/txt_slot_number"
+            android:id="@+id/vehicleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:text="@string/slot_number"
+            android:text="@string/vehicle_model_lbl"
             android:textColor="@color/light_black"
+            android:layout_below="@id/view"
+            android:layout_marginTop="@dimen/margin_15dp"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
-
         <TextView
-            android:id="@+id/slot_value"
+            android:id="@+id/vehicle_name_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/txt_slot_number"
-            android:drawablePadding="@dimen/margin_5dp"
+            android:layout_below="@id/view"
+            android:layout_marginTop="@dimen/margin_15dp"
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
         <View
-            android:id="@+id/view_2"
+            android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
-            android:layout_below="@+id/slot_value"
+            android:layout_below="@+id/vehicle_name_value"
             android:layout_marginTop="@dimen/margin_15dp"
             android:background="@color/dark_grey" />
 
         <TextView
-            android:id="@+id/txt_creation_date"
+            android:id="@+id/txt_pick_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/view_2"
+            android:layout_below="@+id/view3"
             android:layout_marginTop="@dimen/margin_15dp"
-            android:text="@string/creation_date"
+            android:text="@string/pick_date"
+            android:textColor="@color/light_black"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/txt_drop_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/view3"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:text="@string/drop_date"
             android:textColor="@color/light_black"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />drop
 
         <TextView
-            android:id="@+id/creationd_date_value"
+            android:id="@+id/pick_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/txt_creation_date"
-            android:layout_marginLeft="@dimen/margin_10dp"
-            android:layout_toRightOf="@id/txt_creation_date"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/txt_drop_date"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:drawablePadding="@dimen/margin_5dp"
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
 
+        <TextView
+            android:id="@+id/drop_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/txt_drop_date"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:drawablePadding="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp"
+            android:textStyle="normal" />
+
+
         <View
-            android:id="@+id/view_two"
+            android:id="@+id/view_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
-            android:layout_below="@+id/creationd_date_value"
+            android:layout_below="@+id/txt_drop_date"
             android:layout_marginTop="@dimen/margin_15dp"
             android:background="@color/dark_grey" />
 
@@ -114,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/view_two"
+            android:layout_below="@+id/view_2"
             android:layout_marginTop="@dimen/margin_15dp"
             android:text="@string/txt_order_status"
             android:textColor="@color/light_black"
@@ -126,7 +152,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/view_two"
+            android:layout_below="@+id/view_2"
+            android:layout_marginRight="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/margin_15dp"
             android:text=""
             android:textColor="@color/white"
