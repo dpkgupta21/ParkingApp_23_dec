@@ -5,14 +5,18 @@ import android.app.Activity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,13 +63,26 @@ public class OrderHistoryAPIHandler {
             ) {
                 @Override
                 protected Response<JSONArray> parseNetworkResponse(NetworkResponse networkResponse) {
-                    return null;
+                    try {
+                        String jsonString = new String(networkResponse.data,
+                                HttpHeaderParser
+                                        .parseCharset(networkResponse.headers));
+                        return Response.success(new JSONArray(jsonString),
+                                HttpHeaderParser
+                                        .parseCacheHeaders(networkResponse));
+                    } catch (UnsupportedEncodingException e) {
+                        return Response.error(new ParseError(e));
+                    } catch (JSONException je) {
+                        return Response.error(new ParseError(je));
+                    }
                 }
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
+                            GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
+                    params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                             GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                     params.put(GlobalKeys.AUTHTOKEN, ParkingPreference.getKeyAuthtoken(mActivity));
                     params.put(GlobalKeys.USERID, ParkingPreference.getUserid(mActivity));

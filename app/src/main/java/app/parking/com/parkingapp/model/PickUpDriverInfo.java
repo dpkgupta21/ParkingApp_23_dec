@@ -7,5 +7,13 @@ import java.io.Serializable;
  */
 public class PickUpDriverInfo implements Serializable {
 
+    private String pickUpTime;
 
+    public String getPickUpTime() {
+        return pickUpTime;
+    }
+
+    public void setPickUpTime(String pickUpTime) {
+        this.pickUpTime = pickUpTime;
+    }
 }

@@ -197,29 +197,15 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             public void onSuccessOfResponse(Object... arguments) {
                 CustomProgressDialog.hideProgressDialog();
                 try {
-                    JSONObject mJsonObject = (JSONObject) arguments[0];
-                    if (mJsonObject != null) {
-                        if (mJsonObject.has(GlobalKeys.MESSAGE)) {
+                    ParkingPreference.clearSession(mActivity);
+                    Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    //AppUtils.showToast(mActivity, message);
 
-                            JSONObject msgJsonObj = mJsonObject.getJSONObject(GlobalKeys.MESSAGE);
-                            if(msgJsonObj.getString("responseCode").
-                                    equalsIgnoreCase(WebserviceResponseConstants.RESPONSE_CODE_LOGOUT)) {
-                                ParkingPreference.clearSession(mActivity);
-                                Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
-                                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                //AppUtils.showToast(mActivity, message);
+                    finish();
 
-                                finish();
-                            }
 
-                        } else {
-                            AppUtils.showToast(mActivity, "Logout Failed");
-                        }
-                    } else {
-                        AppUtils.showToast(mActivity, "Logout Failed");
-                    }
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -249,11 +235,11 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 title = " ";
                 break;
             case 1:
-                fragment = new CurrentBookingFragment();
+                fragment = new ViewBookingHistoryFragment();
                 title = " ";
                 break;
             case 2:
-                fragment = new ViewBookingHistoryFragment();
+                fragment = new CurrentBookingFragment();
                 title = " ";
                 break;
             case 3:
@@ -328,7 +314,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
 
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

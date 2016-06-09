@@ -25,10 +25,11 @@
             android:id="@+id/order_number_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text=""
+            android:layout_below="@+id/vehiclePlate"
+            android:layout_marginTop="3dp"
+            android:text="dd"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
 
@@ -37,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/order_number_value"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:background="@color/dark_grey" />
 
         <TextView
@@ -57,12 +58,13 @@
             android:id="@+id/slot_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/txt_slot_number"
-            android:drawablePadding="@dimen/margin_5dp"
-            android:text=""
+
+
+            android:layout_below="@+id/txt_slot_number"
+            android:layout_marginTop="3dp"
+            android:text="dd"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <View
@@ -70,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/slot_value"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:background="@color/dark_grey" />
 
         <TextView
@@ -89,12 +91,11 @@
             android:id="@+id/creationd_date_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/txt_creation_date"
-            android:drawablePadding="@dimen/margin_5dp"
-            android:text=""
+            android:layout_below="@+id/txt_creation_date"
+            android:layout_marginTop="3dp"
+            android:text="dd"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
         <View
@@ -102,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/creationd_date_value"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:background="@color/dark_grey" />
 
 
@@ -122,12 +123,11 @@
             android:id="@+id/order_status_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/view_two"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:text=""
+            android:layout_below="@+id/txt_order_status"
+            android:layout_marginTop="3dp"
+            android:text="dd"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />
 
     </RelativeLayout>

@@ -9,14 +9,14 @@ public class VehicleInfoDTO implements Serializable {
     private String vehicleMake = "";
     private String vehicleColor = "";
     private String vehicleModel = "";
-    private String vehiclePlateNumber = "";
+    private String plateNo = "";
 
-    public String getVehiclePlateNumber() {
-        return vehiclePlateNumber;
+    public String getPlateNo() {
+        return plateNo;
     }
 
-    public void setVehiclePlateNumber(String vehiclePlateNumber) {
-        this.vehiclePlateNumber = vehiclePlateNumber;
+    public void setPlateNo(String plateNo) {
+        this.plateNo = plateNo;
     }
 
     public String getVehicleMake() {

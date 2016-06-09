@@ -134,7 +134,7 @@ public class SignupAPIHandler {
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                AppConstants.ONE_SECOND * 20, 0,
+                AppConstants.ONE_SECOND * AppConstants.RETRY_SECONDS, AppConstants.NO_OF_RETRY,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 

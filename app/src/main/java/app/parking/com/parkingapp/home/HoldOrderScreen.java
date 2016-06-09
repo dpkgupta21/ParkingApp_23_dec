@@ -101,18 +101,18 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         //setting departure flight details.
         setViewText(R.id.departure_flight_no_tv, destinationFlightDTO.getFlightNumber());
         setViewText(R.id.departure_flight_name_tv, destinationFlightDTO.getFlightName());
-        setViewText(R.id.departure_flight_arrival_tv,
-                destinationFlightDTO.getFlightArrivalTime());
-        setViewText(R.id.departure_flight_departure_tv,
-                destinationFlightDTO.getFlightDepatureTime());
+//        setViewText(R.id.departure_flight_arrival_tv,
+//                destinationFlightDTO.getFlightArrivalTime());
+//        setViewText(R.id.departure_flight_departure_tv,
+//                destinationFlightDTO.getFlightDepatureTime());
 
         //setting arrival flight details.
         setViewText(R.id.arrival_flight_no_tv, arrivalFlightDTO.getFlightNumber());
         setViewText(R.id.arrival_flight_name_tv, arrivalFlightDTO.getFlightName());
-        setViewText(R.id.arrival_flight_arrival_tv,
-                arrivalFlightDTO.getFlightArrivalTime());
-        setViewText(R.id.arrival_flight_departure_tv,
-                arrivalFlightDTO.getFlightDepatureTime());
+//        setViewText(R.id.arrival_flight_arrival_tv,
+//                arrivalFlightDTO.getFlightArrivalTime());
+//        setViewText(R.id.arrival_flight_departure_tv,
+//                arrivalFlightDTO.getFlightDepatureTime());
 
 
         //setting vehicle details.
@@ -120,7 +120,7 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         setViewText(R.id.vehicle_make_tv, infoDTO.getVehicleMake());
         setViewText(R.id.vehicle_model_tv, infoDTO.getVehicleModel());
         setViewText(R.id.vehicle_color_tv, infoDTO.getVehicleColor());
-        setViewText(R.id.vehicle_platenumber_tv, infoDTO.getVehiclePlateNumber());
+        setViewText(R.id.vehicle_platenumber_tv, infoDTO.getPlateNo());
 
         OrderStatusDTO orderStatusDTO = createOrderResponseDTO.getOrderStatus();
 

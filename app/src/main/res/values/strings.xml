@@ -242,9 +242,15 @@
     <string name="tax_lbl">Tax</string>
     <string name="order_status">Status</string>
 
+    <!-- Title-->
+    <string name="current_booking_title">Current Booking</string>
+    <string name="order_history_title">Order History</string>
+    <string name="order_detail_title">Order Detail</string>
+
 
     <string name="departure_flight">Departure flight</string>
     <string name="arrival_flight">Arrival flight</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

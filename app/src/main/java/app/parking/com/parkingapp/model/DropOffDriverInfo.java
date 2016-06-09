@@ -7,9 +7,13 @@ import java.io.Serializable;
  */
 public class DropOffDriverInfo implements Serializable {
 
+    private String dropOffTime;
 
+    public String getDropOffTime() {
+        return dropOffTime;
+    }
 
-
-
-
+    public void setDropOffTime(String dropOffTime) {
+        this.dropOffTime = dropOffTime;
+    }
 }

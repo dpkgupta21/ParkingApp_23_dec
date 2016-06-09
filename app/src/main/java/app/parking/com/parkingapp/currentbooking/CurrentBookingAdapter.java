@@ -11,6 +11,7 @@ import java.util.List;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.model.OrderHistoryDTO;
+import app.parking.com.parkingapp.utils.HelpMe;
 
 /**
  * Created by Deepak Singh on 06-May-16.
@@ -56,7 +57,7 @@ public class CurrentBookingAdapter extends BaseAdapter {
         OrderHistoryDTO responseDTO = list.get(position);
         holder.orderNumber.setText(responseDTO.getOrderNo());
         holder.slotNumber.setText(responseDTO.getSlotNo());
-        holder.creationDate.setText(responseDTO.getCreationDate());
+        holder.creationDate.setText(HelpMe.getFlightDisplayDateTime(responseDTO.getCreationDate()));
         holder.orderStatus.setText(responseDTO.getOrderStatus());
 
         return convertView;

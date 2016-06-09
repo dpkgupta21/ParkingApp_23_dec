@@ -103,7 +103,7 @@ public class CurrentBookingFragment extends BaseFragment {
         toolbar_right_rl = (RelativeLayout) mToolbar.findViewById(R.id.toolbar_right_rl);
         toolbar_right_tv = (TextView) mToolbar.findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
-        toolbar_title.setText(getResources().getString(R.string.parkforu));
+        toolbar_title.setText(getResources().getString(R.string.order_history_title));
 
         toolbar_right_rl.setVisibility(View.INVISIBLE);
 

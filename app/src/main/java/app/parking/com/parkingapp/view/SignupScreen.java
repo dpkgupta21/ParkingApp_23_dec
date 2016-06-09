@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.SignupAPIHandler;
@@ -86,44 +87,50 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                 } else if (!confrmpwd.equalsIgnoreCase(pwd)) {
                     Snackbar.make(v, getString(R.string.pwd_mismatch), Snackbar.LENGTH_LONG).show();
                 } else {
+                    CustomProgressDialog.showProgDialog(mActivity, null);
                     mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname,
                             lastname, mobNumber, new WebAPIResponseListener() {
                         @Override
                         public void onSuccessOfResponse(Object... arguments) {
+                            try {
 
+                                CustomProgressDialog.hideProgressDialog();
+                                JSONObject mJsonObject = (JSONObject) arguments[0];
+                                if (mJsonObject != null) {
+                                    AppUtils.showToast(SignupScreen.this, "Registration Success");
 
-                            JSONObject mJsonObject = (JSONObject) arguments[0];
-                            if (mJsonObject != null) {
-                                //AppUtils.showToast(SignupScreen.this, "Registration Success");
+                                    Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
+                                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                    finish();
 
-                                Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
-                                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                finish();
-
-                            } else {
-                                AppUtils.showToast(SignupScreen.this, "Registration Failed");
-
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
 
                         }
 
 
                         @Override
                         public void onFailOfResponse(Object... arguments) {
-                            JSONObject mJsonObject = (JSONObject) arguments[0];
-                            if (mJsonObject != null) {
-                                if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
-                                        && AppUtils.getWebServiceErrorCode(mJsonObject).
-                                        equalsIgnoreCase(WebserviceResponseConstants.
-                                                ERROR_USER_ALREADY_SIGNUP)) {
-                                    AppUtils.showDialog(mActivity, "Message",
-                                            AppUtils.getWebServiceErrorMsg(mJsonObject));
-                                }
+                            try {
+                                CustomProgressDialog.hideProgressDialog();
 
-
+//                                JSONObject mJsonObject = (JSONObject) arguments[0];
+//                                if (mJsonObject != null) {
+//                                    if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
+//                                            && AppUtils.getWebServiceErrorCode(mJsonObject).
+//                                            equalsIgnoreCase(WebserviceResponseConstants.
+//                                                    ERROR_USER_ALREADY_SIGNUP)) {
+                                AppUtils.showDialog(mActivity, "Message", "Email already exist. ");
+                                //                 AppUtils.getWebServiceErrorMsg(mJsonObject));
+//                                    }
+//
+//
+//                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
 
                         }
                     });

@@ -27,6 +27,7 @@
             android:id="@+id/top_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/order_details_icon" />
 
         <TextView
@@ -55,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/action_button"
+            android:layout_marginBottom="@dimen/margin_20dp"
             android:layout_below="@+id/top_view">
 
             <LinearLayout
@@ -70,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/margin_10dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/flight_details_button_selector" />
 
                 <RelativeLayout
@@ -98,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/vehicle_details_normal" />
 
                 <RelativeLayout
@@ -126,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/add_servies_btn_normal" />
 
                 <RelativeLayout
@@ -154,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/confirmation_btn_normal" />
 
                 <RelativeLayout
@@ -182,6 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/payment_details_btn_normal" />
 
                 <RelativeLayout
@@ -210,7 +217,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/drop_off_btn_white" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/drop_off_btn_normal" />
 
                 <RelativeLayout
                     android:id="@+id/relative_drop_off_info"
@@ -223,6 +231,7 @@
                     android:gravity="center_horizontal"
                     android:visibility="gone">
 
+                    <include layout="@layout/info_popup_driver_dropoff" />
 
                 </RelativeLayout>
 
@@ -237,8 +246,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:src="@drawable/pck_up_btn_white" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/pck_up_btn_normal" />
 
                 <RelativeLayout
                     android:id="@+id/relative_pick_up_info"
@@ -251,30 +260,31 @@
                     android:gravity="center_horizontal"
                     android:visibility="gone">
 
+                    <include layout="@layout/info_popup_driver_pickup" />
 
                 </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
 
-       <!-- <RelativeLayout
-            android:id="@+id/action_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:background="@color/transparent_black"
-            android:gravity="center"
-            android:padding="@dimen/margin_10dp">
+        <!-- <RelativeLayout
+             android:id="@+id/action_button"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignParentBottom="true"
+             android:layout_below="@+id/view"
+             android:layout_marginTop="@dimen/margin_10dp"
+             android:background="@color/transparent_black"
+             android:gravity="center"
+             android:padding="@dimen/margin_10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/next"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_20sp" />
-        </RelativeLayout>-->
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/next"
+                 android:textColor="@color/white"
+                 android:textSize="@dimen/text_size_20sp" />
+         </RelativeLayout>-->
     </RelativeLayout>
 
 </RelativeLayout>
