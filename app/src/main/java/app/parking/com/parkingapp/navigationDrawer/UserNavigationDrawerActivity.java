@@ -25,19 +25,16 @@ import android.view.View;
 
 import com.google.android.gcm.GCMRegistrar;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.WakeLocker;
-import app.parking.com.parkingapp.bookinghistory.ViewBookingHistoryFragment;
 import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
 import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
-import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.orderstatus.OrderStausFragment;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
-import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.view.LoginScreen;
@@ -235,7 +232,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 title = " ";
                 break;
             case 1:
-                fragment = new ViewBookingHistoryFragment();
+                fragment = new OrderStausFragment();
                 title = " ";
                 break;
             case 2:

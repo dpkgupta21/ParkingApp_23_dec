@@ -1,4 +1,4 @@
-package app.parking.com.parkingapp.currentbooking;
+package app.parking.com.parkingapp.orderstatus;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,12 +16,12 @@ import app.parking.com.parkingapp.utils.HelpMe;
 /**
  * Created by Deepak Singh on 06-May-16.
  */
-public class CurrentBookingAdapter extends BaseAdapter {
+public class OrderStatusAdapter extends BaseAdapter {
 
     private Context context;
     private List<CreateOrderResponseDTO> list;
 
-    public CurrentBookingAdapter(Context context, List<CreateOrderResponseDTO> list) {
+    public OrderStatusAdapter(Context context, List<CreateOrderResponseDTO> list) {
         this.context = context;
         this.list = list;
     }
@@ -46,13 +46,14 @@ public class CurrentBookingAdapter extends BaseAdapter {
         CurrentBookingViewHolder holder = null;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.current_booking_row_layout, parent, false);
+            convertView = inflater.inflate(R.layout.booking_items_layout, parent, false);
 
             holder = new CurrentBookingViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (CurrentBookingViewHolder) convertView.getTag();
         }
+
 
         CreateOrderResponseDTO responseDTO = list.get(position);
         holder.plateNumber.setText(responseDTO.getVehicleInfo().getPlateNo());
