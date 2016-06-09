@@ -37,16 +37,22 @@ public class SplashScreen extends AppCompatActivity {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                String password =
-                        ParkingPreference.getPassword(mActivity);
+                String userId =
+                        ParkingPreference.getUserid(mActivity);
+                String authToken = ParkingPreference.getKeyAuthtoken(mActivity);
                 Intent i = null;
-                if (password == null || password.equalsIgnoreCase("")) {
+                if ((userId == null || userId.equalsIgnoreCase(""))
+                        && (authToken == null || authToken.equalsIgnoreCase(""))) {
                     i = new Intent(mActivity, WelcomeScreen.class);
                     startActivity(i);
                     finish();
                 } else {
 
-                    loginInBackground();
+                    //loginInBackground();
+                    Intent intent = new Intent(SplashScreen.this,
+                            UserNavigationDrawerActivity.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
                 }
 
             }
@@ -86,13 +92,13 @@ public class SplashScreen extends AppCompatActivity {
                             openLoginScreen();
                         }
                     } else {
-                       // CustomProgressDialog.hideProgressDialog();
+                        // CustomProgressDialog.hideProgressDialog();
                         openLoginScreen();
 
                     }
 
                 } catch (JSONException e) {
-                   // CustomProgressDialog.hideProgressDialog();
+                    // CustomProgressDialog.hideProgressDialog();
                     e.printStackTrace();
                 }
 
