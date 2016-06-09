@@ -136,7 +136,8 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 
                     }
                 } else {
-                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, getString(R.string.please_enter_valid_email),
+                            Snackbar.LENGTH_LONG).show();
                 }
                 break;
         }

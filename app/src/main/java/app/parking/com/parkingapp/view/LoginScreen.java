@@ -2,13 +2,9 @@ package app.parking.com.parkingapp.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,11 +54,10 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(LoginScreen.this, ForgetPasswordScreen.class));
                 break;
             case R.id.login_button:
-                CustomProgressDialog.showProgDialog(mActivity, null);
-
                 final String pwd = getViewText(R.id.pwd_et);
                 final String email = getViewText(R.id.email_et);
                 if (validateForm(v)) {
+                    CustomProgressDialog.showProgDialog(mActivity, null);
 
                     LoginAPIHandler mLoginAPIHandler = new LoginAPIHandler(mActivity,
                             email, pwd, new WebAPIResponseListener() {
@@ -134,6 +129,10 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
         if (getEditTextText(R.id.email_et).equals("")) {
 
             Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
+            return false;
+        } else if (!AppUtils.isEmailIDValidate(getEditTextText(R.id.email_et))) {
+            Snackbar.make(v, getString(R.string.please_enter_valid_email),
+                    Snackbar.LENGTH_LONG).show();
             return false;
         } else if (getEditTextText(R.id.pwd_et).equals("")) {
             Snackbar.make(v, getString(R.string.please_enter_pwd), Snackbar.LENGTH_LONG).show();

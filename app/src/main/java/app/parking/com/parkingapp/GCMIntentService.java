@@ -13,16 +13,13 @@ import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
-
-import static app.parking.com.parkingapp.CommonUtilities.displayMessage;
-import static app.parking.com.parkingapp.CommonUtilities.SENDER_ID;
-
 import java.util.Calendar;
 
-import app.parking.com.parkingapp.home.OrderDetailsScreenNew;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
-import app.parking.com.parkingapp.view.LoginScreen;
+
+import static app.parking.com.parkingapp.CommonUtilities.SENDER_ID;
+import static app.parking.com.parkingapp.CommonUtilities.displayMessage;
 
 
 public class GCMIntentService extends GCMBaseIntentService {
@@ -173,10 +170,11 @@ public class GCMIntentService extends GCMBaseIntentService {
             Intent notificationIntent = null;
             PendingIntent intent = null;
             builder.setContentText(message);
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
             notificationIntent = new Intent(context,
                     UserNavigationDrawerActivity.class);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            notificationIntent.putExtra("fragmentPos",2);
+            notificationIntent.putExtra("fragmentPos", 2);
             intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
             builder.setContentIntent(intent);
 
