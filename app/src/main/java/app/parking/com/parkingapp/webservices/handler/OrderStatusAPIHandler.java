@@ -145,37 +145,6 @@ public class OrderStatusAPIHandler {
             }
         };
 
-       /* JsonObjectRequest mJsonRequest = new JsonObjectRequest(
-                Method.POST,
-                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.ORDER_STATUS_INFO)
-                        .trim(), mJsonObjectRequest,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        mResponseListener.onSuccessOfResponse(response.toString());
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                WebserviceAPIErrorHandler.getInstance()
-                        .VolleyErrorHandler(error, mActivity);
-                mResponseListener.onFailOfResponse(error);
-            }
-        }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(GlobalKeys.HEADER_KEY_CONTENT_TYPE,
-                        GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
-                params.put(GlobalKeys.AUTHTOKEN, auth_token);
-                return params;
-            }
-
-        };*/
-
 
         // Adding request to request queue
         if (ParkingAppController.getInstance() != null) {

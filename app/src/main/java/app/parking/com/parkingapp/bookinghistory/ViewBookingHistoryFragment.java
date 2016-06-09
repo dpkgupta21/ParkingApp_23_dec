@@ -118,7 +118,7 @@ public class ViewBookingHistoryFragment extends Fragment implements View.OnClick
         for (CreateOrderResponseDTO responseDTO : createOrderResponseDTOs) {
             OrderHistoryDTO historyDTO = new OrderHistoryDTO();
         }
-        //mBookingHistoryAdapter = new CurrentBookingAdapter()
+        //mBookingHistoryAdapter = new OrderHistoryListAdapter()
     }
 
 

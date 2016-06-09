@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,11 +32,10 @@ import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
 import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.home.HomeScreenFragment;
-import app.parking.com.parkingapp.orderstatus.OrderStausFragment;
+import app.parking.com.parkingapp.orderhistory.OrderHistoryListFragment;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
-import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.view.UserProfileScreen;
 import app.parking.com.parkingapp.webservices.handler.AddTokenPushAPIHandler;
 import app.parking.com.parkingapp.webservices.handler.LogoutAPIHandler;
@@ -72,7 +70,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         int fragmentPos = getIntent().getIntExtra("fragmentPos", 0);
         initViews();
         assignClickOnView();
-        assignClickonNavigationMenu();
+        assignClickOnNavigationMenu();
         displayView(fragmentPos);
 
         String pushRegistrationId = ParkingPreference.getPushRegistrationId(mActivity);
@@ -118,7 +116,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     }
 
 
-    private void assignClickonNavigationMenu() {
+    private void assignClickOnNavigationMenu() {
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -166,7 +164,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                                         CustomProgressDialog.showProgDialog(mActivity, null);
                                         LogoutAPIHandler mLogoutAPIHandler = new
                                                 LogoutAPIHandler(mActivity,
-                                                onLogoutResponseListner());
+                                                null);
 
                                     }
                                 });
@@ -185,41 +183,41 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
     }
 
-    private WebAPIResponseListener onLogoutResponseListner() {
-
-        WebAPIResponseListener mWebAPIResponseListener;
-
-        mWebAPIResponseListener = new WebAPIResponseListener() {
-            @Override
-            public void onSuccessOfResponse(Object... arguments) {
-                CustomProgressDialog.hideProgressDialog();
-                try {
-                    ParkingPreference.clearSession(mActivity);
-                    Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
-                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    //AppUtils.showToast(mActivity, message);
-
-                    finish();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-            @Override
-            public void onFailOfResponse(Object... arguments) {
-                CustomProgressDialog.hideProgressDialog();
-                AppUtils.showToast(mActivity, "Logout Failed");
-
-            }
-        }
-
-        ;
-
-        return mWebAPIResponseListener;
-    }
+//    private WebAPIResponseListener onLogoutResponseListner() {
+//
+//        WebAPIResponseListener mWebAPIResponseListener;
+//
+//        mWebAPIResponseListener = new WebAPIResponseListener() {
+//            @Override
+//            public void onSuccessOfResponse(Object... arguments) {
+//                CustomProgressDialog.hideProgressDialog();
+//                try {
+//                    ParkingPreference.clearSession(mActivity);
+//                    Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+//                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                    //AppUtils.showToast(mActivity, message);
+//
+//                    finish();
+//
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onFailOfResponse(Object... arguments) {
+//                CustomProgressDialog.hideProgressDialog();
+//                AppUtils.showToast(mActivity, "Logout Failed");
+//
+//            }
+//        }
+//
+//        ;
+//
+//        return mWebAPIResponseListener;
+//    }
 
     private void displayView(int position) {
         Fragment fragment = null;
@@ -232,11 +230,11 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                 title = " ";
                 break;
             case 1:
-                fragment = new OrderStausFragment();
+                fragment = new CurrentBookingFragment();
                 title = " ";
                 break;
             case 2:
-                fragment = new CurrentBookingFragment();
+                fragment = new OrderHistoryListFragment();
                 title = " ";
                 break;
             case 3:
@@ -314,7 +312,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             CustomProgressDialog.showProgDialog(mActivity, null);
             LogoutAPIHandler mLogoutAPIHandler = new
                     LogoutAPIHandler(mActivity,
-                    onLogoutResponseListner());
+                    null);
         }
     }
 

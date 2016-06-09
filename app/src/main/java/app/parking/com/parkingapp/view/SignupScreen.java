@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.SignupAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -114,18 +115,13 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                                 try {
                                     CustomProgressDialog.hideProgressDialog();
 
-//                                JSONObject mJsonObject = (JSONObject) arguments[0];
-//                                if (mJsonObject != null) {
-//                                    if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
-//                                            && AppUtils.getWebServiceErrorCode(mJsonObject).
-//                                            equalsIgnoreCase(WebserviceResponseConstants.
-//                                                    ERROR_USER_ALREADY_SIGNUP)) {
-                                    AppUtils.showDialog(mActivity, "Message", "Email already exist. ");
-                                    //                 AppUtils.getWebServiceErrorMsg(mJsonObject));
-//                                    }
-//
-//
-//                                }
+                                    JSONObject errorJsonObj = (JSONObject) arguments[0];
+                                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_USER_ALREADY_SIGNUP)) {
+
+                                        AppUtils.showDialog(mActivity, "Message",
+                                                AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

@@ -1,6 +1,7 @@
 package app.parking.com.parkingapp.webservices.handler;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,9 +20,11 @@ import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -84,10 +87,14 @@ public class LogoutAPIHandler {
                         AppUtils.showInfoLog(TAG, "Response :"
                                 + response);
 
-                        parseLogoutAPIResponse(response.toString());
-                        mResponseListener.onSuccessOfResponse(response);
+                        // Clear preference data
+                        ParkingPreference.clearSession(mActivity);
 
+                        Intent intent = new Intent(mActivity, LoginScreen.class);
+                        mActivity.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        mActivity.finish();
 
+                        //mResponseListener.onSuccessOfResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -100,7 +107,7 @@ public class LogoutAPIHandler {
                     JSONObject errorJsonObj = new JSONObject(errorString);
                     WebserviceAPIErrorHandler.getInstance()
                             .VolleyErrorHandler(volleyError, mActivity);
-                    mResponseListener.onFailOfResponse(errorJsonObj);
+                    // mResponseListener.onFailOfResponse(errorJsonObj);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -139,12 +146,5 @@ public class LogoutAPIHandler {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
-    /**
-     * Parse LoginAPI Response
-     *
-     * @param response
-     */
-    protected void parseLogoutAPIResponse(String response) {
 
-    }
 }

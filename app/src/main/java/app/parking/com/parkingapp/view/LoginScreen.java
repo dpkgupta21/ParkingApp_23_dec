@@ -16,6 +16,7 @@ import app.parking.com.parkingapp.iClasses.GlobalKeys;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.LoginAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -76,28 +77,19 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
                                         String userId = mJsonObject.
                                                 getString(GlobalKeys.RESPONSE__USERID);
 
-                                        AppUtils.showLog(TAG, "email: " + email + " " + auth);
                                         ParkingPreference.setEmailId(mActivity, email);
                                         ParkingPreference.setPassword(mActivity, pwd);
                                         ParkingPreference.setKeyAuthtoken(mActivity, auth);
                                         ParkingPreference.setUserId(mActivity, userId);
                                         ParkingPreference.setIsLogin(mActivity, true);
+
                                         CustomProgressDialog.hideProgressDialog();
 
                                         Intent intent = new Intent(LoginScreen.this,
                                                 UserNavigationDrawerActivity.class);
                                         startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
-                                    } else {
-                                        CustomProgressDialog.hideProgressDialog();
-                                        AppUtils.showDialog(mActivity, "Message",
-                                                "Login Failed");
                                     }
-                                } else {
-                                    CustomProgressDialog.hideProgressDialog();
-                                    AppUtils.showDialog(mActivity, "Message",
-                                            "Login Failed");
-
                                 }
 
                             } catch (JSONException e) {
@@ -109,10 +101,20 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
 
                         @Override
                         public void onFailOfResponse(Object... arguments) {
-                            CustomProgressDialog.hideProgressDialog();
+                            try {
+                                CustomProgressDialog.hideProgressDialog();
 
-                            AppUtils.showDialog(mActivity, "Message",
-                                    "Login Failed");
+                                JSONObject errorJsonObj = (JSONObject) arguments[0];
+                                if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                        equalsIgnoreCase
+                                                (WebserviceResponseConstants.LOGIN_ERROR)) {
+
+                                    AppUtils.showDialog(mActivity, "Message",
+                                            AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
 

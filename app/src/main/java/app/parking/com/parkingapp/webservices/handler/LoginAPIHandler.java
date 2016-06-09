@@ -7,11 +7,13 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
@@ -97,11 +99,23 @@ public class LoginAPIHandler {
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                WebserviceAPIErrorHandler.getInstance()
-                        .VolleyErrorHandler(error, mActivity);
-
-                mResponseListener.onFailOfResponse(error);
+            public void onErrorResponse(VolleyError volleyError) {
+                try {
+                    Response<JSONObject> errorResponse = Response.error(volleyError);
+                    String errorString = new String(errorResponse.error.networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(errorResponse.error.networkResponse.headers));
+                    JSONObject errorJsonObj = new JSONObject(errorString);
+                    WebserviceAPIErrorHandler.getInstance()
+                            .VolleyErrorHandler(volleyError, mActivity);
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             /*

@@ -245,6 +245,7 @@
 
     <!-- Title-->
     <string name="current_booking_title">Current Booking</string>
+    <string name="current_booking_detail_title">Booking Detail</string>
     <string name="order_history_title">Order History</string>
     <string name="order_detail_title">Order Detail</string>
 

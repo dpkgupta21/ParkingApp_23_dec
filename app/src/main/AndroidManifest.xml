@@ -76,7 +76,7 @@
         <activity
             android:name=".bookinghistory.BookingHistoryDetailScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity android:name=".orderstatus.OrderStatusDetails" />
+        <activity android:name=".currentbooking.CurrentBookingDetails" />
         <activity android:name=".appIntroduction.WelcomeScreen" />
         <activity
             android:name=".home.FlightDetailsScreen"
