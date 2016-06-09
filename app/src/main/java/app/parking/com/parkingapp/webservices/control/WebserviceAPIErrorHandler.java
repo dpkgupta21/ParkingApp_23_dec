@@ -49,16 +49,16 @@ public class WebserviceAPIErrorHandler {
     public void VolleyErrorHandler(VolleyError mError, Activity mActivity) {
         AppUtils.showErrorLog(TAG, "VolleyError :" + mError);
         if (mError instanceof NoConnectionError) {
-            AppUtils.showToast(mActivity, mActivity.getResources()
-                    .getString(R.string.network_error));
+            //AppUtils.showToast(mActivity, mActivity.getResources()
+            //    .getString(R.string.network_error));
         } else if (mError instanceof TimeoutError) {
-            AppUtils.showToast(mActivity, mActivity.getResources()
-                    .getString(R.string.network_slow_error));
+            //AppUtils.showToast(mActivity, mActivity.getResources()
+            //   .getString(R.string.network_slow_error));
         } else if (mError instanceof AuthFailureError) {
         } else if (mError instanceof ServerError) {
         } else if (mError instanceof NetworkError) {
-            AppUtils.showToast(mActivity, mActivity.getResources()
-                    .getString(R.string.network_error));
+            //AppUtils.showToast(mActivity, mActivity.getResources()
+            //  .getString(R.string.network_error));
         } else if (mError instanceof ParseError) {
         }
     }

@@ -132,19 +132,12 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailOfResponse(Object... arguments) {
                 try {
-                    JSONObject mJsonObject = (JSONObject) arguments[0];
-                    if (mJsonObject != null) {
-                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
-                                && AppUtils.getWebServiceErrorCode(mJsonObject).
-                                equalsIgnoreCase(WebserviceResponseConstants.
-                                        ERROR_SESSION_EXPIRED)) {
+                    CustomProgressDialog.hideProgressDialog();
 
-                            new CustomAlert(mActivity, mActivity)
-                                    .singleButtonAlertDialog(
-                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
-                                            getString(R.string.ok),
-                                            "singleBtnCallbackResponse", 1000);
-                        }
+                    String errorResponse = (String) arguments[0];
+                    JSONObject errorJsonObj = new JSONObject(errorResponse);
+                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
 
 
                     }
@@ -253,19 +246,12 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailOfResponse(Object... arguments) {
                 try {
-                    JSONObject mJsonObject = (JSONObject) arguments[0];
-                    if (mJsonObject != null) {
-                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
-                                && AppUtils.getWebServiceErrorCode(mJsonObject).
-                                equalsIgnoreCase(WebserviceResponseConstants.
-                                        ERROR_SESSION_EXPIRED)) {
+                    CustomProgressDialog.hideProgressDialog();
 
-                            new CustomAlert(mActivity, mActivity)
-                                    .singleButtonAlertDialog(
-                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
-                                            getString(R.string.ok),
-                                            "singleBtnCallbackResponse", 1000);
-                        }
+                    String errorResponse = (String) arguments[0];
+                    JSONObject errorJsonObj = new JSONObject(errorResponse);
+                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
 
 
                     }

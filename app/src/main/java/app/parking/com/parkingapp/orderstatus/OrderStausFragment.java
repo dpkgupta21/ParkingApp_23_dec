@@ -33,6 +33,7 @@ import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.OrderStatusAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -104,14 +105,7 @@ public class OrderStausFragment extends BaseFragment {
             @Override
             public void onSuccessOfResponse(Object... arguments) {
                 String response = (String) arguments[0];
-
-//                JSONObject obj = new JSONObject();
-//
-//                try {
-//                    obj.put("response", new JSONArray(response));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                CustomProgressDialog.hideProgressDialog();
                 try {
                     Type type = new TypeToken<ArrayList<CreateOrderResponseDTO>>() {
                     }.getType();
@@ -125,12 +119,30 @@ public class OrderStausFragment extends BaseFragment {
                 }
                 AppUtils.showLog(CurrentBookingFragment.class.getSimpleName(), response);
 
-                CustomProgressDialog.hideProgressDialog();
+
             }
 
             @Override
             public void onFailOfResponse(Object... arguments) {
-                CustomProgressDialog.hideProgressDialog();
+                try {
+                    CustomProgressDialog.hideProgressDialog();
+
+                    JSONObject errorJsonObj = (JSONObject) arguments[0];
+                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.NO_ORDERS_FOUND)) {
+
+                        setViewVisibility(R.id.txt_no_data, view, View.VISIBLE);
+                        setViewText(R.id.txt_no_data,
+                                AppUtils.getWebServiceErrorMsg(errorJsonObj), view);
+
+                    } else if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
 

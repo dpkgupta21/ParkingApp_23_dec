@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.fragments.BaseFragment;
 import app.parking.com.parkingapp.model.OrderHistoryDTO;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.OrderHistoryAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -99,10 +101,15 @@ public class CurrentBookingFragment extends BaseFragment {
                     Type type = new TypeToken<ArrayList<OrderHistoryDTO>>() {
                     }.getType();
                     JSONArray array = new JSONArray(response);
-                    List<OrderHistoryDTO> createOrderResponseDTOs = new Gson()
-                            .fromJson(array.toString(), type);
+                    if (array.length() != 0) {
+                        List<OrderHistoryDTO> createOrderResponseDTOs = new Gson()
+                                .fromJson(array.toString(), type);
 
-                    setListAdapter(createOrderResponseDTOs);
+                        setListAdapter(createOrderResponseDTOs);
+                    } else {
+                        setViewVisibility(R.id.currentBookingLIst, view, View.VISIBLE);
+                        setViewText(R.id.currentBookingLIst, "No Order History", view);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -113,7 +120,25 @@ public class CurrentBookingFragment extends BaseFragment {
 
             @Override
             public void onFailOfResponse(Object... arguments) {
-                CustomProgressDialog.hideProgressDialog();
+                try {
+                    CustomProgressDialog.hideProgressDialog();
+
+                    JSONObject errorJsonObj = (JSONObject) arguments[0];
+                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.NO_ORDERS_FOUND)) {
+
+                        setViewVisibility(R.id.txt_no_data, view, View.VISIBLE);
+                        setViewText(R.id.txt_no_data,
+                                AppUtils.getWebServiceErrorMsg(errorJsonObj), view);
+
+                    } else if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
 

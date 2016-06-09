@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -54,10 +55,23 @@ public class OrderHistoryAPIHandler {
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
-                            WebserviceAPIErrorHandler.getInstance()
-                                    .VolleyErrorHandler(error, mActivity);
-                            responseListener.onFailOfResponse(error);
+                        public void onErrorResponse(VolleyError volleyError) {
+                            try {
+                                Response<JSONObject> errorResponse = Response.error(volleyError);
+                                String errorString = new String(errorResponse.error.networkResponse.data,
+                                        HttpHeaderParser
+                                                .parseCharset(errorResponse.error.networkResponse.headers));
+                                JSONObject errorJsonObj= new JSONObject(errorString);
+                                WebserviceAPIErrorHandler.getInstance()
+                                        .VolleyErrorHandler(volleyError, mActivity);
+                                responseListener.onFailOfResponse(errorJsonObj);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
             ) {

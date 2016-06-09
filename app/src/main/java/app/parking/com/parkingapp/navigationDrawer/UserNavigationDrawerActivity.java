@@ -165,7 +165,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                                         AppUtils.showLog(TAG, "email: " + email + " auth: " + auth);
                                         CustomProgressDialog.showProgDialog(mActivity, null);
                                         LogoutAPIHandler mLogoutAPIHandler = new
-                                                LogoutAPIHandler(mActivity, email, auth, userId,
+                                                LogoutAPIHandler(mActivity,
                                                 onLogoutResponseListner());
 
                                     }
@@ -268,61 +268,53 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     }
 
     private void addTokenHandler() {
-        String deviceId = Settings.Secure.getString(getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        String deviceType = "ANDROID";
-        String regId = ParkingPreference.getPushRegistrationId(mActivity);
-        String auth = ParkingPreference.getKeyAuthtoken(mActivity);
-        String userid = ParkingPreference.getUserid(mActivity);
-        String email = ParkingPreference.getEmailId(mActivity);
+
 
         mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this,
-                regId, deviceId,
-                deviceType, email,
-                auth, userid, new WebAPIResponseListener() {
-            @Override
-            public void onSuccessOfResponse(Object... arguments) {
+                new WebAPIResponseListener() {
+                    @Override
+                    public void onSuccessOfResponse(Object... arguments) {
 
-                try {
-                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                        try {
+                            JSONObject mJsonObject = (JSONObject) arguments[0];
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
 
-            @Override
-            public void onFailOfResponse(Object... arguments) {
-                try {
-                    JSONObject mJsonObject = (JSONObject) arguments[0];
-                    if (mJsonObject != null) {
-                        if (AppUtils.getWebServiceErrorCode(mJsonObject) != null
-                                && AppUtils.getWebServiceErrorCode(mJsonObject).
-                                equalsIgnoreCase(WebserviceResponseConstants.
-                                        ERROR_SESSION_EXPIRED)) {
+                    @Override
+                    public void onFailOfResponse(Object... arguments) {
+                        try {
+                            CustomProgressDialog.hideProgressDialog();
 
-                            new CustomAlert(mActivity, mActivity)
-                                    .singleButtonAlertDialog(
-                                            AppUtils.getWebServiceErrorMsg(mJsonObject),
-                                            getString(R.string.ok),
-                                            "singleBtnCallbackResponse", 1000);
+                            String errorResponse = (String) arguments[0];
+                            JSONObject errorJsonObj = new JSONObject(errorResponse);
+                            if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                    equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+
+                                new CustomAlert(mActivity, mActivity)
+                                        .singleButtonAlertDialog(
+                                                AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                                getString(R.string.ok),
+                                                "singleBtnCallbackResponse", 1000);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
+                });
     }
 
 
     public void singleBtnCallbackResponse(Boolean flag, int code) {
         if (flag) {
-            startActivity(new Intent(mActivity, LoginScreen.class));
+            CustomProgressDialog.showProgDialog(mActivity, null);
+            LogoutAPIHandler mLogoutAPIHandler = new
+                    LogoutAPIHandler(mActivity,
+                    onLogoutResponseListner());
         }
     }
 

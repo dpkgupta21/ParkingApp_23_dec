@@ -7,16 +7,19 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
@@ -37,9 +40,7 @@ public class LogoutAPIHandler {
     /**
      * Request Data
      */
-    private String emailId, auth_token, userId;
 
-    private String device_token, device_platform;
     /**
      * API Response Listener
      */
@@ -47,17 +48,12 @@ public class LogoutAPIHandler {
 
     /**
      * @param mActivity
-     * @param email
      * @param webAPIResponseListener
      */
-    public LogoutAPIHandler(Activity mActivity, String email,
-                            String auth, String userId,
+    public LogoutAPIHandler(Activity mActivity,
                             WebAPIResponseListener webAPIResponseListener) {
 
         this.mActivity = mActivity;
-        this.emailId = email;
-        this.auth_token = auth;
-        this.userId = userId;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -73,7 +69,7 @@ public class LogoutAPIHandler {
 
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
-            mJsonObjectRequest.put(GlobalKeys.EMAIL, emailId);
+            mJsonObjectRequest.put(GlobalKeys.EMAIL, ParkingPreference.getEmailId(mActivity));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,10 +91,23 @@ public class LogoutAPIHandler {
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                WebserviceAPIErrorHandler.getInstance()
-                        .VolleyErrorHandler(error, mActivity);
-                mResponseListener.onFailOfResponse(error);
+            public void onErrorResponse(VolleyError volleyError) {
+                try {
+                    Response<JSONObject> errorResponse = Response.error(volleyError);
+                    String errorString = new String(errorResponse.error.networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(errorResponse.error.networkResponse.headers));
+                    JSONObject errorJsonObj = new JSONObject(errorString);
+                    WebserviceAPIErrorHandler.getInstance()
+                            .VolleyErrorHandler(volleyError, mActivity);
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             /*
@@ -113,8 +122,8 @@ public class LogoutAPIHandler {
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
-                params.put(GlobalKeys.AUTHTOKEN, auth_token);
-                params.put(GlobalKeys.USERID, userId);
+                params.put(GlobalKeys.AUTHTOKEN, ParkingPreference.getKeyAuthtoken(mActivity));
+                params.put(GlobalKeys.USERID, ParkingPreference.getUserid(mActivity));
                 return params;
             }
 
@@ -126,7 +135,7 @@ public class LogoutAPIHandler {
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                AppConstants.ONE_SECOND * 20, 0,
+                AppConstants.ONE_SECOND * AppConstants.RETRY_SECONDS, AppConstants.NO_OF_RETRY,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 

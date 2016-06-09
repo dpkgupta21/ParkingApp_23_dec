@@ -1,23 +1,27 @@
 package app.parking.com.parkingapp.webservices.handler;
 
 import android.app.Activity;
+import android.provider.Settings;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.parking.com.parkingapp.application.ParkingAppController;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.GlobalKeys;
+import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.webservices.control.WebserviceAPIErrorHandler;
@@ -48,23 +52,14 @@ public class AddTokenPushAPIHandler {
 
     /**
      * @param mActivity
-     * @param deviceId
-     * @param regToken
      * @param webAPIResponseListener
      */
-    public AddTokenPushAPIHandler(Activity mActivity, String regToken,
-                                  String deviceId, String deviceType, String email,
-                                  String authToken,String userId,
+    public AddTokenPushAPIHandler(Activity mActivity,
                                   WebAPIResponseListener webAPIResponseListener) {
 
 
         this.mActivity = mActivity;
-        this.regToken = regToken;
-        this.deviceId = deviceId;
-        this.deviceType = deviceType;
-        this.email = email;
-        this.authToken = authToken;
-        this.userId=userId;
+
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -80,6 +75,11 @@ public class AddTokenPushAPIHandler {
 
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
+            String deviceId = Settings.Secure.getString(mActivity.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+            String deviceType = "ANDROID";
+            String regToken = ParkingPreference.getPushRegistrationId(mActivity);
+            String email = ParkingPreference.getEmailId(mActivity);
 
             mJsonObjectRequest.put(GlobalKeys.REG_TOKEN, regToken);
             mJsonObjectRequest.put(GlobalKeys.DEVICE_ID, deviceId);
@@ -100,7 +100,6 @@ public class AddTokenPushAPIHandler {
                                 + response);
 
 
-
                         parseLoginAPIResponse(response.toString());
                         mResponseListener.onSuccessOfResponse(response);
 
@@ -108,13 +107,25 @@ public class AddTokenPushAPIHandler {
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError volleyError) {
 
 
-                WebserviceAPIErrorHandler.getInstance()
-                        .VolleyErrorHandler(error, mActivity);
-
-                mResponseListener.onFailOfResponse(error);
+                try {
+                    Response<JSONObject> errorResponse = Response.error(volleyError);
+                    String errorString = new String(errorResponse.error.networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(errorResponse.error.networkResponse.headers));
+                    JSONObject errorJsonObj = new JSONObject(errorString);
+                    WebserviceAPIErrorHandler.getInstance()
+                            .VolleyErrorHandler(volleyError, mActivity);
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             /*
@@ -129,8 +140,8 @@ public class AddTokenPushAPIHandler {
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
                 params.put(GlobalKeys.ACCEPT_KEY_CONTENT_TYPE,
                         GlobalKeys.HEADER_VALUE_CONTENT_TYPE);
-                params.put(GlobalKeys.AUTHTOKEN, authToken);
-                params.put(GlobalKeys.USERID, userId);
+                params.put(GlobalKeys.AUTHTOKEN, ParkingPreference.getKeyAuthtoken(mActivity));
+                params.put(GlobalKeys.USERID, ParkingPreference.getUserid(mActivity));
                 return params;
             }
 
@@ -142,7 +153,7 @@ public class AddTokenPushAPIHandler {
         }
         // set request time-out
         mJsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                AppConstants.ONE_SECOND * 20, 0,
+                AppConstants.ONE_SECOND * AppConstants.RETRY_SECONDS, AppConstants.NO_OF_RETRY,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 

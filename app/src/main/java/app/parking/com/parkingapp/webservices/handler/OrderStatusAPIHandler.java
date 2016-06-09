@@ -7,11 +7,9 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
-import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONArray;
@@ -51,7 +49,7 @@ public class OrderStatusAPIHandler {
     /**
      * API Response Listener
      */
-    private WebAPIResponseListener mResponseListener;
+    private WebAPIResponseListener responseListener;
 
     /**
      * @param mActivity
@@ -65,7 +63,7 @@ public class OrderStatusAPIHandler {
         this.parameters = parameters;
         this.auth_token = auth;
         this.userId = userId;
-        this.mResponseListener = webAPIResponseListener;
+        this.responseListener = webAPIResponseListener;
         postAPICall();
 
     }
@@ -92,15 +90,29 @@ public class OrderStatusAPIHandler {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
                         System.out.println(jsonArray.toString());
-                        mResponseListener.onSuccessOfResponse(jsonArray.toString());
+                        responseListener.onSuccessOfResponse(jsonArray.toString());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        WebserviceAPIErrorHandler.getInstance()
-                                .VolleyErrorHandler(volleyError, mActivity);
-                        mResponseListener.onFailOfResponse(volleyError);
+
+                        try {
+                            Response<JSONObject> errorResponse = Response.error(volleyError);
+                            String errorString = new String(errorResponse.error.networkResponse.data,
+                                    HttpHeaderParser
+                                            .parseCharset(errorResponse.error.networkResponse.headers));
+                            JSONObject errorJsonObj = new JSONObject(errorString);
+                            WebserviceAPIErrorHandler.getInstance()
+                                    .VolleyErrorHandler(volleyError, mActivity);
+                            responseListener.onFailOfResponse(errorJsonObj);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }) {
             @Override
@@ -118,6 +130,7 @@ public class OrderStatusAPIHandler {
                     return Response.error(new ParseError(je));
                 }
             }
+
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
