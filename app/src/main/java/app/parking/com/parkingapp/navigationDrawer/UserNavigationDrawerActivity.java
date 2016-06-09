@@ -48,16 +48,17 @@ import static app.parking.com.parkingapp.CommonUtilities.SENDER_ID;
 
 public class UserNavigationDrawerActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private String TAG = UserNavigationDrawerActivity.class.getSimpleName();
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
-    private int mCurrentSelectedPosition;
     private View headerView;
+
+
     public static Activity mActivity;
-    private String TAG = UserNavigationDrawerActivity.class.getSimpleName();
     private AsyncTask<Void, Void, Void> mRegisterTask;
-    private AddTokenPushAPIHandler mAddTokenAPIHandler;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.tool_bar);
 
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         setSupportActionBar(mToolbar);
@@ -122,6 +123,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 item.setChecked(true);
+                int mCurrentSelectedPosition = 0;
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 switch (item.getItemId()) {
                     case R.id.nav_item_home:
@@ -268,7 +270,8 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     private void addTokenHandler() {
 
 
-        mAddTokenAPIHandler = new AddTokenPushAPIHandler(UserNavigationDrawerActivity.this,
+        AddTokenPushAPIHandler mAddTokenAPIHandler = new AddTokenPushAPIHandler
+                (UserNavigationDrawerActivity.this,
                 new WebAPIResponseListener() {
                     @Override
                     public void onSuccessOfResponse(Object... arguments) {
@@ -313,6 +316,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
             LogoutAPIHandler mLogoutAPIHandler = new
                     LogoutAPIHandler(mActivity,
                     null);
+            CustomProgressDialog.hideProgressDialog();
         }
     }
 
