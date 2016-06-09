@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +30,6 @@ import app.parking.com.parkingapp.currentbooking.CurrentBookingFragment;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.fragments.BaseFragment;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
-import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
@@ -45,19 +43,9 @@ public class OrderStausFragment extends BaseFragment {
     private Activity mActivity;
 
     private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv, no_service_tv;
+    private TextView toolbar_title;
     private RelativeLayout toolbar_right_rl;
-    private ImageView payment;
     private ListView currentBookingList;
-    private CreateOrderResponseDTO createOrderResponseDTO;
-    private PurchaseOrderDTO purchaseOrderDTO;
-    private boolean isFlight;
-    private boolean isVehicle;
-    private boolean isService;
-    private boolean isPayment;
-    private boolean isOrder;
-    private boolean isPickUpInfo;
-    private boolean isDropOffInfo;
 
     public static CurrentBookingFragment newInstance(String param1, String param2) {
         CurrentBookingFragment fragment = new CurrentBookingFragment();
@@ -103,7 +91,6 @@ public class OrderStausFragment extends BaseFragment {
 
         //mToolbar.setNavigationIcon(R.drawable.back_button);
         toolbar_right_rl = (RelativeLayout) mToolbar.findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) mToolbar.findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.order_history_title));
 

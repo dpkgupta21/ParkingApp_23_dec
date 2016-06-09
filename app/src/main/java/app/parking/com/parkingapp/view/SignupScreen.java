@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.utils.AppUtils;
-import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.webservices.handler.SignupAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -66,55 +65,54 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                 String confrmpwd = cnfrm_pwd_et.getText().toString().trim();
                 String lastname = lastname_et.getText().toString().trim();
                 String mobNumber = phone_et.getText().toString().trim();
+                if (AppUtils.isEmailIDValidate(email)) {
+                    if (firstname.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_firtsname), Snackbar.LENGTH_LONG).show();
 
+                    } else if (lastname.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
 
-                if (firstname.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_firtsname), Snackbar.LENGTH_LONG).show();
+                    } else if (email.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
+                    } else if (mobNumber.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
 
-                } else if (lastname.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+                    } else if (pwd.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_pwd), Snackbar.LENGTH_LONG).show();
 
-                } else if (email.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_email), Snackbar.LENGTH_LONG).show();
-                } else if (mobNumber.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
+                    } else if (confrmpwd.isEmpty()) {
+                        Snackbar.make(v, getString(R.string.please_enter_cnfrm_pwd), Snackbar.LENGTH_LONG).show();
+                    } else if (!confrmpwd.equalsIgnoreCase(pwd)) {
+                        Snackbar.make(v, getString(R.string.pwd_mismatch), Snackbar.LENGTH_LONG).show();
+                    } else {
+                        CustomProgressDialog.showProgDialog(mActivity, null);
+                        mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname,
+                                lastname, mobNumber, new WebAPIResponseListener() {
+                            @Override
+                            public void onSuccessOfResponse(Object... arguments) {
+                                try {
 
-                } else if (pwd.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_pwd), Snackbar.LENGTH_LONG).show();
+                                    CustomProgressDialog.hideProgressDialog();
+                                    JSONObject mJsonObject = (JSONObject) arguments[0];
+                                    if (mJsonObject != null) {
+                                        AppUtils.showToast(SignupScreen.this, "Registration Success");
 
-                } else if (confrmpwd.isEmpty()) {
-                    Snackbar.make(v, getString(R.string.please_enter_cnfrm_pwd), Snackbar.LENGTH_LONG).show();
-                } else if (!confrmpwd.equalsIgnoreCase(pwd)) {
-                    Snackbar.make(v, getString(R.string.pwd_mismatch), Snackbar.LENGTH_LONG).show();
-                } else {
-                    CustomProgressDialog.showProgDialog(mActivity, null);
-                    mSignupHandler = new SignupAPIHandler(this, email, pwd, firstname,
-                            lastname, mobNumber, new WebAPIResponseListener() {
-                        @Override
-                        public void onSuccessOfResponse(Object... arguments) {
-                            try {
+                                        Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
+                                        startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                        finish();
 
-                                CustomProgressDialog.hideProgressDialog();
-                                JSONObject mJsonObject = (JSONObject) arguments[0];
-                                if (mJsonObject != null) {
-                                    AppUtils.showToast(SignupScreen.this, "Registration Success");
-
-                                    Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
-                                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                    finish();
-
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+
                             }
 
-                        }
 
-
-                        @Override
-                        public void onFailOfResponse(Object... arguments) {
-                            try {
-                                CustomProgressDialog.hideProgressDialog();
+                            @Override
+                            public void onFailOfResponse(Object... arguments) {
+                                try {
+                                    CustomProgressDialog.hideProgressDialog();
 
 //                                JSONObject mJsonObject = (JSONObject) arguments[0];
 //                                if (mJsonObject != null) {
@@ -122,20 +120,23 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
 //                                            && AppUtils.getWebServiceErrorCode(mJsonObject).
 //                                            equalsIgnoreCase(WebserviceResponseConstants.
 //                                                    ERROR_USER_ALREADY_SIGNUP)) {
-                                AppUtils.showDialog(mActivity, "Message", "Email already exist. ");
-                                //                 AppUtils.getWebServiceErrorMsg(mJsonObject));
+                                    AppUtils.showDialog(mActivity, "Message", "Email already exist. ");
+                                    //                 AppUtils.getWebServiceErrorMsg(mJsonObject));
 //                                    }
 //
 //
 //                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
                             }
-
-                        }
-                    });
+                        });
 
 
+                    }
+                } else {
+                    Snackbar.make(v, getString(R.string.please_enter_secondname), Snackbar.LENGTH_LONG).show();
                 }
                 break;
         }

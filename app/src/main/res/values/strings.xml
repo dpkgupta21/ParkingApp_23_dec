@@ -152,6 +152,7 @@
     <string name="second_name">Second Name</string>
     <string name="please_enter_firtsname">Please Enter First Name</string>
     <string name="please_enter_secondname">Please Enter Second Name</string>
+    <string name="please_enter_valid_email">Please Enter Valid Email</string>
     <string name="plate_number">Plate Number</string>
     <string name="submit_order">Submit Order</string>
     <string name="venuename">Venue</string>

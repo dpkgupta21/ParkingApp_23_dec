@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
-import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
@@ -27,21 +25,16 @@ import app.parking.com.parkingapp.utils.AppConstants;
 public class OrderStatusDetails extends BaseActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv, no_service_tv;
+    private TextView toolbar_title;
     private RelativeLayout toolbar_right_rl;
     private ImageView payment;
-    private ListView services_lv;
-    ///private RelativeLayout submit_button;
     private CreateOrderResponseDTO createOrderResponseDTO;
-    private PurchaseOrderDTO purchaseOrderDTO;
     private boolean isFlight;
     private boolean isVehicle;
     private boolean isService;
     private boolean isPayment;
     private boolean isOrder;
     private boolean firstTime;
-    private boolean isPickUpInfo;
-    private boolean isDropOffInfo;
 
 
     @Override
@@ -99,8 +92,6 @@ public class OrderStatusDetails extends BaseActivity implements View.OnClickList
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        services_lv = (ListView) findViewById(R.id.services_lv);
-        no_service_tv = (TextView) findViewById(R.id.no_service_tv);
         //submit_button = (RelativeLayout) findViewById(R.id.submit_button);
 
         setSupportActionBar(mToolbar);
@@ -108,7 +99,6 @@ public class OrderStatusDetails extends BaseActivity implements View.OnClickList
 
         //mToolbar.setNavigationIcon(R.drawable.back_button);
         toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
         firstTime = true;
