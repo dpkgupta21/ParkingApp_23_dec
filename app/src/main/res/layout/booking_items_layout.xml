@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_2dp"
+    android:layout_margin="@dimen/margin_10dp"
     android:background="@color/light_black">
 
     <RelativeLayout
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/plate_number_value"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@color/dark_grey" />
 
 
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
             android:layout_below="@+id/vehicle_name_value"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@color/dark_grey" />
 
         <TextView
@@ -87,40 +87,50 @@
             android:textStyle="normal" />
 
         <TextView
+            android:id="@+id/pick_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txt_pick_date"
+            android:layout_below="@id/txt_pick_date"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:drawablePadding="@dimen/margin_5dp"
+            android:text="wdqsdfqef"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/horizontal_line_height"
+            android:layout_below="@+id/pick_value"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:background="@color/dark_grey" />
+
+        <TextView
             android:id="@+id/txt_drop_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/view3"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/view4"
             android:layout_marginTop="@dimen/margin_15dp"
             android:text="@string/drop_date"
             android:textColor="@color/light_black"
             android:textSize="@dimen/text_size_16sp"
             android:textStyle="normal" />drop
 
-        <TextView
-            android:id="@+id/pick_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/txt_drop_date"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:drawablePadding="@dimen/margin_5dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
-            android:textStyle="normal" />
+
 
         <TextView
             android:id="@+id/drop_date_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@+id/txt_drop_date"
             android:layout_below="@id/txt_drop_date"
             android:layout_marginRight="@dimen/margin_10dp"
             android:drawablePadding="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_10dp"
-            android:text=""
+            android:text="dasdcas"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_18sp"
             android:textStyle="normal" />
@@ -130,8 +140,8 @@
             android:id="@+id/view_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_line_height"
-            android:layout_below="@+id/txt_drop_date"
-            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_below="@+id/drop_date_value"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@color/dark_grey" />
 
 

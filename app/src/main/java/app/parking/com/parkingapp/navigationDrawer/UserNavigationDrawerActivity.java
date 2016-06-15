@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
@@ -53,10 +54,9 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
     private View headerView;
+    private boolean backPressedToExitOnce = false;
+    public Activity mActivity;
 
-
-    public static Activity mActivity;
-    private AsyncTask<Void, Void, Void> mRegisterTask;
 
 
 
@@ -73,11 +73,8 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         assignClickOnView();
         assignClickOnNavigationMenu();
         displayView(fragmentPos);
+        addTokenHandler();
 
-        String pushRegistrationId = ParkingPreference.getPushRegistrationId(mActivity);
-        if (pushRegistrationId == null || pushRegistrationId.equalsIgnoreCase("")) {
-            registrationPushNotification();
-        }
 
     }
 
@@ -227,7 +224,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         switch (position) {
 
             case 0:
-                addTokenHandler();
+
                 fragment = new HomeScreenFragment();
                 title = " ";
                 break;
@@ -320,94 +317,23 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
         }
     }
 
-    // For Push notification
-    private void registrationPushNotification() {
-        // Make sure the device has the proper dependencies.
-        GCMRegistrar.checkDevice(mActivity);
-
-        // Make sure the manifest was properly set - comment out this line
-        // while developing the app, then uncomment it when it's ready.
-        GCMRegistrar.checkManifest(mActivity);
-
-        registerReceiver(mHandleMessageReceiver, new IntentFilter(
-                DISPLAY_MESSAGE_ACTION));
-
-        // Get GCM registration id
-        final String regId = GCMRegistrar
-                .getRegistrationId(mActivity);
-
-        ParkingPreference.setPushRegistrationId(mActivity, regId);
-        Log.i("info", "RegId :" + regId);
-        // Check if regid already presents
-        if (regId.equals("")) {
-            Log.i("info", "RegId :" + regId);
-            // Registration is not present, register now with GCM
-            GCMRegistrar.register(mActivity, SENDER_ID);
-        } else {
-            // Device is already registered on GCM
-            if (GCMRegistrar
-                    .isRegisteredOnServer(mActivity)) {
-                // Skips registration.
-                Log.i("info", "Already registered with GCM");
-            } else {
-                Log.i("info", "Not registered with GCM");
-                // Try to register again, but not in the UI thread.
-                // It's also necessary to cancel the thread onDestroy(),
-                // hence the use of AsyncTask instead of a raw thread.
-                mRegisterTask = new AsyncTask<Void, Void, Void>() {
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        mRegisterTask = null;
-                    }
-
-                };
-                mRegisterTask.execute(null, null, null);
-            }
-        }
-    }
-
-    /**
-     * Receiving push messages
-     */
-    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-            // Waking up mobile if it is sleeping
-            WakeLocker.acquire(getApplicationContext());
-
-            /**
-             * Take appropriate action on this message depending upon your app
-             * requirement For now i am just displaying it on the screen
-             * */
-
-            // Showing received message
-
-            // Releasing wake lock
-            WakeLocker.release();
-        }
-    };
 
 
     @Override
-    protected void onDestroy() {
-        if (mRegisterTask != null) {
-            mRegisterTask.cancel(true);
+    public void onBackPressed() {
+        if (backPressedToExitOnce) {
+            super.onBackPressed();
+            //SessionManager.logoutUser(mActivity);
+        } else {
+            this.backPressedToExitOnce = true;
+            Toast.makeText(mActivity, "Press again to exit", Toast.LENGTH_SHORT).show();
+            new android.os.Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    backPressedToExitOnce = false;
+                }
+            }, 2000);
         }
-        try {
-            unregisterReceiver(mHandleMessageReceiver);
-            GCMRegistrar.onDestroy(mActivity);
-        } catch (Exception e) {
-            AppUtils.showLog(TAG, "UnRegister Receiver Error " + e.getMessage());
-        }
-        super.onDestroy();
     }
-
-
 }

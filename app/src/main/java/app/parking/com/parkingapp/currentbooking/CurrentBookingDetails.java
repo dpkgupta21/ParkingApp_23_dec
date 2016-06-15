@@ -40,7 +40,7 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_details_screen_new);
+        setContentView(R.layout.activity_current_booking_details);
         initViews();
         assignClicks();
 //        Toast.makeText(OrderDetailsScreenNew.this, "Transaction Id :" +
