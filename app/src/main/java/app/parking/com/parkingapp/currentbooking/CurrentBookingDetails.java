@@ -1,5 +1,6 @@
 package app.parking.com.parkingapp.currentbooking;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,27 +16,31 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
+import app.parking.com.parkingapp.model.DriverInfo;
+import app.parking.com.parkingapp.model.DropOffDriverInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
+import app.parking.com.parkingapp.model.PickUpDriverInfo;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.HelpMe;
 
 public class CurrentBookingDetails extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
-    private TextView toolbar_title;
+
     private RelativeLayout toolbar_right_rl;
-    private ImageView payment;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private boolean isFlight;
     private boolean isVehicle;
     private boolean isService;
     private boolean isPayment;
     private boolean isOrder;
-    private boolean firstTime;
-
+    //private boolean firstTime;
+    private boolean isPickUpInfo;
+    private boolean isDropOffInfo;
+    private Activity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +73,7 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
     }
 
     private void assignClicks() {
-        payment.setOnClickListener(this);
+
         ImageView flight_details = (ImageView) findViewById(R.id.flight_details);
         ImageView vehicle_details = (ImageView) findViewById(R.id.vehicle_details);
         ImageView service_details = (ImageView) findViewById(R.id.service_details);
@@ -82,29 +87,26 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
         order_confirmation.setOnClickListener(this);
         drop_off.setOnClickListener(this);
         pick_up.setOnClickListener(this);
-        setClick(R.id.action_button);
 
-
+        setClick(R.id.payment);
     }
 
     private void initViews() {
 
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         //submit_button = (RelativeLayout) findViewById(R.id.submit_button);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
-        //mToolbar.setNavigationIcon(R.drawable.back_button);
+        mToolbar.setNavigationIcon(R.drawable.back_button);
         toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.current_booking_detail_title));
-        firstTime = true;
         toolbar_right_rl.setVisibility(View.INVISIBLE);
 
-        payment = (ImageView) findViewById(R.id.payment);
 
     }
 
@@ -181,30 +183,39 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.drop_off:
-
+                if (!isDropOffInfo) {
+                    showDetailPopup(5);
+                    isDropOffInfo = true;
+                } else {
+                    showDetailPopup(7);
+                    isDropOffInfo = false;
+                }
                 break;
             case R.id.pick_up:
-                break;
-            case R.id.action_button:
-                goToDashBoard();
+                if (!isPickUpInfo) {
+                    showDetailPopup(6);
+                    isPickUpInfo = true;
+                } else {
+                    showDetailPopup(7);
+                    isPickUpInfo = false;
+                }
                 break;
         }
 
     }
 
-    private void goToDashBoard() {
-        Intent intent = new Intent(CurrentBookingDetails.this, UserNavigationDrawerActivity.class);
-        startActivity(intent);
-        this.finish();
-    }
+
 
     private void setValue() {
         showFlightInfo();
-//        showVehicleInfo();
-//        showServiceInfo();
-//        showOrderInfo();
-//        showPaymentInfo();
+        showVehicleInfo();
+        showServiceInfo();
+        showOrderInfo();
+        showPaymentInfo();
+        showDropOffInfo();
+        showPickUpInfo();
     }
+
 
     private void showFlightInfo() {
         FlightInfoDTO flightInfoDTO = createOrderResponseDTO.getFlightInfo();
@@ -234,6 +245,7 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
             isFlight = true;
 
         } else {
+            setViewEnable(R.id.flight_details, false);
             setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
         }
 
@@ -283,11 +295,38 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
     }
 
     private void showDropOffInfo() {
-
+        DriverInfo driverInfo = createOrderResponseDTO.getDriverInfo();
+        if (driverInfo != null) {
+            DropOffDriverInfo dropOffDriverInfo = driverInfo.getDropoffDriverInfo();
+            if (dropOffDriverInfo != null) {
+                setViewText(R.id.txt_dropoff_val,
+                        HelpMe.getFlightDisplayDateTime(dropOffDriverInfo.getDropOffTime()));
+            } else {
+                setViewEnable(R.id.drop_off, false);
+                setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
+            }
+        } else {
+            setViewEnable(R.id.drop_off, false);
+            setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
+        }
     }
 
     private void showPickUpInfo() {
+        DriverInfo driverInfo = createOrderResponseDTO.getDriverInfo();
+        if (driverInfo != null) {
+            PickUpDriverInfo pickupDriverInfo = driverInfo.getPickupDriverInfo();
+            if (pickupDriverInfo != null) {
+                setViewText(R.id.txt_pickup_val,
+                        HelpMe.getFlightDisplayDateTime(pickupDriverInfo.getPickUpTime()));
+            } else {
+                setViewEnable(R.id.pick_up, false);
+                setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
+            }
+        } else {
+            setViewEnable(R.id.pick_up, false);
+            setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
 
+        }
     }
 
     private void showDetailPopup(int status) {
@@ -298,19 +337,17 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
-                if (!firstTime) {
-                    setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
-                    setViewVisibility(R.id.relative_vehicle_info, View.GONE);
-                    setViewVisibility(R.id.relative_service_info, View.GONE);
-                    setViewVisibility(R.id.relative_order_info, View.GONE);
-                    setViewVisibility(R.id.relative_payment_info, View.GONE);
-                    setViewVisibility(R.id.relative_drop_off_info, View.GONE);
-                    setViewVisibility(R.id.relative_pick_up_info, View.GONE);
-                } else {
-                    firstTime = false;
-                }
+                setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
+
                 break;
             case 1:
                 isFlight = false;
@@ -318,8 +355,8 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
-                checkClickedButton();
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.VISIBLE);
@@ -335,8 +372,9 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = true;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -353,8 +391,9 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = true;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -371,8 +410,9 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = true;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -388,8 +428,8 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
-                checkClickedButton();
+                isPickUpInfo = false;
+                isDropOffInfo = true;
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -405,8 +445,8 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
-                checkClickedButton();
+                isPickUpInfo = true;
+                isDropOffInfo = false;
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -422,8 +462,8 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
-                checkClickedButton();
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -437,39 +477,8 @@ public class CurrentBookingDetails extends BaseActivity implements View.OnClickL
         }
     }
 
-    private void checkClickedButton() {
-        if (isFlight && !firstTime) {
-            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
-        } else {
-            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_normal);
-        }
-
-        if (isVehicle || createOrderResponseDTO.getVehicleInfo().getVehicleMake().equalsIgnoreCase("")) {
-            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
-        } else {
-            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_normal);
-        }
-
-        if (isOrder) {
-            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_white);
-        } else {
-            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_normal);
-        }
-
-        if (isService || (createOrderResponseDTO.getServiceInfo().getServices().size() == 0)) {
-            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
-        } else {
-            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_normal);
-        }
-
-        if (isPayment) {
-            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_white);
-        } else {
-            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_normal);
-        }
-    }
-
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

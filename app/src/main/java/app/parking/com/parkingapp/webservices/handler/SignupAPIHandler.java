@@ -64,7 +64,7 @@ public class SignupAPIHandler {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.mobNumber=mobNumber;
+        this.mobNumber = mobNumber;
         this.mResponseListener = webAPIResponseListener;
         postAPICall();
 
@@ -78,7 +78,7 @@ public class SignupAPIHandler {
          * String Request
          */
 
-       
+
         JSONObject mJsonObjectRequest = new JSONObject();
         try {
             mJsonObjectRequest.put(GlobalKeys.EMAIL, emailId);
@@ -108,21 +108,24 @@ public class SignupAPIHandler {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                JSONObject errorJsonObj = null;
                 try {
                     Response<JSONObject> errorResponse = Response.error(volleyError);
                     String errorString = new String(errorResponse.error.networkResponse.data,
                             HttpHeaderParser
                                     .parseCharset(errorResponse.error.networkResponse.headers));
-                    JSONObject errorJsonObj = new JSONObject(errorString);
+                    errorJsonObj = new JSONObject(errorString);
                     WebserviceAPIErrorHandler.getInstance()
                             .VolleyErrorHandler(volleyError, mActivity);
                     mResponseListener.onFailOfResponse(errorJsonObj);
                 } catch (UnsupportedEncodingException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 } catch (JSONException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 } catch (Exception e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 }
             }

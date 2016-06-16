@@ -1,12 +1,12 @@
 package app.parking.com.parkingapp.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,22 +16,21 @@ import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
+import app.parking.com.parkingapp.model.DriverInfo;
+import app.parking.com.parkingapp.model.DropOffDriverInfo;
 import app.parking.com.parkingapp.model.FlightInfoDTO;
+import app.parking.com.parkingapp.model.PickUpDriverInfo;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.model.Service;
 import app.parking.com.parkingapp.model.ServiceInfoDTO;
 import app.parking.com.parkingapp.model.VehicleInfoDTO;
 import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.utils.AppConstants;
+import app.parking.com.parkingapp.utils.HelpMe;
 
 public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv, no_service_tv;
-    private RelativeLayout toolbar_right_rl;
-    private ImageView payment;
-    private ListView services_lv;
-    ///private RelativeLayout submit_button;
+    private Activity mActivity;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private PurchaseOrderDTO purchaseOrderDTO;
     private boolean isFlight;
@@ -39,7 +38,6 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private boolean isService;
     private boolean isPayment;
     private boolean isOrder;
-    private boolean firstTime;
     private boolean isPickUpInfo;
     private boolean isDropOffInfo;
 
@@ -48,11 +46,11 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_details_screen_new);
+        mActivity= OrderDetailsScreenNew.this;
+
         initViews();
         assignClicks();
-//        Toast.makeText(OrderDetailsScreenNew.this, "Transaction Id :" +
-//                createOrderResponseDTO.getOrderConfirmation().getPaymentTransactionId(),
-//                Toast.LENGTH_SHORT).show();
+
         if (getIntent() != null) {
             purchaseOrderDTO = (PurchaseOrderDTO) getIntent().
                     getSerializableExtra(AppConstants.PURCHASE_ORDER_KEY);
@@ -74,7 +72,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     }
 
     private void assignClicks() {
-        payment.setOnClickListener(this);
+
         ImageView flight_details = (ImageView) findViewById(R.id.flight_details);
         ImageView vehicle_details = (ImageView) findViewById(R.id.vehicle_details);
         ImageView service_details = (ImageView) findViewById(R.id.service_details);
@@ -89,31 +87,26 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         drop_off.setOnClickListener(this);
         pick_up.setOnClickListener(this);
         setClick(R.id.action_button);
-
+        setClick(R.id.payment);
 
     }
 
     private void initViews() {
 
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        services_lv = (ListView) findViewById(R.id.services_lv);
-        no_service_tv = (TextView) findViewById(R.id.no_service_tv);
-        //submit_button = (RelativeLayout) findViewById(R.id.submit_button);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
         //mToolbar.setNavigationIcon(R.drawable.back_button);
-        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        RelativeLayout toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        TextView toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
-        firstTime = true;
         toolbar_right_rl.setVisibility(View.INVISIBLE);
 
-        payment = (ImageView) findViewById(R.id.payment);
 
     }
 
@@ -143,7 +136,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.flight_details:
                 if (!isFlight) {
-                    showFlightInfo();
+                    showDetailPopup(0);
                 } else {
                     showDetailPopup(7);
                     isFlight = false;
@@ -152,7 +145,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 break;
             case R.id.vehicle_details:
                 if (!isVehicle) {
-                    showVehicleInfo();
+                    showDetailPopup(1);
                 } else {
                     showDetailPopup(7);
                     isVehicle = false;
@@ -162,7 +155,7 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 break;
             case R.id.service_details:
                 if (!isService) {
-                    showServiceInfo();
+                    showDetailPopup(2);
                 } else {
                     showDetailPopup(7);
                     isService = false;
@@ -190,9 +183,23 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.drop_off:
-
+                if (!isDropOffInfo) {
+                    showDetailPopup(5);
+                    isDropOffInfo = true;
+                } else {
+                    showDetailPopup(7);
+                    isDropOffInfo = false;
+                }
                 break;
             case R.id.pick_up:
+                if (!isPickUpInfo) {
+                    showDetailPopup(6);
+                    isPickUpInfo = true;
+                } else {
+                    showDetailPopup(7);
+                    isPickUpInfo = false;
+                }
+
                 break;
             case R.id.action_button:
                 goToDashBoard();
@@ -202,17 +209,19 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     }
 
     private void goToDashBoard() {
-        Intent intent = new Intent(OrderDetailsScreenNew.this, UserNavigationDrawerActivity.class);
+        Intent intent = new Intent(mActivity, UserNavigationDrawerActivity.class);
         startActivity(intent);
         this.finish();
     }
 
     private void setValue() {
         showFlightInfo();
-//        showVehicleInfo();
-//        showServiceInfo();
-//        showOrderInfo();
-//        showPaymentInfo();
+        showVehicleInfo();
+        showServiceInfo();
+        showOrderInfo();
+        showPaymentInfo();
+        showDropOffInfo();
+        showPickUpInfo();
     }
 
     private void showFlightInfo() {
@@ -239,10 +248,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
             setViewText(R.id.txt_dest_destination_time_val, destinationFlighDTO.getFlightDepatureTime());
             setViewText(R.id.txt_dest_origin_val, destinationFlighDTO.getOrigin());
             setViewText(R.id.txt_dest_destination_val, destinationFlighDTO.getDestination());
-            showDetailPopup(0);
-            isFlight = true;
 
         } else {
+            setViewEnable(R.id.flight_details, false);
             setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
         }
 
@@ -251,15 +259,16 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     private void showVehicleInfo() {
         VehicleInfoDTO vehicleInfoDTO = createOrderResponseDTO.getVehicleInfo();
 
-        setViewText(R.id.txt_vehicle_make_val, vehicleInfoDTO.getVehicleMake());
-        setViewText(R.id.txt_vehicle_model_val, vehicleInfoDTO.getVehicleModel());
-        setViewText(R.id.txt_vehicle_color_val, vehicleInfoDTO.getVehicleColor());
-        setViewText(R.id.txt_vehicle_plate_number_val, "");
-
         if (vehicleInfoDTO != null && !vehicleInfoDTO.getVehicleModel().equalsIgnoreCase("")) {
-            showDetailPopup(1);
-            isVehicle = true;
+
+            setViewText(R.id.txt_vehicle_make_val, vehicleInfoDTO.getVehicleMake());
+            setViewText(R.id.txt_vehicle_model_val, vehicleInfoDTO.getVehicleModel());
+            setViewText(R.id.txt_vehicle_color_val, vehicleInfoDTO.getVehicleColor());
+            setViewText(R.id.txt_vehicle_plate_number_val, vehicleInfoDTO.getPlateNo());
+
+
         } else {
+            setViewEnable(R.id.vehicle_details, false);
             setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
         }
     }
@@ -274,9 +283,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
 
             }
 
-            showDetailPopup(2);
-            isService = true;
         } else {
+            setViewEnable(R.id.service_details, false);
             setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
         }
 
@@ -292,12 +300,40 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
     }
 
     private void showDropOffInfo() {
-
+        DriverInfo driverInfo = createOrderResponseDTO.getDriverInfo();
+        if (driverInfo != null) {
+            DropOffDriverInfo dropOffDriverInfo = driverInfo.getDropoffDriverInfo();
+            if (dropOffDriverInfo != null) {
+                setViewText(R.id.txt_dropoff_val,
+                        HelpMe.getFlightDisplayDateTime(dropOffDriverInfo.getDropOffTime()));
+            } else {
+                setViewEnable(R.id.drop_off, false);
+                setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
+            }
+        } else {
+            setViewEnable(R.id.drop_off, false);
+            setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
+        }
     }
 
     private void showPickUpInfo() {
+        DriverInfo driverInfo = createOrderResponseDTO.getDriverInfo();
+        if (driverInfo != null) {
+            PickUpDriverInfo pickupDriverInfo = driverInfo.getPickupDriverInfo();
+            if (pickupDriverInfo != null) {
+                setViewText(R.id.txt_pickup_val,
+                        HelpMe.getFlightDisplayDateTime(pickupDriverInfo.getPickUpTime()));
+            } else {
+                setViewEnable(R.id.pick_up, false);
+                setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
+            }
+        } else {
+            setViewEnable(R.id.pick_up, false);
+            setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
 
+        }
     }
+
 
     private void showDetailPopup(int status) {
         switch (status) {
@@ -307,19 +343,18 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
-                if (!firstTime) {
-                    setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
-                    setViewVisibility(R.id.relative_vehicle_info, View.GONE);
-                    setViewVisibility(R.id.relative_service_info, View.GONE);
-                    setViewVisibility(R.id.relative_order_info, View.GONE);
-                    setViewVisibility(R.id.relative_payment_info, View.GONE);
-                    setViewVisibility(R.id.relative_drop_off_info, View.GONE);
-                    setViewVisibility(R.id.relative_pick_up_info, View.GONE);
-                } else {
-                    firstTime = false;
-                }
+
+                setViewVisibility(R.id.relative_flight_info, View.VISIBLE);
+                setViewVisibility(R.id.relative_vehicle_info, View.GONE);
+                setViewVisibility(R.id.relative_service_info, View.GONE);
+                setViewVisibility(R.id.relative_order_info, View.GONE);
+                setViewVisibility(R.id.relative_payment_info, View.GONE);
+                setViewVisibility(R.id.relative_drop_off_info, View.GONE);
+                setViewVisibility(R.id.relative_pick_up_info, View.GONE);
+
                 break;
             case 1:
                 isFlight = false;
@@ -327,8 +362,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.VISIBLE);
@@ -344,8 +380,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = true;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -362,8 +399,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = true;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -380,8 +418,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = true;
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -397,8 +436,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = false;
+                isDropOffInfo = true;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -414,8 +454,9 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
+                isPickUpInfo = true;
+                isDropOffInfo = false;
 
-                checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -431,8 +472,8 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
-                checkClickedButton();
+                isPickUpInfo = false;
+                isDropOffInfo = false;
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);
                 setViewVisibility(R.id.relative_vehicle_info, View.GONE);
@@ -446,37 +487,6 @@ public class OrderDetailsScreenNew extends BaseActivity implements View.OnClickL
         }
     }
 
-    private void checkClickedButton() {
-        if (isFlight && !firstTime) {
-            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
-        } else {
-            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_normal);
-        }
-
-        if (isVehicle || createOrderResponseDTO.getVehicleInfo().getVehicleMake().equalsIgnoreCase("")) {
-            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
-        } else {
-            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_normal);
-        }
-
-        if (isOrder) {
-            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_white);
-        } else {
-            setImageResourseBackground(R.id.order_confirmation, R.drawable.confirmation_btn_normal);
-        }
-
-        if (isService || (createOrderResponseDTO.getServiceInfo().getServices().size() == 0)) {
-            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
-        } else {
-            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_normal);
-        }
-
-        if (isPayment) {
-            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_white);
-        } else {
-            setImageResourseBackground(R.id.payment, R.drawable.payment_details_btn_normal);
-        }
-    }
 
     @Override
     public void onBackPressed() {

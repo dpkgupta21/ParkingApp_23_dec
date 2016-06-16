@@ -210,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/drop_off_btn_white" />
+                    android:src="@drawable/drop_off_btn_normal" />
 
                 <RelativeLayout
                     android:id="@+id/relative_drop_off_info"
@@ -238,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/margin_10dp"
-                    android:src="@drawable/pck_up_btn_white" />
+                    android:src="@drawable/pck_up_btn_normal" />
 
                 <RelativeLayout
                     android:id="@+id/relative_pick_up_info"

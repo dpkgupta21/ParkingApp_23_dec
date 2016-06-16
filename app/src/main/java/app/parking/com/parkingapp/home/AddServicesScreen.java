@@ -3,7 +3,7 @@ package app.parking.com.parkingapp.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +20,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.activity.BaseActivity;
 import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderDTO;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.HoldOrderDTO;
 import app.parking.com.parkingapp.model.ListOfServicesDTO;
+import app.parking.com.parkingapp.navigationDrawer.UserNavigationDrawerActivity;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
@@ -35,27 +37,29 @@ import app.parking.com.parkingapp.webservices.handler.CreateOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.handler.ServicesAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
-public class AddServicesScreen extends AppCompatActivity implements View.OnClickListener {
+public class AddServicesScreen extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv, no_service_tv;
-    private RelativeLayout toolbar_right_rl;
+    //private Toolbar mToolbar;
+    //private TextView toolbar_title, toolbar_right_tv, no_service_tv;
+    //private RelativeLayout toolbar_right_rl;
+    private static final String TAG = AddServicesScreen.class.getSimpleName();
+
+    private static final int CREATE_ORDER_TOKEN_EXPIRED_FAILURE = 1000;
+    private static final int SERVICES_TOKEN_EXPIRED_FAILURE = 1001;
 
     private ListView services_lv;
-    private RelativeLayout submit_button;
     private AddServicesAdapter addServicesAdapter;
     private ArrayList<ListOfServicesDTO> listOfServicesDTOArrayList;
-    private String TAG = AddServicesScreen.class.getSimpleName();
     private CreateOrderDTO createOrderDTO;
     private ArrayList<ListOfServicesDTO> listOfServicesDTO;
     private Activity mActivity;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_services_screen);
         mActivity = AddServicesScreen.this;
+
         initViews();
         assignClicks();
 
@@ -78,19 +82,16 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
     }
 
     private void assignClicks() {
-        submit_button.setOnClickListener(this);
-        toolbar_right_rl.setOnClickListener(this);
-
+        setClick(R.id.toolbar_right_rl);
+        setClick(R.id.submit_button);
     }
 
     private void initViews() {
 
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         services_lv = (ListView) findViewById(R.id.services_lv);
-        no_service_tv = (TextView) findViewById(R.id.no_service_tv);
-        submit_button = (RelativeLayout) findViewById(R.id.submit_button);
 
 
         setSupportActionBar(mToolbar);
@@ -98,12 +99,12 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mToolbar.setNavigationIcon(R.drawable.back_button);
-        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        TextView toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
 
-        toolbar_right_rl.setVisibility(View.VISIBLE);
+
+        setViewVisibility(R.id.toolbar_right_rl, View.VISIBLE);
         toolbar_right_tv.setText(R.string.skip);
 
 
@@ -124,7 +125,8 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
                 AppUtils.showLog(TAG, listOfServicesDTOArrayList.size() + "");
 
-                addServicesAdapter = new AddServicesAdapter(AddServicesScreen.this, listOfServicesDTOArrayList, no_service_tv);
+                addServicesAdapter = new AddServicesAdapter(AddServicesScreen.this,
+                        listOfServicesDTOArrayList, ((TextView) findViewById(R.id.no_service_tv)));
                 services_lv.setAdapter(addServicesAdapter);
 
             }
@@ -134,14 +136,26 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
                 try {
                     CustomProgressDialog.hideProgressDialog();
 
-                    String errorResponse = (String) arguments[0];
-                    JSONObject errorJsonObj = new JSONObject(errorResponse);
-                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
-                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+                    if (arguments != null) {
+                        JSONObject errorJsonObj = (JSONObject) arguments[0];
 
+                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase
+                                        (WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
 
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse",
+                                            SERVICES_TOKEN_EXPIRED_FAILURE);
+                        }
                     }
                 } catch (Exception e) {
+                    CustomProgressDialog.hideProgressDialog();
+                    AppUtils.showDialog(mActivity,
+                            getString(R.string.dialog_title_alert),
+                            getString(R.string.network_error_please_try_again) );
                     e.printStackTrace();
                 }
             }
@@ -248,14 +262,26 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
                 try {
                     CustomProgressDialog.hideProgressDialog();
 
-                    String errorResponse = (String) arguments[0];
-                    JSONObject errorJsonObj = new JSONObject(errorResponse);
-                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
-                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+                    if (arguments != null) {
+                        JSONObject errorJsonObj = (JSONObject) arguments[0];
 
+                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase
+                                        (WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
 
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse",
+                                            CREATE_ORDER_TOKEN_EXPIRED_FAILURE);
+                        }
                     }
                 } catch (Exception e) {
+                    CustomProgressDialog.hideProgressDialog();
+                    AppUtils.showDialog(mActivity,
+                            getString(R.string.dialog_title_alert),
+                            getString(R.string.network_error_please_try_again) );
                     e.printStackTrace();
                 }
             }
@@ -267,7 +293,14 @@ public class AddServicesScreen extends AppCompatActivity implements View.OnClick
 
     public void singleBtnCallbackResponse(Boolean flag, int code) {
         if (flag) {
-            startActivity(new Intent(mActivity, LoginScreen.class));
+            if (code == CREATE_ORDER_TOKEN_EXPIRED_FAILURE
+                    || code == CREATE_ORDER_TOKEN_EXPIRED_FAILURE) {
+
+                ParkingPreference.clearSession(mActivity);
+                Intent intent = new Intent(mActivity, LoginScreen.class);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
         }
     }
 

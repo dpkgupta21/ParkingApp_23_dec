@@ -113,9 +113,26 @@ public class FlightDetailsAPIHandler {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                WebserviceAPIErrorHandler.getInstance()
-                        .VolleyErrorHandler(error, mActivity);
-                mResponseListener.onFailOfResponse(error);
+                JSONObject errorJsonObj=null;
+                try {
+                    Response<JSONObject> errorResponse = Response.error(error);
+                    String errorString = new String(errorResponse.error.networkResponse.data,
+                            HttpHeaderParser
+                                    .parseCharset(errorResponse.error.networkResponse.headers));
+                    errorJsonObj = new JSONObject(errorString);
+                    WebserviceAPIErrorHandler.getInstance()
+                            .VolleyErrorHandler(error, mActivity);
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                } catch (UnsupportedEncodingException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override

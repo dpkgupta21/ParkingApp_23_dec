@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
+import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.DestinationFlightInfo;
@@ -25,15 +27,18 @@ import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.HelpMe;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.handler.HoldOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class HoldOrderScreen extends BaseActivity implements View.OnClickListener {
-    private Toolbar mToolbar;
-    private Button confirm_button;
+
+    private static final String TAG = HoldOrderScreen.class.getSimpleName();
+    private static final int HOLD_ORDER_TOKEN_EXPIRED_FAILURE = 1000;
+
     private HoldOrderDTO holdOrderDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
-    private String TAG = HoldOrderScreen.class.getSimpleName();
     private Activity mActivity;
 
     @Override
@@ -51,11 +56,11 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
     private void assignClicks() {
 
-        confirm_button.setOnClickListener(this);
+        setClick(R.id.btn_confirm);
     }
 
     private void initViews() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
@@ -66,8 +71,6 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         toolbar_title.setText(getResources().getString(R.string.parkforu));
 
 
-        confirm_button = (Button) findViewById(R.id.btn_confirm);
-        confirm_button.setOnClickListener(this);
         if (getIntent() != null) {
             createOrderResponseDTO = (CreateOrderResponseDTO) getIntent().
                     getSerializableExtra(AppConstants.ORDER_SUMMARY_KEY);
@@ -180,7 +183,31 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailOfResponse(Object... arguments) {
-                CustomProgressDialog.hideProgressDialog();
+                try {
+                    CustomProgressDialog.hideProgressDialog();
+
+                    if (arguments != null) {
+                        JSONObject errorJsonObj = (JSONObject) arguments[0];
+
+                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase
+                                        (WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse",
+                                            HOLD_ORDER_TOKEN_EXPIRED_FAILURE);
+                        }
+                    }
+                } catch (Exception e) {
+                    CustomProgressDialog.hideProgressDialog();
+                    AppUtils.showDialog(mActivity,
+                            getString(R.string.dialog_title_alert),
+                            getString(R.string.network_error_please_try_again));
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -202,4 +229,17 @@ public class HoldOrderScreen extends BaseActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
 
     }
+
+
+    public void singleBtnCallbackResponse(Boolean flag, int code) {
+        if (flag) {
+            if (code == HOLD_ORDER_TOKEN_EXPIRED_FAILURE) {
+                ParkingPreference.clearSession(mActivity);
+                Intent intent = new Intent(mActivity, LoginScreen.class);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
+        }
+    }
+
 }

@@ -84,6 +84,7 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
                         public void onSuccessOfResponse(Object... arguments) {
 
                             try {
+                                CustomProgressDialog.hideProgressDialog();
                                 JSONObject mJsonObject = (JSONObject) arguments[0];
                                 if (mJsonObject != null) {
                                     if (mJsonObject.has(GlobalKeys.AUTHTOKEN) &&
@@ -101,7 +102,6 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
                                         ParkingPreference.setUserId(mActivity, userId);
                                         ParkingPreference.setIsLogin(mActivity, true);
 
-                                        CustomProgressDialog.hideProgressDialog();
 
                                         Intent intent = new Intent(LoginScreen.this,
                                                 UserNavigationDrawerActivity.class);
@@ -122,15 +122,22 @@ public class LoginScreen extends BaseActivity implements View.OnClickListener {
                             try {
                                 CustomProgressDialog.hideProgressDialog();
 
-                                JSONObject errorJsonObj = (JSONObject) arguments[0];
-                                if (AppUtils.getWebServiceErrorCode(errorJsonObj).
-                                        equalsIgnoreCase
-                                                (WebserviceResponseConstants.LOGIN_ERROR)) {
+                                if (arguments != null) {
+                                    JSONObject errorJsonObj = (JSONObject) arguments[0];
 
-                                    AppUtils.showDialog(mActivity, "Message",
-                                            AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                            equalsIgnoreCase
+                                                    (WebserviceResponseConstants.LOGIN_ERROR)) {
+
+                                        AppUtils.showDialog(mActivity,
+                                                getString(R.string.dialog_title_message),
+                                                AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                    }
                                 }
                             } catch (Exception e) {
+                                CustomProgressDialog.hideProgressDialog();
+                                Snackbar.make(v, getString(R.string.network_error_please_try_again),
+                                        Snackbar.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
                         }

@@ -96,7 +96,8 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                                     CustomProgressDialog.hideProgressDialog();
                                     JSONObject mJsonObject = (JSONObject) arguments[0];
                                     if (mJsonObject != null) {
-                                        AppUtils.showToast(SignupScreen.this, "Registration Success");
+                                        Snackbar.make(v, getString(R.string.signup_successfully),
+                                                Snackbar.LENGTH_LONG).show();
 
                                         Intent intent = new Intent(SignupScreen.this, LoginScreen.class);
                                         startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -114,15 +115,21 @@ public class SignupScreen extends AppCompatActivity implements View.OnClickListe
                             public void onFailOfResponse(Object... arguments) {
                                 try {
                                     CustomProgressDialog.hideProgressDialog();
+                                    if (arguments != null) {
+                                        JSONObject errorJsonObj = (JSONObject) arguments[0];
+                                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                                equalsIgnoreCase(WebserviceResponseConstants.
+                                                        ERROR_USER_ALREADY_SIGNUP)) {
 
-                                    JSONObject errorJsonObj = (JSONObject) arguments[0];
-                                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
-                                            equalsIgnoreCase(WebserviceResponseConstants.ERROR_USER_ALREADY_SIGNUP)) {
-
-                                        AppUtils.showDialog(mActivity, "Message",
-                                                AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                            AppUtils.showDialog(mActivity,
+                                                    getString(R.string.dialog_title_message),
+                                                    AppUtils.getWebServiceErrorMsg(errorJsonObj));
+                                        }
                                     }
                                 } catch (Exception e) {
+                                    CustomProgressDialog.hideProgressDialog();
+                                    Snackbar.make(v, getString(R.string.network_error_please_try_again),
+                                            Snackbar.LENGTH_LONG).show();
                                     e.printStackTrace();
                                 }
 

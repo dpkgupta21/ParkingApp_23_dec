@@ -94,25 +94,29 @@ public class LogoutAPIHandler {
                         mActivity.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         mActivity.finish();
 
-                        //mResponseListener.onSuccessOfResponse(response);
+                        mResponseListener.onSuccessOfResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                JSONObject errorJsonObj = null;
                 try {
                     Response<JSONObject> errorResponse = Response.error(volleyError);
                     String errorString = new String(errorResponse.error.networkResponse.data,
                             HttpHeaderParser
                                     .parseCharset(errorResponse.error.networkResponse.headers));
-                    JSONObject errorJsonObj = new JSONObject(errorString);
+                    errorJsonObj = new JSONObject(errorString);
                     WebserviceAPIErrorHandler.getInstance()
                             .VolleyErrorHandler(volleyError, mActivity);
-                    // mResponseListener.onFailOfResponse(errorJsonObj);
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                 } catch (UnsupportedEncodingException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 } catch (JSONException e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 } catch (Exception e) {
+                    mResponseListener.onFailOfResponse(errorJsonObj);
                     e.printStackTrace();
                 }
             }

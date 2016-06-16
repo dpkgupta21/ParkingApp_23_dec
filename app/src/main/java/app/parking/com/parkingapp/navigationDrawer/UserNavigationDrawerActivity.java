@@ -37,6 +37,7 @@ import app.parking.com.parkingapp.orderhistory.OrderHistoryListFragment;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.view.UserProfileScreen;
 import app.parking.com.parkingapp.webservices.handler.AddTokenPushAPIHandler;
 import app.parking.com.parkingapp.webservices.handler.LogoutAPIHandler;
@@ -56,8 +57,6 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
     private View headerView;
     private boolean backPressedToExitOnce = false;
     public Activity mActivity;
-
-
 
 
     @Override
@@ -163,7 +162,7 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
                                         CustomProgressDialog.showProgDialog(mActivity, null);
                                         LogoutAPIHandler mLogoutAPIHandler = new
                                                 LogoutAPIHandler(mActivity,
-                                                null);
+                                                onLogoutResponseListner());
 
                                     }
                                 });
@@ -182,41 +181,62 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
     }
 
-//    private WebAPIResponseListener onLogoutResponseListner() {
-//
-//        WebAPIResponseListener mWebAPIResponseListener;
-//
-//        mWebAPIResponseListener = new WebAPIResponseListener() {
-//            @Override
-//            public void onSuccessOfResponse(Object... arguments) {
-//                CustomProgressDialog.hideProgressDialog();
-//                try {
-//                    ParkingPreference.clearSession(mActivity);
-//                    Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
-//                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//                    //AppUtils.showToast(mActivity, message);
-//
-//                    finish();
-//
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//
-//            @Override
-//            public void onFailOfResponse(Object... arguments) {
-//                CustomProgressDialog.hideProgressDialog();
-//                AppUtils.showToast(mActivity, "Logout Failed");
-//
-//            }
-//        }
-//
-//        ;
-//
-//        return mWebAPIResponseListener;
-//    }
+    private WebAPIResponseListener onLogoutResponseListner() {
+
+        WebAPIResponseListener mWebAPIResponseListener;
+
+        mWebAPIResponseListener = new WebAPIResponseListener() {
+            @Override
+            public void onSuccessOfResponse(Object... arguments) {
+                CustomProgressDialog.hideProgressDialog();
+                try {
+                    ParkingPreference.clearSession(mActivity);
+                    Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+                    finish();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onFailOfResponse(Object... arguments) {
+                try {
+                    CustomProgressDialog.hideProgressDialog();
+                    if (arguments != null) {
+                        JSONObject errorJsonObj = (JSONObject) arguments[0];
+                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase(WebserviceResponseConstants.ERROR_INVALID_TOKEN)
+                                || AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_MISMATCH)) {
+
+                            ParkingPreference.clearSession(mActivity);
+                            Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+                            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+                            finish();
+                        }
+                    }
+                } catch (Exception e) {
+                    CustomProgressDialog.hideProgressDialog();
+                    AppUtils.showDialog(mActivity,
+                            getString(R.string.dialog_title_alert),
+                            getString(R.string.network_error_please_try_again));
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+
+        ;
+
+        return mWebAPIResponseListener;
+    }
 
     private void displayView(int position) {
         Fragment fragment = null;
@@ -269,54 +289,56 @@ public class UserNavigationDrawerActivity extends AppCompatActivity {
 
         AddTokenPushAPIHandler mAddTokenAPIHandler = new AddTokenPushAPIHandler
                 (UserNavigationDrawerActivity.this,
-                new WebAPIResponseListener() {
-                    @Override
-                    public void onSuccessOfResponse(Object... arguments) {
+                        new WebAPIResponseListener() {
+                            @Override
+                            public void onSuccessOfResponse(Object... arguments) {
 
-                        try {
-                            JSONObject mJsonObject = (JSONObject) arguments[0];
+                                try {
+                                    JSONObject mJsonObject = (JSONObject) arguments[0];
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-
-                    @Override
-                    public void onFailOfResponse(Object... arguments) {
-                        try {
-                            CustomProgressDialog.hideProgressDialog();
-
-                            String errorResponse = (String) arguments[0];
-                            JSONObject errorJsonObj = new JSONObject(errorResponse);
-                            if (AppUtils.getWebServiceErrorCode(errorJsonObj).
-                                    equalsIgnoreCase(WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
-
-                                new CustomAlert(mActivity, mActivity)
-                                        .singleButtonAlertDialog(
-                                                AppUtils.getWebServiceErrorMsg(errorJsonObj),
-                                                getString(R.string.ok),
-                                                "singleBtnCallbackResponse", 1000);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
 
-                    }
-                });
+
+                            @Override
+                            public void onFailOfResponse(Object... arguments) {
+                                try {
+                                    CustomProgressDialog.hideProgressDialog();
+                                    if (arguments != null) {
+                                        String errorResponse = (String) arguments[0];
+                                        JSONObject errorJsonObj = new JSONObject(errorResponse);
+                                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                                equalsIgnoreCase(WebserviceResponseConstants.
+                                                        ERROR_TOKEN_EXPIRED)) {
+
+                                            new CustomAlert(mActivity, mActivity)
+                                                    .singleButtonAlertDialog(
+                                                            AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                                            getString(R.string.ok),
+                                                            "singleBtnCallbackResponse", 1000);
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    CustomProgressDialog.hideProgressDialog();
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
     }
 
 
     public void singleBtnCallbackResponse(Boolean flag, int code) {
         if (flag) {
-            CustomProgressDialog.showProgDialog(mActivity, null);
-            LogoutAPIHandler mLogoutAPIHandler = new
-                    LogoutAPIHandler(mActivity,
-                    null);
-            CustomProgressDialog.hideProgressDialog();
+            ParkingPreference.clearSession(mActivity);
+            Intent intent = new Intent(UserNavigationDrawerActivity.this, LoginScreen.class);
+            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
         }
     }
-
 
 
     @Override

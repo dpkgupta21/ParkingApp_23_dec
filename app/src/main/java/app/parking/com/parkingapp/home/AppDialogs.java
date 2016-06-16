@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
+import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.iClasses.FlightDetailInterface;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
@@ -40,6 +43,7 @@ import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
 import app.parking.com.parkingapp.utils.HelpMe;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
 import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.handler.FlightDetailsAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
@@ -55,6 +59,8 @@ public class AppDialogs {
 
     private static Dialog mModelDialog;
     private static ArrayList<FlightDetailsDTO> flightDetailsDTOList = null;
+    private static final int FLIGHT_INFO_TOKEN_EXPIRED_FAILURE = 1000;
+
 
     public static void selectCarMake(final Activity mActivity,
                                      final TextView textView) {
@@ -241,83 +247,36 @@ public class AppDialogs {
 
 
             //final ArrayList<FlightDetailsDTO> flightDetailsDTOList = new ArrayList<FlightDetailsDTO>();
-            final ListView flightDetails = (ListView) mModelDialog
+            final ListView flightDetailListView = (ListView) mModelDialog
                     .findViewById(R.id.listview);
             TextView search_btn = (TextView) mModelDialog.findViewById(R.id.search_btn);
-            final EditText edtSearch = (EditText) mModelDialog.findViewById(R.id.edt_search);
+
             final String tag = isDepartSelected ? "depart" : "arrival";
+
+            final EditText edtSearch = (EditText) mModelDialog.findViewById(R.id.edt_search);
+
+
+            edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        // do your stuff here
+                        searchActionDone(tag, edtSearch, mActivity, flightDetailListView);
+                    }
+                    return false;
+                }
+            });
+
             search_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-
-                    if (!edtSearch.getText().toString().isEmpty()) {
-
-                        CustomProgressDialog.showProgDialog(mActivity, "Searching...");
-                        new FlightDetailsAPIHandler(mActivity,
-                                edtSearch.getText().toString().trim(),
-                                edtSearch.getText().toString().trim(),
-                                ParkingPreference.getKeyAuthtoken(mActivity),
-                                ParkingPreference.getUserid(mActivity),
-                                tag,
-                                new WebAPIResponseListener() {
-                                    @Override
-                                    public void onSuccessOfResponse(Object... arguments) {
-
-
-                                        String response = arguments[0].toString();
-                                        JSONArray responseArray = null;
-                                        try {
-                                            responseArray = new JSONArray(response);
-
-                                            Type type = new TypeToken<List<FlightDetailsDTO>>() {
-                                            }.getType();
-
-
-                                            flightDetailsDTOList = new Gson().
-                                                    fromJson(responseArray.toString(), type);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        CustomProgressDialog.hideProgressDialog();
-                                        AppUtils.showLog(TAG, response);
-                                        if (flightDetailsDTOList.size() > 0) {
-
-                                            flightDetails.setVisibility(View.VISIBLE);
-
-                                            FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
-                                                    flightDetailsDTOList, mModelDialog);
-                                            flightDetails.setAdapter(adapter);
-                                            adapter.notifyDataSetChanged();
-
-
-                                            ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
-                                                    setVisibility(View.GONE);
-
-                                        } else {
-                                            ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
-                                                    setVisibility(View.VISIBLE);
-                                            flightDetails.setVisibility(View.GONE);
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFailOfResponse(Object... arguments) {
-                                        CustomProgressDialog.hideProgressDialog();
-                                        AppUtils.showDialog(mActivity, "Alert!",
-                                                "Some error occured");
-                                    }
-                                });
-                    } else {
-                        AppUtils.showDialog(mActivity, "Alert!",
-                                "Search field cannot be empty");
-                    }
+                    searchActionDone(tag, edtSearch, mActivity, flightDetailListView);
                 }
             });
 
 
-            flightDetails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            flightDetailListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     AppUtils.showLog(TAG, position + "");
@@ -360,6 +319,107 @@ public class AppDialogs {
 
     }
 
+    private static void searchActionDone(String tag,
+                                         final EditText edtSearch,
+                                         final Activity mActivity,
+                                         final ListView flightDetailListView) {
+
+        if (!edtSearch.getText().toString().isEmpty()) {
+
+            CustomProgressDialog.showProgDialog(mActivity, "Searching...");
+            new FlightDetailsAPIHandler(mActivity,
+                    edtSearch.getText().toString().trim(),
+                    edtSearch.getText().toString().trim(),
+                    ParkingPreference.getKeyAuthtoken(mActivity),
+                    ParkingPreference.getUserid(mActivity),
+                    tag,
+                    new WebAPIResponseListener() {
+                        @Override
+                        public void onSuccessOfResponse(Object... arguments) {
+
+
+                            String response = arguments[0].toString();
+                            JSONArray responseArray = null;
+                            try {
+                                responseArray = new JSONArray(response);
+
+                                Type type = new TypeToken<List<FlightDetailsDTO>>() {
+                                }.getType();
+
+
+                                flightDetailsDTOList = new Gson().
+                                        fromJson(responseArray.toString(), type);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            CustomProgressDialog.hideProgressDialog();
+                            AppUtils.showLog(TAG, response);
+                            if (flightDetailsDTOList.size() > 0) {
+
+                                flightDetailListView.setVisibility(View.VISIBLE);
+
+                                FlightDetailsAdapter adapter = new FlightDetailsAdapter(mActivity,
+                                        flightDetailsDTOList, mModelDialog);
+                                flightDetailListView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+
+                                ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                        setVisibility(View.GONE);
+
+                            } else {
+                                ((TextView) mModelDialog.findViewById(R.id.txt_no_found)).
+                                        setVisibility(View.VISIBLE);
+                                flightDetailListView.setVisibility(View.GONE);
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailOfResponse(Object... arguments) {
+                            try {
+                                CustomProgressDialog.hideProgressDialog();
+
+                                if (arguments != null) {
+                                    JSONObject errorJsonObj = (JSONObject) arguments[0];
+
+                                    if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                            equalsIgnoreCase
+                                                    (WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+                                        AppUtils.showToast(mActivity, AppUtils.getWebServiceErrorMsg(errorJsonObj));
+//                                        new CustomAlert(mActivity, mActivity)
+//                                                .singleButtonAlertDialog(
+//                                                        AppUtils.getWebServiceErrorMsg(errorJsonObj),
+//                                                        mActivity.getString(R.string.ok),
+//                                                        "singleBtnCallbackResponse",
+//                                                        FLIGHT_INFO_TOKEN_EXPIRED_FAILURE);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                CustomProgressDialog.hideProgressDialog();
+                                AppUtils.showDialog(mActivity,
+                                        mActivity.getString(R.string.dialog_title_alert),
+                                        mActivity.getString(R.string.network_error_please_try_again));
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } else {
+            AppUtils.showDialog(mActivity, "Alert!",
+                    "Search field cannot be empty");
+        }
+    }
+
+//    public void singleBtnCallbackResponse(Boolean flag, int code) {
+//        if (flag) {
+//            if (code == FLIGHT_INFO_TOKEN_EXPIRED_FAILURE) {
+//                ParkingPreference.clearSession(mActivity);
+//                Intent intent = new Intent(mActivity, LoginScreen.class);
+//                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                finish();
+//            }
+//        }
+//    }
 
     public static void paymentDialog(final Activity mActivity,
                                      final CreateOrderResponseDTO mCreateOrderResponseDTO,

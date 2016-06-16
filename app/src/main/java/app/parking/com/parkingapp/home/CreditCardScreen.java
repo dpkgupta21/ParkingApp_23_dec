@@ -1,6 +1,7 @@
 package app.parking.com.parkingapp.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -20,17 +21,22 @@ import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import app.parking.com.parkingapp.R;
 import app.parking.com.parkingapp.activity.BaseActivity;
+import app.parking.com.parkingapp.customViews.CustomAlert;
 import app.parking.com.parkingapp.customViews.CustomProgressDialog;
 import app.parking.com.parkingapp.model.CreateOrderResponseDTO;
 import app.parking.com.parkingapp.model.PurchaseOrderDTO;
 import app.parking.com.parkingapp.preferences.ParkingPreference;
 import app.parking.com.parkingapp.utils.AppConstants;
 import app.parking.com.parkingapp.utils.AppUtils;
+import app.parking.com.parkingapp.utils.WebserviceResponseConstants;
+import app.parking.com.parkingapp.view.LoginScreen;
 import app.parking.com.parkingapp.webservices.handler.PurchaseOrderAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
@@ -39,16 +45,11 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
 
     private static final String TAG = CreditCardScreen.class.getSimpleName();
-    private Toolbar mToolbar;
-    private TextView toolbar_title, toolbar_right_tv;
-    //private Spinner month_spinner, year_spinner;
+    private static final int PURCHASE_ORDER_TOKEN_EXPIRED_FAILURE = 1000;
 
     private PurchaseOrderDTO purchaseOrderDTO;
-    //private PurchaseOrderResponseDTO purchaseOrderResponseDTO;
     private CreateOrderResponseDTO createOrderResponseDTO;
     private String PUBLISHABLE_KEY = "pk_test_OpA06mOu6bmI6iGZMrahmKkc";
-    private RelativeLayout toolbar_right_rl;
-
     private Activity mActivity;
 
     @Override
@@ -71,7 +72,7 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
     private void assignClicks() {
 
-        toolbar_right_tv.setOnClickListener(this);
+
         ((EditText) findViewById(R.id.card_num_et))
                 .addTextChangedListener(getTextWatcher(R.id.card_num_et2));
         ((EditText) findViewById(R.id.card_num_et2))
@@ -113,22 +114,22 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
 
     private void initViews() {
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.back_button);
 
 
-        toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
-        toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
+        RelativeLayout toolbar_right_rl = (RelativeLayout) findViewById(R.id.toolbar_right_rl);
+        TextView toolbar_right_tv = (TextView) findViewById(R.id.toolbar_right_tv);
         toolbar_title.setVisibility(View.VISIBLE);
         toolbar_title.setText(getResources().getString(R.string.parkforu));
 
         toolbar_right_rl.setVisibility(View.VISIBLE);
         toolbar_right_tv.setText(R.string.next);
-
+        toolbar_right_tv.setOnClickListener(this);
         // Spinner element
        // month_spinner = (Spinner) findViewById(R.id.month_spinner);
         //year_spinner = (Spinner) findViewById(R.id.year_spinner);
@@ -291,32 +292,56 @@ public class CreditCardScreen extends BaseActivity implements AdapterView.OnItem
                 createOrderResponseDTO = new Gson().fromJson(response, CreateOrderResponseDTO.class);
 
                 AppUtils.showLog(TAG, response);
-                //AppUtils.showToast(CreditCardScreen.this, "Payment Successful");
                 AppDialogs.messageDialog(mActivity,
                         mActivity.getString(R.string.payment_success),
                         createOrderResponseDTO);
-                /*Intent intent = new Intent(mActivity,
-                        OrderDetailsScreenNew.class);
-                Toast.makeText(CreditCardScreen.this, "Transaction id :" + createOrderResponseDTO.getOrderConfirmation().
-                        getPaymentTransactionId(), Toast.LENGTH_SHORT).show();
 
-                intent.putExtra(AppConstants.ORDER_SUMMARY_KEY, createOrderResponseDTO);
-                startActivity(intent);
-                finish();
-
-                CustomProgressDialog.hideProgressDialog();*/
 
             }
 
             @Override
             public void onFailOfResponse(Object... arguments) {
 
-                CustomProgressDialog.hideProgressDialog();
+                try {
+                    CustomProgressDialog.hideProgressDialog();
+
+                    if (arguments != null) {
+                        JSONObject errorJsonObj = (JSONObject) arguments[0];
+
+                        if (AppUtils.getWebServiceErrorCode(errorJsonObj).
+                                equalsIgnoreCase
+                                        (WebserviceResponseConstants.ERROR_TOKEN_EXPIRED)) {
+
+                            new CustomAlert(mActivity, mActivity)
+                                    .singleButtonAlertDialog(
+                                            AppUtils.getWebServiceErrorMsg(errorJsonObj),
+                                            getString(R.string.ok),
+                                            "singleBtnCallbackResponse",
+                                            PURCHASE_ORDER_TOKEN_EXPIRED_FAILURE);
+                        }
+                    }
+                } catch (Exception e) {
+                    CustomProgressDialog.hideProgressDialog();
+                    AppUtils.showDialog(mActivity,
+                            getString(R.string.dialog_title_alert),
+                            getString(R.string.network_error_please_try_again));
+                    e.printStackTrace();
+                }
             }
         };
 
         return webAPIResponseListener;
     }
 
+    public void singleBtnCallbackResponse(Boolean flag, int code) {
+        if (flag) {
+            if (code == PURCHASE_ORDER_TOKEN_EXPIRED_FAILURE) {
+                ParkingPreference.clearSession(mActivity);
+                Intent intent = new Intent(mActivity, LoginScreen.class);
+                startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
+        }
+    }
 
 }

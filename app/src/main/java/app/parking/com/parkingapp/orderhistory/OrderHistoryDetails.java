@@ -36,12 +36,10 @@ import app.parking.com.parkingapp.webservices.handler.OrderDetailsAPIHandler;
 import app.parking.com.parkingapp.webservices.ihelper.WebAPIResponseListener;
 
 public class OrderHistoryDetails extends BaseActivity {
-    //private Toolbar mToolbar;
-    //private TextView toolbar_title, toolbar_right_tv;
+
     private RelativeLayout toolbar_right_rl;
     private ImageView payment;
     private CreateOrderResponseDTO createOrderResponseDTO;
-    private PurchaseOrderDTO purchaseOrderDTO;
     private boolean isFlight;
     private boolean isVehicle;
     private boolean isService;
@@ -271,6 +269,7 @@ public class OrderHistoryDetails extends BaseActivity {
             setViewText(R.id.txt_dest_destination_val, destinationFlighDTO.getDestination());
         } else {
             setViewEnable(R.id.flight_details, false);
+            setImageResourseBackground(R.id.flight_details, R.drawable.flight_detail_btn_white);
         }
 
     }
@@ -285,6 +284,7 @@ public class OrderHistoryDetails extends BaseActivity {
             setViewText(R.id.txt_vehicle_plate_number_val, vehicleInfoDTO.getPlateNo());
         } else {
             setViewEnable(R.id.vehicle_details, false);
+            setImageResourseBackground(R.id.vehicle_details, R.drawable.vehicle_details_white);
         }
     }
 
@@ -299,6 +299,8 @@ public class OrderHistoryDetails extends BaseActivity {
             }
         } else {
             setViewEnable(R.id.service_details, false);
+            setImageResourseBackground(R.id.service_details, R.drawable.add_servies_btn_white);
+
         }
     }
 
@@ -319,9 +321,11 @@ public class OrderHistoryDetails extends BaseActivity {
                         HelpMe.getFlightDisplayDateTime(dropOffDriverInfo.getDropOffTime()));
             } else {
                 setViewEnable(R.id.drop_off, false);
+                setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
             }
         } else {
             setViewEnable(R.id.drop_off, false);
+            setImageResourseBackground(R.id.drop_off, R.drawable.drop_off_btn_white);
         }
     }
 
@@ -334,9 +338,11 @@ public class OrderHistoryDetails extends BaseActivity {
                         HelpMe.getFlightDisplayDateTime(pickupDriverInfo.getPickUpTime()));
             } else {
                 setViewEnable(R.id.pick_up, false);
+                setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
             }
         } else {
             setViewEnable(R.id.pick_up, false);
+            setImageResourseBackground(R.id.pick_up, R.drawable.pck_up_btn_white);
 
         }
     }
@@ -485,7 +491,8 @@ public class OrderHistoryDetails extends BaseActivity {
                 isOrder = false;
                 isService = false;
                 isPayment = false;
-
+                isPickUpInfo = false;
+                isDropOffInfo = false;
                 //checkClickedButton();
 
                 setViewVisibility(R.id.relative_flight_info, View.GONE);

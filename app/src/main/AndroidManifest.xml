@@ -92,11 +92,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".home.ServicesScreen"
-            android:label="@string/title_activity_services_screen"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
-        <activity
             android:name=".home.OrderConfirmationDetailsScreen"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".home.PurchaseReceiptDetailsScreen" />
