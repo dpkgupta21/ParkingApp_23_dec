@@ -79,7 +79,8 @@ public class ServicesAPIHandler {
         CustomProgressDialog.showProgDialog(mActivity,null);
         JSONObject mJsonObjectRequest = new JSONObject();
 
-        JsonArrayRequest mJsonArrayRequest = new JsonArrayRequest((AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FETCH_SERVICES + "Vancouver")
+        JsonArrayRequest mJsonArrayRequest = new JsonArrayRequest(
+                (AppConstants.APP_WEBSERVICE_API_URL + GlobalKeys.FETCH_SERVICES + "Vancouver")
                 .trim(), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
